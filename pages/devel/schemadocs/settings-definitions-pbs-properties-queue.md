@@ -1,15 +1,15 @@
-# Untitled boolean in buildtest configuration schema Schema
+# Untitled string in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/system/properties/load_default_buildspecs
+settings.schema.json#/definitions/pbs/properties/queue
 ```
 
-Specify whether buildtest should automatically load  buildspecs provided in buildtest repo into buildspec cache
+Specify the lsf queue you want to use `-q <queue>`
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                  |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :-------------------------------------------------------------------------- |
 | Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [settings.schema.json*](../out/settings.schema.json "open original schema") |
 
-## load_default_buildspecs Type
+## queue Type
 
-`boolean`
+`string`

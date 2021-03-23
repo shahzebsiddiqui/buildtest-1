@@ -1,15 +1,15 @@
-# Untitled boolean in buildtest configuration schema Schema
+# Untitled undefined type in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/system/properties/load_default_buildspecs
+settings.schema.json#/definitions/pbs/properties/before_script
 ```
 
-Specify whether buildtest should automatically load  buildspecs provided in buildtest repo into buildspec cache
+The `before_script` section can be used to specify commands before start of test. The script will be sourced in active shell.
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                  |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :-------------------------------------------------------------------------- |
 | Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [settings.schema.json*](../out/settings.schema.json "open original schema") |
 
-## load_default_buildspecs Type
+## before_script Type
 
-`boolean`
+unknown
