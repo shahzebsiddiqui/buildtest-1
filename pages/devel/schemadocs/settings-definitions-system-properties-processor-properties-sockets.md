@@ -1,15 +1,19 @@
-# Untitled string in buildtest configuration schema Schema
+# Untitled integer in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/system/properties/compilers/properties/find/properties/gcc
+settings.schema.json#/definitions/system/properties/processor/properties/sockets
 ```
 
-Specify a regular expression to search for gcc compilers from your module stack
+Specify Number of CPU Sockets
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                  |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :-------------------------------------------------------------------------- |
 | Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [settings.schema.json*](../out/settings.schema.json "open original schema") |
 
-## gcc Type
+## sockets Type
 
-`string`
+`integer`
+
+## sockets Constraints
+
+**minimum**: the value of this number must greater than or equal to: `1`

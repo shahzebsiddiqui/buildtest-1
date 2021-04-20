@@ -82,6 +82,12 @@
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-regex.md "Perform regular expression search using re") – `definitions.schema.json#/definitions/status/properties/regex`
 
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-regex.md "Perform regular expression search using re") – `definitions.schema.json#/definitions/status/properties/regex`
+
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env.md "One or more key value pairs for an environment (key=value)") – `definitions.schema.json#/definitions/env`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
@@ -104,9 +110,11 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-properties-system-patternproperties-.md) – `settings.schema.json#/properties/system/patternProperties/^.*$`
 
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-processor.md "Specify processor information") – `settings.schema.json#/definitions/system/properties/processor`
+
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers.md "Declare compiler section for defining system compilers that can be referenced in buildspec") – `settings.schema.json#/definitions/system/properties/compilers`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-find.md "Find compilers based on module names") – `settings.schema.json#/definitions/system/properties/compilers/properties/find`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-find.md "Find compilers by specifying regular expression that is applied to modulefile names") – `settings.schema.json#/definitions/system/properties/compilers/properties/find`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler.md "Start of compiler declaration") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler`
 
@@ -146,6 +154,12 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-compiler_section-properties-module.md) – `settings.schema.json#/definitions/compiler_section/properties/module`
 
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx.md "Declaration of one or more UPCXX compilers where we define C, C++ compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx-patternproperties-.md "A compiler section is composed of cc, cxx and fc wrapper these are required when you need to specify compiler wrapper") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx/patternProperties/^.*$`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-compiler_section-properties-module.md) – `settings.schema.json#/definitions/compiler_section/properties/module`
+
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors.md "The executor section is used for declaring your executors that are responsible for running jobs") – `settings.schema.json#/definitions/system/properties/executors`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors-properties-defaults.md "Specify default executor settings for all executors") – `settings.schema.json#/definitions/system/properties/executors/properties/defaults`
@@ -169,12 +183,16 @@
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors-properties-pbs.md "The pbs section is used for declaring PBS executors for running jobs using PBS scheduler") – `settings.schema.json#/definitions/system/properties/executors/properties/pbs`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors-properties-pbs-patternproperties-.md "An instance object of cobalt executor") – `settings.schema.json#/definitions/system/properties/executors/properties/pbs/patternProperties/^.*$`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-cdash.md "Specify CDASH configuration used to upload tests via 'buildtest cdash' command") – `settings.schema.json#/definitions/system/properties/cdash`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system.md) – `settings.schema.json#/definitions/system`
 
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-processor.md "Specify processor information") – `settings.schema.json#/definitions/system/properties/processor`
+
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers.md "Declare compiler section for defining system compilers that can be referenced in buildspec") – `settings.schema.json#/definitions/system/properties/compilers`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-find.md "Find compilers based on module names") – `settings.schema.json#/definitions/system/properties/compilers/properties/find`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-find.md "Find compilers by specifying regular expression that is applied to modulefile names") – `settings.schema.json#/definitions/system/properties/compilers/properties/find`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler.md "Start of compiler declaration") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler`
 
@@ -214,6 +232,12 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-compiler_section-properties-module.md) – `settings.schema.json#/definitions/compiler_section/properties/module`
 
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx.md "Declaration of one or more UPCXX compilers where we define C, C++ compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx-patternproperties-.md "A compiler section is composed of cc, cxx and fc wrapper these are required when you need to specify compiler wrapper") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx/patternProperties/^.*$`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-compiler_section-properties-module.md) – `settings.schema.json#/definitions/compiler_section/properties/module`
+
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors.md "The executor section is used for declaring your executors that are responsible for running jobs") – `settings.schema.json#/definitions/system/properties/executors`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors-properties-defaults.md "Specify default executor settings for all executors") – `settings.schema.json#/definitions/system/properties/executors/properties/defaults`
@@ -237,6 +261,8 @@
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors-properties-pbs.md "The pbs section is used for declaring PBS executors for running jobs using PBS scheduler") – `settings.schema.json#/definitions/system/properties/executors/properties/pbs`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors-properties-pbs-patternproperties-.md "An instance object of cobalt executor") – `settings.schema.json#/definitions/system/properties/executors/properties/pbs/patternProperties/^.*$`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-cdash.md "Specify CDASH configuration used to upload tests via 'buildtest cdash' command") – `settings.schema.json#/definitions/system/properties/cdash`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-compiler_section.md "A compiler section is composed of cc, cxx and fc wrapper these are required when you need to specify compiler wrapper") – `settings.schema.json#/definitions/compiler_section`
 
@@ -360,6 +386,16 @@
 
 *   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-status.md "The status section describes how buildtest detects PASS/FAIL on test") – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/status`
 
+*   [Untitled object in compiler schema version 1.0](./compiler-v1-properties-compilers-properties-default-properties-upcxx.md "Specify compiler configuration for group of compilers") – `compiler-v1.0.schema.json#/properties/compilers/properties/default/properties/upcxx`
+
+*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-batch.md "The batch field is used to specify scheduler agnostic directives that are translated to #SBATCH or #BSUB based on your scheduler") – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/batch`
+
+*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-env.md "One or more key value pairs for an environment (key=value)") – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/env`
+
+*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-vars.md "One or more key value pairs for an environment (key=value)") – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/vars`
+
+*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-status.md "The status section describes how buildtest detects PASS/FAIL on test") – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/status`
+
 *   [Untitled object in compiler schema version 1.0](./compiler-v1-properties-compilers-properties-config.md "Specify compiler configuration based on named compilers") – `compiler-v1.0.schema.json#/properties/compilers/properties/config`
 
 *   [Untitled object in compiler schema version 1.0](./compiler-v1-properties-compilers-properties-config-patternproperties-.md "Specify compiler configuration at compiler level") – `compiler-v1.0.schema.json#/properties/compilers/properties/config/patternProperties/^.*$`
@@ -389,6 +425,8 @@
 *   [Untitled object in script schema version 1.0](./script-v1-properties-status.md "The status section describes how buildtest detects PASS/FAIL on test") – `script-v1.0.schema.json#/properties/status`
 
 ### Arrays
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-int_or_list-oneof-1.md) – `definitions.schema.json#/definitions/int_or_list/oneOf/1`
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-int_or_list-oneof-1.md) – `definitions.schema.json#/definitions/int_or_list/oneOf/1`
 
@@ -464,6 +502,10 @@
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
+*   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-load.md "Load one or more modules via module load") – `settings.schema.json#/definitions/module/properties/load`
+
+*   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
+
 *   [Untitled array in buildtest configuration schema](./settings-definitions-lsf-properties-options.md "Specify any options for bsub for this executor when running all jobs associated to this executor") – `settings.schema.json#/definitions/lsf/properties/options`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-slurm-properties-options.md "Specify any other options for sbatch used by this executor for running all jobs") – `settings.schema.json#/definitions/slurm/properties/options`
@@ -475,6 +517,10 @@
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-hostnames.md "Specify a list of hostnames to check where buildtest can run for the given system record") – `settings.schema.json#/definitions/system/properties/hostnames`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-buildspec_roots.md "Specify a list of directory paths to search buildspecs") – `settings.schema.json#/definitions/system/properties/buildspec_roots`
+
+*   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-load.md "Load one or more modules via module load") – `settings.schema.json#/definitions/module/properties/load`
+
+*   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-load.md "Load one or more modules via module load") – `settings.schema.json#/definitions/module/properties/load`
 
@@ -583,6 +629,18 @@
 *   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_all-properties-bb.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_all/properties/BB`
 
 *   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_all-properties-dw.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_all/properties/DW`
+
+*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-sbatch.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/sbatch`
+
+*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-bsub.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/bsub`
+
+*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-cobalt.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/cobalt`
+
+*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-pbs.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/pbs`
+
+*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-bb.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/BB`
+
+*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-dw.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/DW`
 
 *   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config-properties-sbatch.md) – `compiler-v1.0.schema.json#/definitions/default_compiler_config/properties/sbatch`
 
