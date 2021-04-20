@@ -9,12 +9,14 @@ import re
 
 from buildtest.buildsystem.scriptbuilder import ScriptBuilder
 from buildtest.buildsystem.compilerbuilder import CompilerBuilder
-from buildtest.menu.compilers import BuildtestCompilers
+from buildtest.cli.compilers import BuildtestCompilers
 from buildtest.system import system
 
 
 class Builder:
-    def __init__(self, bp, buildexecutor, filters, testdir, rebuild=1):
+    def __init__(
+        self, bp, buildexecutor, filters, testdir, buildtest_system=None, rebuild=1
+    ):
         """Based on a loaded Buildspec file, return the correct builder
         for each based on the type. Each type is associated with a known
         Builder class.
@@ -27,10 +29,12 @@ class Builder:
         :type filters: dict, required
         :param testdir: Test Destination directory, specified by --testdir
         :type testdir: str, required
+        :param buildtest_system: Instance of BuildTestSystem
+        :type buildtest_system: BuildTestSystem
         :param rebuild: Number of rebuilds for a tesst this is specified by ``buildtest build --rebuild``. Defaults to 1
         :type rebuild: int, optional
         """
-
+        self.system = buildtest_system or system
         self.logger = logging.getLogger(__name__)
         self.testdir = testdir
         self.buildexecutor = buildexecutor
@@ -42,7 +46,7 @@ class Builder:
 
         self.bp = bp
         self.filters = filters
-        # system = BuildTestSystem()
+
         self.builders = []
 
         for count in range(self.rebuild):
@@ -58,7 +62,7 @@ class Builder:
                 if self._skip_tests_by_tags(recipe, name):
                     continue
 
-                if self._skip_tests_run_only(recipe, name, system):
+                if self._skip_tests_run_only(recipe, name):
                     continue
 
                 # Add the builder based on the type
@@ -161,7 +165,7 @@ class Builder:
 
         return False
 
-    def _skip_tests_run_only(self, recipe, name, system):
+    def _skip_tests_run_only(self, recipe, name):
         """This method will skip tests based on ``run_only`` field from buildspec. Checks
         are performed based on conditionals and if any conditional is not met we skip test.
 
@@ -169,8 +173,6 @@ class Builder:
         :type recipe: dict, required
         :param name: name of test from buildspec file
         :type name: str, required
-        :param system: An instance of ``BuildTestSystem`` class
-        :type system: BuildTestSystem, required
         :return: Returns a boolean to see if test is skipped based on ``run_only`` property
         :rtype: bool
         """
@@ -179,9 +181,10 @@ class Builder:
 
             # skip test if host scheduler is not one specified via 'scheduler' field
             if recipe["run_only"].get("scheduler") and (
-                recipe["run_only"].get("scheduler") not in system.system["scheduler"]
+                recipe["run_only"].get("scheduler")
+                not in self.system.system["scheduler"]
             ):
-                msg = f"[{name}][{self.bp.buildspec}]: test is skipped because ['run_only']['scheduler'] got value: {recipe['run_only']['scheduler']} but detected scheduler: {system.system['scheduler']}."
+                msg = f"[{name}][{self.bp.buildspec}]: test is skipped because ['run_only']['scheduler'] got value: {recipe['run_only']['scheduler']} but detected scheduler: {self.system.system['scheduler']}."
                 print(msg)
                 self.logger.info(msg)
                 return True
@@ -197,17 +200,17 @@ class Builder:
 
             # skip test if host platform is not equal to value specified by 'platform' field
             if recipe["run_only"].get("platform") and (
-                recipe["run_only"].get("platform") != system.system["platform"]
+                recipe["run_only"].get("platform") != self.system.system["platform"]
             ):
-                msg = f"[{name}][{self.bp.buildspec}]: test is skipped because this test is expected to run on platform: {recipe['run_only']['platform']} but detected platform: {system.system['platform']}."
+                msg = f"[{name}][{self.bp.buildspec}]: test is skipped because this test is expected to run on platform: {recipe['run_only']['platform']} but detected platform: {self.system.system['platform']}."
                 print(msg)
                 self.logger.info(msg)
                 return True
 
             # skip test if host platform is not equal to value specified by 'platform' field
             if recipe["run_only"].get("linux_distro"):
-                if system.system["os"] not in recipe["run_only"]["linux_distro"]:
-                    msg = f"[{name}][{self.bp.buildspec}]: test is skipped because this test is expected to run on linux distro: {recipe['run_only']['linux_distro']} but detected linux distro: {system.system['os']}."
+                if self.system.system["os"] not in recipe["run_only"]["linux_distro"]:
+                    msg = f"[{name}][{self.bp.buildspec}]: test is skipped because this test is expected to run on linux distro: {recipe['run_only']['linux_distro']} but detected linux distro: {self.system.system['os']}."
                     print(msg)
                     self.logger.info(msg)
                     return True

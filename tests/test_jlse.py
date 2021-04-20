@@ -1,8 +1,9 @@
 import os
 import pytest
 import socket
-from buildtest.menu.build import BuildTest
-from buildtest.menu.compilers import BuildtestCompilers
+from buildtest.cli.build import BuildTest
+from buildtest.cli.compilers import BuildtestCompilers
+from buildtest.system import BuildTestSystem
 
 
 def test_jlse():
@@ -12,9 +13,13 @@ def test_jlse():
 
     here = os.path.dirname(os.path.abspath(__file__))
     configuration = os.path.join(here, "settings", "jlse.yml")
+    system = BuildTestSystem()
+    system.check()
 
     buildspec_files = os.path.join(here, "examples", "jlse", "hostname.yml")
-    cmd = BuildTest(config_file=configuration, buildspecs=[buildspec_files])
+    cmd = BuildTest(
+        config_file=configuration, buildspecs=[buildspec_files], buildtest_system=system
+    )
     cmd.build()
 
     # testing buildtest config compilers find

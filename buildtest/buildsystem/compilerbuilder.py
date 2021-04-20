@@ -4,9 +4,9 @@ import shutil
 
 from buildtest.buildsystem.base import BuilderBase
 from buildtest.config import buildtest_configuration
-from buildtest.defaults import executor_root
+from buildtest.defaults import BUILDTEST_EXECUTOR_DIR
 from buildtest.exceptions import BuildTestError
-from buildtest.menu.compilers import BuildtestCompilers
+from buildtest.cli.compilers import BuildtestCompilers
 from buildtest.utils.file import resolve_path
 from buildtest.utils.tools import deep_get
 
@@ -200,7 +200,7 @@ class CompilerBuilder(BuilderBase):
             lines += data_warp_lines
 
         lines += [
-            f"source {os.path.join(executor_root, self.executor, 'before_script.sh')}"
+            f"source {os.path.join(BUILDTEST_EXECUTOR_DIR, self.executor, 'before_script.sh')}"
         ]
 
         lines += [self.exec_variable]
@@ -231,7 +231,7 @@ class CompilerBuilder(BuilderBase):
             lines.append(self.post_run)
 
         lines += [
-            f"source {os.path.join(executor_root, self.executor, 'after_script.sh')}"
+            f"source {os.path.join(BUILDTEST_EXECUTOR_DIR, self.executor, 'after_script.sh')}"
         ]
         return lines
 
@@ -241,13 +241,13 @@ class CompilerBuilder(BuilderBase):
         Buildspec recipe.
         """
 
-        # attempt to resolve path based on 'source' field. One can specify an absolute path if specified we honor it
-        self.abspath_sourcefile = resolve_path(self.sourcefile)
-        # One can specify a relative path to where buildspec is located when using 'source' field so we try again
-        if not self.abspath_sourcefile:
-            self.abspath_sourcefile = resolve_path(
-                os.path.join(os.path.dirname(self.buildspec), self.sourcefile)
-            )
+        # attempt to resolve path based on 'source' field.
+        # 1. The source file can be absolute path and if exists we use this
+        # 2. The source file can be relative path to where buildspec is located
+
+        self.abspath_sourcefile = resolve_path(self.sourcefile) or resolve_path(
+            os.path.join(os.path.dirname(self.buildspec), self.sourcefile)
+        )
 
         # raise error if we can't find source file to compile
         if not self.abspath_sourcefile:

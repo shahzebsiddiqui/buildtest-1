@@ -9,19 +9,24 @@ import logging
 import os
 import sys
 
-from buildtest.defaults import USER_SETTINGS_FILE, executor_root
+from buildtest.defaults import USER_SETTINGS_FILE, BUILDTEST_EXECUTOR_DIR
 from buildtest.executors.cobalt import CobaltExecutor
 from buildtest.executors.local import LocalExecutor
 from buildtest.executors.lsf import LSFExecutor
 from buildtest.executors.slurm import SlurmExecutor
 from buildtest.executors.pbs import PBSExecutor
+from buildtest.exceptions import ExecutorError
 from buildtest.utils.file import create_dir, write_file
 
 
 class BuildExecutor:
-    """A BuildExecutor is a base class for an executor. The executors can be
-    different types such as local, slurm, lsf, cobalt which map to subclass
-    ``LocalExecutor``, ``SlurmExecutor``, ``LSFExecutor``, ``CobaltExecutor``
+    """A BuildExecutor is responsible for initialing executors from buildtest configuration
+    file which provides a list of executors. This class keeps track of all executors and provides
+    the following methods:
+
+    **setup**: This method will  write executor's ``before_script.sh`` and ``after_script.sh`` file that is sourced in each test upon calling executor.
+    **run**: Responsible for invoking executor's **run** method based on builder object which is of type BuilderBase.
+    **poll**: This is responsible for invoking ``poll`` method for corresponding executor from the builder object by checking job state
     """
 
     def __init__(self, site_config):
@@ -30,7 +35,7 @@ class BuildExecutor:
         each executor to be available.
 
         :param site_config: the site configuration for buildtest.
-        :type site_config: instance of BuildtestConfiguration class, required
+        :type site_config: BuildtestConfiguration class, required
         """
 
         self.executors = {}
@@ -99,7 +104,7 @@ class BuildExecutor:
         is set for the executor, and fall back to the default.
 
         :param builder: the builder with the loaded Buildspec.
-        :type builder: buildtest.buildsystem.BuilderBase (or subclass).
+        :type builder: BuilderBase (subclass), required.
         """
 
         # extract executor name from buildspec recipe
@@ -140,16 +145,20 @@ class BuildExecutor:
         """
 
         for executor_name in self.executors.keys():
-            create_dir(os.path.join(executor_root, executor_name))
+            create_dir(os.path.join(BUILDTEST_EXECUTOR_DIR, executor_name))
             executor_settings = self.executors[executor_name]._settings
 
             # if before_script field defined in executor section write content to var/executors/<executor>/before_script.sh
-            file = os.path.join(executor_root, executor_name, "before_script.sh")
+            file = os.path.join(
+                BUILDTEST_EXECUTOR_DIR, executor_name, "before_script.sh"
+            )
             content = executor_settings.get("before_script") or ""
             write_file(file, content)
 
             # after_script field defined in executor section write content to var/executors/<executor>/after_script.sh
-            file = os.path.join(executor_root, executor_name, "after_script.sh")
+            file = os.path.join(
+                BUILDTEST_EXECUTOR_DIR, executor_name, "after_script.sh"
+            )
             content = executor_settings.get("after_script") or ""
             write_file(file, content)
 
@@ -160,16 +169,19 @@ class BuildExecutor:
         setup, build, and finish.
 
         :param builder: the builder with the loaded test configuration.
-        :type builder: buildtest.buildsystem.BuilderBase (or subclass).
+        :type builder: BuilderBase (subclass), required.
         """
         executor = self._choose_executor(builder)
-
         # The run stage for LocalExecutor is to invoke run method
         if executor.type == "local":
             executor.run(builder)
-        # The run stage for batch executor (Slurm, LSF, Cobalt) executor is to invoke dispatch method
+        # The run stage for batch executor (Slurm, LSF, Cobalt, PBS) executor is to invoke dispatch method
         elif executor.type in ["slurm", "lsf", "cobalt", "pbs"]:
             executor.dispatch(builder)
+        else:
+            raise ExecutorError(
+                f"Invalid executor type: {executor.type} for executor: {executor.name}. Please check your configuration file"
+            )
 
     def poll(self, builder):
         """Poll all jobs for batch executors (LSF, Slurm, Cobalt, PBS). For slurm we poll
@@ -188,8 +200,8 @@ class BuildExecutor:
         which is ``done`` or ``exiting`` state, we mark job is complete.
 
         For PBS jobs we poll job if its in queued or running stage which corresponds
-        to "Q" and "R" in job stage. If job is finished ("F") we gather results. If job
-        is in "H" stage we automatically cancel job otherwise we ignore job and mark job complete.
+        to ``Q`` and ``R`` in job stage. If job is finished (``F``) we gather results. If job
+        is in ``H`` stage we automatically cancel job otherwise we ignore job and mark job complete.
 
         :param builder: an instance of BuilderBase (subclass)
         :type builder: BuilderBase (subclass), required

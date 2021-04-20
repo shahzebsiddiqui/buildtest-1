@@ -4,74 +4,33 @@ for building test scripts from a Buildspec
 """
 
 import logging
-import json
 import os
 import re
+import shutil
 import sys
 import time
+from datetime import datetime
 from jsonschema.exceptions import ValidationError
 from tabulate import tabulate
 from termcolor import colored
-from buildtest.config import check_settings
-from buildtest.defaults import (
-    BUILDTEST_ROOT,
-    BUILDSPEC_CACHE_FILE,
-)
+
+from buildtest import BUILDTEST_VERSION
 from buildtest.buildsystem.builders import Builder
 from buildtest.buildsystem.parser import BuildspecParser
-from buildtest.exceptions import BuildTestError
+from buildtest.cli.report import update_report
+from buildtest.config import check_settings
+from buildtest.defaults import BUILDSPEC_CACHE_FILE, BUILDTEST_USER_HOME, BUILD_REPORT
+from buildtest.exceptions import (
+    BuildTestError,
+    BuildspecError,
+    ExecutorError,
+)
 from buildtest.executors.setup import BuildExecutor
-
-from buildtest.menu.report import update_report
-from buildtest.utils.file import walk_tree, resolve_path, is_file, create_dir
+from buildtest.system import system
+from buildtest.utils.file import walk_tree, resolve_path, is_file, create_dir, load_json
 from buildtest.utils.tools import Hasher, deep_get
 
 logger = logging.getLogger(__name__)
-
-
-def resolve_testdirectory(buildtest_configuration, cli_testdir=None):
-    """This method resolves which test directory to select. For example, one
-    can specify test directory via command line ``buildtest build --testdir <path>``
-    or path in configuration file. The default is $BUILDTEST_ROOT/var/tests
-
-
-    :param buildtest_configuration: loaded buildtest configuration as a dict.
-    :type buildtest_configuration: dict
-    :param cli_testdir: test directory from command line ``buildtest build --testdir``
-    :type cli_testdir: str
-    :return: Path to test directory to use
-    :rtype: str
-    """
-
-    prefix = buildtest_configuration.get("testdir")
-
-    # variable to set test directory if prefix is set
-    prefix_testdir = None
-    if prefix:
-        prefix = resolve_path(prefix, exist=False)
-
-        if prefix:
-            prefix_testdir = prefix
-
-    if cli_testdir:
-        # resolve full path for test directory specified by --testdir option
-        cli_testdir = resolve_path(cli_testdir, exist=False)
-
-    # Order of precedence when detecting test directory
-    # 1. Command line option --testdir
-    # 2. Configuration option specified by 'testdir'
-    # 3. Defaults to $BUILDTEST_ROOT/var/tests
-    test_directory = (
-        cli_testdir or prefix_testdir or os.path.join(BUILDTEST_ROOT, "var", "tests")
-    )
-    if not test_directory:
-        raise BuildTestError(
-            "Invalid value for test directory, please specify a valid directory path through command line (--testdir) or configuration file"
-        )
-
-    create_dir(test_directory)
-
-    return test_directory
 
 
 class BuildTest:
@@ -88,6 +47,8 @@ class BuildTest:
         stage=None,
         filter_tags=None,
         rebuild=None,
+        buildtest_system=None,
+        report_file=None,
     ):
         """The initializer method is responsible for checking input arguments for type
         check, if any argument fails type check we raise an error. If all arguments pass
@@ -111,7 +72,12 @@ class BuildTest:
         :type filter_tags: list, optional
         :param rebuild: contains value of command line argument (--rebuild)
         :type rebuild: list, optional
+        :param buildtest_system: Instance of BuildTestSystem class
+        :type  buildtest_system: BuildTestSystem
+        :param report_file: Specify location where report file is written
+        :type report_file: str, optional
         """
+
         stage_values = ["parse", "build"]
 
         if buildspecs and not isinstance(buildspecs, list):
@@ -143,18 +109,17 @@ class BuildTest:
         if rebuild and not isinstance(rebuild, int):
             raise BuildTestError(f"{rebuild} is not of type int")
 
-        self.configfile = config_file
+        self.config_file = config_file
         self.configuration = check_settings(
-            settings_path=self.configfile, executor_check=True
+            settings_path=self.config_file, executor_check=True
         )
 
-        # self.configuration = BuildtestConfiguration(self.configfile)
         self.buildspecs = buildspecs
         self.exclude_buildspecs = exclude_buildspecs
         self.tags = tags
         self.executors = executors
 
-        self.testdir = resolve_testdirectory(self.configuration.target_config, testdir)
+        self.testdir = self.resolve_testdirectory(testdir)
         self.stage = stage
         self.filtertags = filter_tags
         self.rebuild = rebuild
@@ -168,6 +133,20 @@ class BuildTest:
 
         self.builders = None
         self.buildexecutor = BuildExecutor(self.configuration)
+        self.system = buildtest_system or system
+        self.report_file = resolve_path(report_file, exist=False) or BUILD_REPORT
+
+        print("\n")
+        print("User: ", self.system.system["user"])
+        print("Hostname: ", self.system.system["host"])
+        print("Platform: ", self.system.system["platform"])
+        print("Current Time: ", datetime.now().strftime("%Y/%m/%d %X"))
+        print("buildtest path:", shutil.which("buildtest"))
+        print("buildtest version: ", BUILDTEST_VERSION)
+        print("python path:", self.system.system["python"])
+        print("python version: ", self.system.system["pyver"])
+        print("Test Directory: ", self.testdir)
+        print("Configuration File: ", self.configuration.file)
 
     def build(self):
         """This method is responsible for implementating stages: parse, build, run, update. """
@@ -193,7 +172,41 @@ class BuildTest:
 
         # only update report if we have a list of valid builders returned from run_phase
         if self.builders:
-            update_report(self.builders)
+            update_report(self.builders, self.report_file)
+
+    def resolve_testdirectory(self, cli_testdir=None):
+        """This method resolves which test directory to select. For example, one
+        can specify test directory via command line ``buildtest build --testdir <path>``
+        or path in configuration file. The default is $HOME/.buildtest/var/tests
+
+
+        :param cli_testdir: test directory from command line ``buildtest build --testdir``
+        :type cli_testdir: str
+        :return: Path to test directory to use
+        :rtype: str
+        """
+
+        # variable to set test directory if prefix is set
+        prefix_testdir = resolve_path(
+            self.configuration.target_config.get("testdir"), exist=False
+        )
+
+        # resolve full path for test directory specified by --testdir option
+        cli_testdir = resolve_path(cli_testdir, exist=False)
+
+        # Order of precedence when detecting test directory
+        # 1. Command line option --testdir
+        # 2. Configuration option specified by 'testdir'
+        # 3. Defaults to $HOME/.buildtest/var/tests
+        test_directory = (
+            cli_testdir
+            or prefix_testdir
+            or os.path.join(BUILDTEST_USER_HOME, "var", "tests")
+        )
+
+        create_dir(test_directory)
+
+        return test_directory
 
     def discover_buildspecs(self, printTable=False):
         """This method discovers all buildspecs based on --buildspecs, --tags, --executor
@@ -206,6 +219,9 @@ class BuildTest:
         self.bp_found = []
         self.bp_removed = []
 
+        tag_dict = {}
+        executor_dict = {}
+
         logger.debug(
             f"Discovering buildspecs based on tags={self.tags}, executor={self.executors}, buildspec={self.buildspecs}, excluded buildspec={self.exclude_buildspecs}"
         )
@@ -216,7 +232,8 @@ class BuildTest:
             for name in self.tags:
                 logger.debug(f"Checking {name} is type 'str'")
                 assert isinstance(name, str)
-                buildspecs += self.discover_buildspecs_by_tags(name)
+                tag_dict[name] = self.discover_buildspecs_by_tags(name)
+                buildspecs += tag_dict[name]
 
             self.bp_found += buildspecs
 
@@ -230,7 +247,8 @@ class BuildTest:
                 logger.debug(f"Checking {name} is type 'str'")
                 assert isinstance(name, str)
 
-                buildspecs += self.discover_buildspecs_by_executor_name(name)
+                executor_dict[name] = self.discover_buildspecs_by_executor_name(name)
+                buildspecs += executor_dict[name]
 
             self.bp_found += buildspecs
 
@@ -308,11 +326,42 @@ class BuildTest:
             print(msg)
 
             print("Discovered Buildspecs:")
-            [print(buildspec) for buildspec in self.detected_buildspecs]
+            for buildspec in self.detected_buildspecs:
+                print(buildspec)
 
             if self.bp_removed:
                 print("\nExcluded Buildspecs:")
-                [print(file) for file in self.bp_removed]
+                for file in self.bp_removed:
+                    print(file)
+
+            # print breakdown of buildspecs by tags
+            if tag_dict:
+                print("\nBREAKDOWN OF BUILDSPECS BY TAGS\n")
+
+                headers = tag_dict.keys()
+                if os.getenv("BUILDTEST_COLOR") == "True":
+                    headers = list(
+                        map(
+                            lambda x: colored(x, "blue", attrs=["bold"]),
+                            tag_dict.keys(),
+                        )
+                    )
+                print(tabulate(tag_dict, headers=headers, tablefmt="simple"))
+
+            # print breakdown of buildspecs by executors
+            if executor_dict:
+                print("\nBREAKDOWN OF BUILDSPECS BY EXECUTORS\n")
+
+                headers = executor_dict.keys()
+                if os.getenv("BUILDTEST_COLOR") == "True":
+                    headers = list(
+                        map(
+                            lambda x: colored(x, "blue", attrs=["bold"]),
+                            executor_dict.keys(),
+                        )
+                    )
+
+                print(tabulate(executor_dict, headers=headers, tablefmt="simple"))
 
     def discover_buildspecs_by_tags(self, input_tag):
         """This method discovers buildspecs by tags, using ``--tags`` option
@@ -332,8 +381,17 @@ class BuildTest:
                 f"Cannot for buildspec cache: {BUILDSPEC_CACHE_FILE}, please run 'buildtest buildspec find' "
             )
 
+        cache = load_json(BUILDSPEC_CACHE_FILE)
+
+        """
         with open(BUILDSPEC_CACHE_FILE, "r") as fd:
-            cache = json.loads(fd.read())
+            
+            try:
+                cache = json.loads(fd.read())
+            except json.JSONDecodeError as err:
+                print(err)
+                raise BuildTestError(f"Error loading file: {BUILDSPEC_CACHE_FILE} via json.loads please make sure its valid JSON file")
+        """
 
         buildspecs = []
         # query all buildspecs from BUILDSPEC_CACHE_FILE for tags keyword and
@@ -347,6 +405,9 @@ class BuildTest:
 
                 if input_tag in tag:
                     buildspecs.append(buildspecfile)
+
+        # remove any duplicates and return back a list
+        buildspecs = list(set(buildspecs))
 
         return buildspecs
 
@@ -367,8 +428,7 @@ class BuildTest:
                 f"Cannot for buildspec cache: {BUILDSPEC_CACHE_FILE}, please run 'buildtest buildspec find' "
             )
 
-        with open(BUILDSPEC_CACHE_FILE, "r") as fd:
-            cache = json.loads(fd.read())
+        cache = load_json(BUILDSPEC_CACHE_FILE)
 
         buildspecs = []
         # query all buildspecs from BUILDSPEC_CACHE_FILE for tags keyword and
@@ -382,6 +442,9 @@ class BuildTest:
                     "executor"
                 ):
                     buildspecs.append(buildspecfile)
+
+        # remove any duplicates and return back a list
+        buildspecs = list(set(buildspecs))
 
         return buildspecs
 
@@ -473,7 +536,7 @@ class BuildTest:
             try:
                 # Read in Buildspec file here, loading each will validate the buildspec file
                 bp = BuildspecParser(buildspec, self.buildexecutor)
-            except (BuildTestError, ValidationError) as err:
+            except (BuildTestError, BuildspecError, ValidationError) as err:
                 invalid_buildspecs.append(
                     f"Skipping {buildspec} since it failed to validate"
                 )
@@ -490,6 +553,7 @@ class BuildTest:
                 filters=self.filtertags,
                 testdir=self.testdir,
                 rebuild=self.rebuild,
+                buildtest_system=self.system,
             )
             self.builders += builder.get_builders()
 
@@ -522,6 +586,25 @@ class BuildTest:
             print(msg)
             print(tabulate(table, headers=headers, tablefmt="presto"))
 
+            testnames = list(map(lambda x: x.name, self.builders))
+            description = list(
+                map(lambda x: x.recipe.get("description"), self.builders)
+            )
+
+            print("\n\n")
+
+            headers = ["name", "description"]
+            if os.getenv("BUILDTEST_COLOR") == "True":
+                headers = list(
+                    map(lambda x: colored(x, "blue", attrs=["bold"]), headers)
+                )
+
+            print(
+                tabulate(
+                    zip(testnames, description), headers=headers, tablefmt="simple"
+                )
+            )
+
     def build_phase(self, printTable=False):
         """This method will build all tests by invoking class method ``build`` for
         each builder that generates testscript in the test directory.
@@ -542,12 +625,11 @@ class BuildTest:
         print(msg)
 
         table = Hasher()
-        headers = ["name", "id", "type", "executor", "tags", "compiler", "testpath"]
-        for field in headers:
-            table["script"][field] = []
-            table["compiler"][field] = []
 
-        del table["script"]["compiler"]
+        for field in ["name", "id", "type", "executor", "tags", "testpath"]:
+            table["script"][field] = []
+        for field in ["name", "id", "type", "executor", "tags", "compiler", "testpath"]:
+            table["compiler"][field] = []
 
         for builder in self.builders:
             try:
@@ -579,9 +661,13 @@ class BuildTest:
             # if we have any tests using 'script' schema we print all tests together since table columns are different
             if len(table["script"]["name"]) > 0:
 
+                headers = table["script"].keys()
                 if os.getenv("BUILDTEST_COLOR") == "True":
                     headers = list(
-                        map(lambda x: colored(x, "blue", attrs=["bold"]), headers)
+                        map(
+                            lambda x: colored(x, "blue", attrs=["bold"]),
+                            table["script"].keys(),
+                        )
                     )
 
                 print(
@@ -600,7 +686,10 @@ class BuildTest:
                 headers = table["compiler"].keys()
                 if os.getenv("BUILDTEST_COLOR") == "True":
                     headers = list(
-                        map(lambda x: colored(x, "blue", attrs=["bold"]), headers)
+                        map(
+                            lambda x: colored(x, "blue", attrs=["bold"]),
+                            table["compiler"].keys(),
+                        )
                     )
 
                 print(
@@ -670,7 +759,6 @@ class BuildTest:
             "executor": [],
             "status": [],
             "returncode": [],
-            "testpath": [],
         }
 
         poll_queue = []
@@ -678,7 +766,7 @@ class BuildTest:
         for builder in self.builders:
             try:
                 self.buildexecutor.run(builder)
-            except SystemExit as err:
+            except ExecutorError as err:
                 print("[%s]: Failed to Run Test" % builder.metadata["name"])
                 errmsg.append(err)
                 logger.error(err)
@@ -690,7 +778,6 @@ class BuildTest:
             table["executor"].append(builder.executor)
             table["status"].append(builder.metadata["result"]["state"])
             table["returncode"].append(builder.metadata["result"]["returncode"])
-            table["testpath"].append(builder.metadata["testpath"])
 
             # for jobs with N/A state we append to poll queue which means job is dispatched to scheduler
             # and we poll job later
@@ -733,7 +820,6 @@ class BuildTest:
                 "executor": [],
                 "status": [],
                 "returncode": [],
-                "testpath": [],
             }
 
             if printTable:
@@ -763,7 +849,6 @@ class BuildTest:
                 table["executor"].append(builder.executor)
                 table["status"].append(builder.metadata["result"]["state"])
                 table["returncode"].append(builder.metadata["result"]["returncode"])
-                table["testpath"].append(builder.metadata["testpath"])
 
                 total_tests += 1
 

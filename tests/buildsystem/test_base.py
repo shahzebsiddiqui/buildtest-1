@@ -10,7 +10,7 @@ from buildtest.buildsystem.builders import Builder
 from buildtest.buildsystem.parser import BuildspecParser
 from buildtest.config import BuildtestConfiguration
 from buildtest.defaults import DEFAULT_SETTINGS_FILE
-from buildtest.exceptions import BuildTestError
+from buildtest.exceptions import BuildTestError, BuildspecError
 from buildtest.executors.setup import BuildExecutor
 from buildtest.utils.file import walk_tree
 
@@ -30,11 +30,11 @@ def test_BuildspecParser(tmp_path):
         BuildspecParser(None, executors)
 
     directory = os.path.join(here, "invalid_buildspecs")
-    builders = []
+
     for buildspec in walk_tree(directory, ".yml"):
         buildspecfile = os.path.join(directory, buildspec)
         print("Processing buildspec: ", buildspecfile)
-        with pytest.raises(BuildTestError):
+        with pytest.raises(BuildspecError):
             BuildspecParser(buildspecfile, executors)
 
     directory = os.path.join(here, "invalid_builds")
