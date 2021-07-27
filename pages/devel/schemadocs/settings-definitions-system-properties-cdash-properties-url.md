@@ -4,7 +4,7 @@
 settings.schema.json#/definitions/system/properties/cdash/properties/url
 ```
 
-Url to CDASH project
+Url to CDASH server
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                  |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :-------------------------------------------------------------------------- |
