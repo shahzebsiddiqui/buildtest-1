@@ -1,7 +1,7 @@
 distro
 isort
 jsonschema
-lmodule==0.1
+lmodule==0.2.0
 PyYAML>=5.2
 requests
 tabulate
