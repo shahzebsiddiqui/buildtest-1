@@ -1,0 +1,18 @@
+system:
+  generic:
+    hostnames: ['.*']
+    moduletool: N/A
+    executors:
+      defaults:
+         pollinterval: 10
+         max_pend_time: 30
+      pbs:
+        workq:
+          queue: workq
+    compilers:
+      compiler:
+        gcc:
+          default:
+            cc: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fc: /usr/bin/gfortran

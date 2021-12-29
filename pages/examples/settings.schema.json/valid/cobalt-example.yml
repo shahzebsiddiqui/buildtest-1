@@ -1,0 +1,22 @@
+system:
+  generic:
+    hostnames: ['.*']
+    moduletool: lmod
+    executors:
+      defaults:
+         max_pend_time: 30
+
+      cobalt:
+        knl:
+          queue: knl
+
+        haswell:
+          queue: haswell
+
+    compilers:
+      compiler:
+        gcc:
+          default:
+            cc: /usr/bin/gcc
+            cxx: /usr/bin/g++
+            fc: /usr/bin/gfortran
