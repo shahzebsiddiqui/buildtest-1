@@ -4,11 +4,11 @@
 settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi
 ```
 
-Declaration of one or more PGI compilers where we define C, C++ and Fortran compiler. The PGI compiler wrapper are `pgcc`, `pgc++` and `pgfortran`.
+Declaration of one or more PGI compilers.
 
-| Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                  |
-| :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :-------------------------------------------------------------------------- |
-| Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [settings.schema.json*](../out/settings.schema.json "open original schema") |
+| Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                   |
+| :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------- |
+| Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [settings.schema.json\*](../out/settings.schema.json "open original schema") |
 
 ## pgi Type
 
@@ -32,7 +32,7 @@ A compiler section is composed of `cc`, `cxx` and `fc` wrapper these are require
 
 *   cannot be null
 
-*   defined in: [buildtest configuration schema](settings-definitions-compiler_section.md "settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi/patternProperties/^.\*$")
+*   defined in: [buildtest configuration schema](settings-definitions-compiler_section.md "settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi/patternProperties/^.*$")
 
 ### ^.\*$ Type
 

@@ -6,13 +6,13 @@
 
 *   [buildtest configuration schema](./settings.md) – `settings.schema.json`
 
-*   [compiler schema version 1.0](./compiler-v1.md "The compiler schema is of type: compiler in sub-schema which is used for compiling and running programs") – `compiler-v1.0.schema.json`
+*   [compiler schema](./compiler.md "The compiler schema is of type: compiler in sub-schema which is used for compiling and running programs") – `compiler.schema.json`
 
 *   [global schema](./global.md "buildtest global schema is validated for all buildspecs") – `global.schema.json`
 
-*   [script schema version 1.0](./script-v1.md "The script schema is of type: script in sub-schema which is used for running shell scripts") – `script-v1.0.schema.json`
+*   [script schema version](./script.md "The script schema is of type: script in sub-schema which is used for running shell scripts") – `script.schema.json`
 
-*   [spack schema version 1.0](./spack-v1.md "The spack schema is referenced using type: spack which is used for generating tests using spack package manager") – `spack-v1.0.schema.json`
+*   [spack schema version](./spack.md "The spack schema is referenced using type: spack which is used for generating tests using spack package manager") – `spack.schema.json`
 
 ## Other Schemas
 
@@ -29,6 +29,14 @@
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-needs-items-0-oneof-1.md) – `definitions.schema.json#/definitions/needs/items/0/oneOf/1`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
@@ -96,11 +104,13 @@
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-needs-items-0-oneof-1.md) – `definitions.schema.json#/definitions/needs/items/0/oneOf/1`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-artifacts.md) – `definitions.schema.json#/definitions/artifacts`
+
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-metrics_field.md) – `definitions.schema.json#/definitions/metrics_field`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-metrics.md "This field is used for defining one or more metrics that is recorded for each test") – `definitions.schema.json#/definitions/metrics`
-
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-run_only.md "A set of conditions to specify when running tests") – `definitions.schema.json#/definitions/run_only`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status.md "The status section describes how buildtest detects PASS/FAIL on test") – `definitions.schema.json#/definitions/status`
 
@@ -114,6 +124,34 @@
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
 
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-module.md) – `definitions.schema.json#/definitions/module`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-needs-items-0-oneof-1.md) – `definitions.schema.json#/definitions/needs/items/0/oneOf/1`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
@@ -137,6 +175,64 @@
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-needs-items-0-oneof-1.md) – `definitions.schema.json#/definitions/needs/items/0/oneOf/1`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
@@ -154,19 +250,21 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler.md "Start of compiler declaration") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-gcc.md "Declaration of one or more GNU compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/gcc`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-gcc.md "Declaration of one or more GNU compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/gcc`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-intel.md "Declaration of one or more Intel compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/intel`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-intel.md "Declaration of one or more Intel compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/intel`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cray.md "Declaration of one or more Cray compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cray`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cray.md "Declaration of one or more Cray compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cray`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-pgi.md "Declaration of one or more PGI compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-pgi.md "Declaration of one or more PGI compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-clang.md "Declaration of one or more Clang compilers where we define C, C++ compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/clang`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-clang.md "Declaration of one or more Clang compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/clang`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cuda.md "Declaration of one or more Cuda compilers where we define C compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cuda`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cuda.md "Declaration of one or more CUDA compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cuda`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx.md "Declaration of one or more UPCXX compilers where we define C, C++ compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx.md "Declaration of one or more UPCXX compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-nvhpc.md "Declaration of one or more NVHPC compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/nvhpc`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors.md "The executor section is used for declaring your executors that are responsible for running jobs") – `settings.schema.json#/definitions/system/properties/executors`
 
@@ -194,19 +292,21 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler.md "Start of compiler declaration") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-gcc.md "Declaration of one or more GNU compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/gcc`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-gcc.md "Declaration of one or more GNU compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/gcc`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-intel.md "Declaration of one or more Intel compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/intel`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-intel.md "Declaration of one or more Intel compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/intel`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cray.md "Declaration of one or more Cray compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cray`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cray.md "Declaration of one or more Cray compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cray`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-pgi.md "Declaration of one or more PGI compilers where we define C, C++ and Fortran compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-pgi.md "Declaration of one or more PGI compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/pgi`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-clang.md "Declaration of one or more Clang compilers where we define C, C++ compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/clang`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-clang.md "Declaration of one or more Clang compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/clang`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cuda.md "Declaration of one or more Cuda compilers where we define C compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cuda`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-cuda.md "Declaration of one or more CUDA compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/cuda`
 
-*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx.md "Declaration of one or more UPCXX compilers where we define C, C++ compiler") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx`
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-upcxx.md "Declaration of one or more UPCXX compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/upcxx`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-compilers-properties-compiler-properties-nvhpc.md "Declaration of one or more NVHPC compilers") – `settings.schema.json#/definitions/system/properties/compilers/properties/compiler/properties/nvhpc`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-executors.md "The executor section is used for declaring your executors that are responsible for running jobs") – `settings.schema.json#/definitions/system/properties/executors`
 
@@ -238,67 +338,87 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-pbs.md "An instance object of cobalt executor") – `settings.schema.json#/definitions/pbs`
 
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_all.md "Specify compiler configuration for all compiler groups") – `compiler-v1.0.schema.json#/definitions/default_compiler_all`
+*   [Untitled object in compiler schema](./compiler-definitions-default_compiler_all.md "Specify compiler configuration for all compiler groups") – `compiler.schema.json#/definitions/default_compiler_all`
 
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-default_compiler_config.md "Specify compiler configuration for group of compilers") – `compiler-v1.0.schema.json#/definitions/default_compiler_config`
+*   [Untitled object in compiler schema](./compiler-definitions-default_compiler_config.md "Specify compiler configuration for group of compilers") – `compiler.schema.json#/definitions/default_compiler_config`
 
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-compiler_declaration.md "Specify compiler configuration at compiler level") – `compiler-v1.0.schema.json#/definitions/compiler_declaration`
+*   [Untitled object in compiler schema](./compiler-definitions-compiler_declaration.md "Specify compiler configuration at compiler level") – `compiler.schema.json#/definitions/compiler_declaration`
 
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-compiler_declaration-properties-module.md) – `compiler-v1.0.schema.json#/definitions/compiler_declaration/properties/module`
+*   [Untitled object in compiler schema](./compiler-properties-compilers.md) – `compiler.schema.json#/properties/compilers`
 
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-properties-compilers.md) – `compiler-v1.0.schema.json#/properties/compilers`
+*   [Untitled object in compiler schema](./compiler-properties-compilers-properties-default.md) – `compiler.schema.json#/properties/compilers/properties/default`
 
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-properties-compilers-properties-default.md) – `compiler-v1.0.schema.json#/properties/compilers/properties/default`
-
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-properties-compilers-properties-config.md "Specify compiler configuration based on named compilers") – `compiler-v1.0.schema.json#/properties/compilers/properties/config`
-
-*   [Untitled object in compiler schema version 1.0](./compiler-v1-definitions-compiler_declaration-properties-module.md) – `compiler-v1.0.schema.json#/definitions/compiler_declaration/properties/module`
+*   [Untitled object in compiler schema](./compiler-properties-compilers-properties-config.md "Specify compiler configuration based on named compilers") – `compiler.schema.json#/properties/compilers/properties/config`
 
 *   [Untitled object in global schema](./global-properties-buildspecs.md "This section is used to define one or more tests (buildspecs)") – `global.schema.json#/properties/buildspecs`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-properties-spack.md "Entry point to spack configuration") – `spack-v1.0.schema.json#/properties/spack`
+*   [Untitled object in script schema version](./script-properties-compilers.md) – `script.schema.json#/properties/compilers`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env-properties-create.md "Create a spack environment via spack env create") – `spack-v1.0.schema.json#/definitions/env/properties/create`
+*   [Untitled object in script schema version](./script-properties-compilers-properties-default.md) – `script.schema.json#/properties/compilers/properties/default`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env-properties-activate.md "Activate a spack environment via spack env activate") – `spack-v1.0.schema.json#/definitions/env/properties/activate`
+*   [Untitled object in script schema version](./script-properties-compilers-properties-config.md "Specify compiler configuration based on named compilers") – `script.schema.json#/properties/compilers/properties/config`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env-properties-rm.md "Remove an existing spack environment via spack env rm") – `spack-v1.0.schema.json#/definitions/env/properties/rm`
+*   [Untitled object in script schema version](./script-definitions-compiler_declaration-default_compiler_config.md "Specify compiler configuration for group of compilers") – `script.schema.json#/definitions/compiler_declaration/default_compiler_config`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-test-properties-run.md "Run tests using spack via spack test run command") – `spack-v1.0.schema.json#/definitions/test/properties/run`
+*   [Untitled object in script schema version](./script-properties-default_compiler_config.md "Specify compiler configuration for group of compilers") – `script.schema.json#/properties/default_compiler_config`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-test-properties-results.md "View test results via spack test results after running tests via spack test run") – `spack-v1.0.schema.json#/definitions/test/properties/results`
+*   [Untitled object in script schema version](./script-definitions-compiler_declaration.md "Specify compiler configuration at compiler level") – `script.schema.json#/definitions/compiler_declaration`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env.md "Used for managing spack environment using spack env command") – `spack-v1.0.schema.json#/definitions/env`
+*   [Untitled object in script schema version](./script-definitions-compiler_declaration-default_compiler_config.md "Specify compiler configuration for group of compilers") – `script.schema.json#/definitions/compiler_declaration/default_compiler_config`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env-properties-create.md "Create a spack environment via spack env create") – `spack-v1.0.schema.json#/definitions/env/properties/create`
+*   [Untitled object in script schema version](./script-definitions-default_compiler_config.md "Specify compiler configuration for group of compilers") – `script.schema.json#/definitions/default_compiler_config`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env-properties-activate.md "Activate a spack environment via spack env activate") – `spack-v1.0.schema.json#/definitions/env/properties/activate`
+*   [Untitled object in spack schema version](./spack-properties-spack.md "Entry point to spack configuration") – `spack.schema.json#/properties/spack`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-env-properties-rm.md "Remove an existing spack environment via spack env rm") – `spack-v1.0.schema.json#/definitions/env/properties/rm`
+*   [Untitled object in spack schema version](./spack-definitions-env-properties-create.md "Create a spack environment via spack env create") – `spack.schema.json#/definitions/env/properties/create`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-install.md "Install spack packages using spack install command") – `spack-v1.0.schema.json#/definitions/install`
+*   [Untitled object in spack schema version](./spack-definitions-env-properties-activate.md "Activate a spack environment via spack env activate") – `spack.schema.json#/definitions/env/properties/activate`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-test.md) – `spack-v1.0.schema.json#/definitions/test`
+*   [Untitled object in spack schema version](./spack-definitions-env-properties-rm.md "Remove an existing spack environment via spack env rm") – `spack.schema.json#/definitions/env/properties/rm`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-test-properties-run.md "Run tests using spack via spack test run command") – `spack-v1.0.schema.json#/definitions/test/properties/run`
+*   [Untitled object in spack schema version](./spack-definitions-test-properties-run.md "Run tests using spack via spack test run command") – `spack.schema.json#/definitions/test/properties/run`
 
-*   [Untitled object in spack schema version 1.0](./spack-v1-definitions-test-properties-results.md "View test results via spack test results after running tests via spack test run") – `spack-v1.0.schema.json#/definitions/test/properties/results`
+*   [Untitled object in spack schema version](./spack-definitions-test-properties-results.md "View test results via spack test results after running tests via spack test run") – `spack.schema.json#/definitions/test/properties/results`
+
+*   [Untitled object in spack schema version](./spack-definitions-env.md "Used for managing spack environment using spack env command") – `spack.schema.json#/definitions/env`
+
+*   [Untitled object in spack schema version](./spack-definitions-env-properties-create.md "Create a spack environment via spack env create") – `spack.schema.json#/definitions/env/properties/create`
+
+*   [Untitled object in spack schema version](./spack-definitions-env-properties-activate.md "Activate a spack environment via spack env activate") – `spack.schema.json#/definitions/env/properties/activate`
+
+*   [Untitled object in spack schema version](./spack-definitions-env-properties-rm.md "Remove an existing spack environment via spack env rm") – `spack.schema.json#/definitions/env/properties/rm`
+
+*   [Untitled object in spack schema version](./spack-definitions-install.md "Install spack packages using spack install command") – `spack.schema.json#/definitions/install`
+
+*   [Untitled object in spack schema version](./spack-definitions-test.md) – `spack.schema.json#/definitions/test`
+
+*   [Untitled object in spack schema version](./spack-definitions-test-properties-run.md "Run tests using spack via spack test run command") – `spack.schema.json#/definitions/test/properties/run`
+
+*   [Untitled object in spack schema version](./spack-definitions-test-properties-results.md "View test results via spack test results after running tests via spack test run") – `spack.schema.json#/definitions/test/properties/results`
 
 ### Arrays
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-run_only-properties-linux_distro.md "Specify a list of Linux Distros to check when processing test") – `definitions.schema.json#/definitions/run_only/properties/linux_distro`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-module-properties-swap.md "Swap modules using module swap") – `definitions.schema.json#/definitions/module/properties/swap`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-module-properties-swap.md "Swap modules using module swap") – `definitions.schema.json#/definitions/module/properties/swap`
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-list_of_strings.md) – `definitions.schema.json#/definitions/list_of_strings`
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-list_of_ints.md) – `definitions.schema.json#/definitions/list_of_ints`
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-run_only-properties-linux_distro.md "Specify a list of Linux Distros to check when processing test") – `definitions.schema.json#/definitions/run_only/properties/linux_distro`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-needs.md "A list of test names that are dependency before runnning job") – `definitions.schema.json#/definitions/needs`
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-run_only-properties-linux_distro.md "Specify a list of Linux Distros to check when processing test") – `definitions.schema.json#/definitions/run_only/properties/linux_distro`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-module-properties-swap.md "Swap modules using module swap") – `definitions.schema.json#/definitions/module/properties/swap`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-module-properties-swap.md "Swap modules using module swap") – `definitions.schema.json#/definitions/module/properties/swap`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-module-properties-swap.md "Swap modules using module swap") – `definitions.schema.json#/definitions/module/properties/swap`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-hostnames.md "Specify a list of hostnames to check where buildtest can run for the given system record") – `settings.schema.json#/definitions/system/properties/hostnames`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-buildspec_roots.md "Specify a list of directory paths to search buildspecs") – `settings.schema.json#/definitions/system/properties/buildspec_roots`
+
+*   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
@@ -335,6 +455,8 @@
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-hostnames.md "Specify a list of hostnames to check where buildtest can run for the given system record") – `settings.schema.json#/definitions/system/properties/hostnames`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-buildspec_roots.md "Specify a list of directory paths to search buildspecs") – `settings.schema.json#/definitions/system/properties/buildspec_roots`
+
+*   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
@@ -393,10 +515,6 @@
 *   [Untitled array in buildtest configuration schema](./settings-definitions-pbs-properties-options.md "Specify any options for qsub for this executor when running all jobs associated to this executor") – `settings.schema.json#/definitions/pbs/properties/options`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
-
-*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-compiler_declaration-properties-module-properties-swap.md "Swap modules using module swap") – `compiler-v1.0.schema.json#/definitions/compiler_declaration/properties/module/properties/swap`
-
-*   [Untitled array in compiler schema version 1.0](./compiler-v1-definitions-compiler_declaration-properties-module-properties-swap.md "Swap modules using module swap") – `compiler-v1.0.schema.json#/definitions/compiler_declaration/properties/module/properties/swap`
 
 *   [Untitled array in global schema](./global-properties-maintainers.md "One or more maintainers or aliases") – `global.schema.json#/properties/maintainers`
 

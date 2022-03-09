@@ -39,6 +39,12 @@
           "type": "string",
           "description": "system description field"
         },
+        "numprocs":
+        {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Specify size of Process Pool for parallel processing"
+        },
         "buildspec_roots": {
           "type": "array",
           "items": {
@@ -115,6 +121,10 @@
                 "upcxx": {
                   "type": "string",
                   "description": "Specify a regular expression to search for upcxx compilers from your module stack"
+                },
+                "nvhpc": {
+                  "type": "string",
+                  "description": "Specify a regular expression to search for nvhpc compilers from your module stack"
                 }
               }
             },
@@ -124,37 +134,42 @@
               "description": "Start of compiler declaration",
               "properties": {
                 "gcc": {
-                  "description": "Declaration of one or more GNU compilers where we define C, C++ and Fortran compiler. The GNU compiler wrapper are ``gcc``, ``g++`` and ``gfortran``. ",
+                  "description": "Declaration of one or more GNU compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "intel": {
-                  "description": "Declaration of one or more Intel compilers where we define C, C++ and Fortran compiler. The Intel compiler wrapper are ``icc``, ``icpc`` and ``ifort``. ",
+                  "description": "Declaration of one or more Intel compilers. ",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "cray": {
-                  "description": "Declaration of one or more Cray compilers where we define C, C++ and Fortran compiler. The Cray compiler wrapper are ``cc``, ``CC`` and ``ftn``.",
+                  "description": "Declaration of one or more Cray compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "pgi": {
-                  "description": "Declaration of one or more PGI compilers where we define C, C++ and Fortran compiler. The PGI compiler wrapper are ``pgcc``, ``pgc++`` and ``pgfortran``.",
+                  "description": "Declaration of one or more PGI compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "clang": {
-                  "description": "Declaration of one or more Clang compilers where we define C, C++ compiler. The Clang compiler wrapper are ``clang``, ``clang++``.",
+                  "description": "Declaration of one or more Clang compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "cuda": {
-                  "description": "Declaration of one or more Cuda compilers where we define C compiler. The Cuda compiler wrapper is ``nvcc``. ",
+                  "description": "Declaration of one or more CUDA compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "upcxx": {
-                  "description": "Declaration of one or more UPCXX compilers where we define C, C++ compiler. The UPCXX compiler wrapper are ``upcxx``.",
+                  "description": "Declaration of one or more UPCXX compilers.",
+                  "type": "object",
+                  "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
+                },
+                "nvhpc": {
+                  "description": "Declaration of one or more NVHPC compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 }
@@ -178,8 +193,8 @@
                     "minimum": 10,
                     "default": 30
                   },
-                  "max_pend_time": {
-                    "$ref": "#/definitions/max_pend_time"
+                  "maxpendtime": {
+                    "$ref": "#/definitions/maxpendtime"
                   },
                   "account": {
                     "$ref": "#/definitions/account"
@@ -323,11 +338,11 @@
       "additionalProperties": false,
       "items": { "type": "string" }
     },
-    "max_pend_time": {
+    "maxpendtime": {
       "type": "integer",
-      "description": "Cancel job if it is still pending in queue beyond max_pend_time",
-      "minimum": 10,
-      "default": 90
+      "description": "Cancel job if it is still pending in queue beyond maxpendtime",
+      "minimum": 1,
+      "default": 86400
     },
     "account": {
       "type": "string",
@@ -388,9 +403,9 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",
@@ -429,9 +444,9 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",
@@ -470,9 +485,9 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",
@@ -511,9 +526,9 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",

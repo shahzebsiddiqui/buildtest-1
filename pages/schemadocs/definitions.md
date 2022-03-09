@@ -16,7 +16,7 @@ unknown ([JSON Schema Definitions File. ](definitions.md))
 
 # JSON Schema Definitions File.  Definitions
 
-## Definitions group list_of_strings
+## Definitions group list\_of\_strings
 
 Reference this group by using
 
@@ -27,7 +27,7 @@ Reference this group by using
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
 
-## Definitions group string_or_list
+## Definitions group string\_or\_list
 
 Reference this group by using
 
@@ -38,7 +38,7 @@ Reference this group by using
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
 
-## Definitions group list_of_ints
+## Definitions group list\_of\_ints
 
 Reference this group by using
 
@@ -49,7 +49,7 @@ Reference this group by using
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
 
-## Definitions group int_or_list
+## Definitions group int\_or\_list
 
 Reference this group by using
 
@@ -173,7 +173,92 @@ Reference this group by using
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
 
-## Definitions group metrics_field
+## Definitions group needs
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/needs"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group artifacts
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/artifacts"}
+```
+
+| Property          | Type      | Required | Nullable       | Defined by                                                                                                                                                  |
+| :---------------- | :-------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [output](#output) | `boolean` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-output.md "definitions.schema.json#/definitions/artifacts/properties/output") |
+| [error](#error)   | `boolean` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-error.md "definitions.schema.json#/definitions/artifacts/properties/error")   |
+| [files](#files)   | `array`   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/artifacts/properties/files")              |
+
+### output
+
+Save output file
+
+`output`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-output.md "definitions.schema.json#/definitions/artifacts/properties/output")
+
+#### output Type
+
+`boolean`
+
+### error
+
+Save error file
+
+`error`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-error.md "definitions.schema.json#/definitions/artifacts/properties/error")
+
+#### error Type
+
+`boolean`
+
+### files
+
+List of files to save as artifacts for job dependency
+
+`files`
+
+*   is optional
+
+*   Type: `string[]`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/artifacts/properties/files")
+
+#### files Type
+
+`string[]`
+
+#### files Constraints
+
+**minimum number of items**: the minimum number of items for this array is: `1`
+
+**unique items**: all items in this array must be unique. Duplicates are not allowed.
+
+## Definitions group metrics\_field
 
 Reference this group by using
 
@@ -181,11 +266,9 @@ Reference this group by using
 {"$ref":"definitions.schema.json#/definitions/metrics_field"}
 ```
 
-| Property        | Type     | Required | Nullable       | Defined by                                                                                                                                                      |
-| :-------------- | :------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [regex](#regex) | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/metrics_field/properties/regex")                        |
-| [vars](#vars)   | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-metrics_field-properties-vars.md "definitions.schema.json#/definitions/metrics_field/properties/vars") |
-| [env](#env)     | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-metrics_field-properties-env.md "definitions.schema.json#/definitions/metrics_field/properties/env")   |
+| Property        | Type     | Required | Nullable       | Defined by                                                                                                                               |
+| :-------------- | :------- | :------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
+| [regex](#regex) | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/metrics_field/properties/regex") |
 
 ### regex
 
@@ -204,42 +287,6 @@ Perform regular expression search using `re.search` python module on stdout/stde
 #### regex Type
 
 `object` ([Details](definitions-definitions-regex.md))
-
-### vars
-
-Assign value to metric based on variable name
-
-`vars`
-
-*   is optional
-
-*   Type: `string`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-metrics_field-properties-vars.md "definitions.schema.json#/definitions/metrics_field/properties/vars")
-
-#### vars Type
-
-`string`
-
-### env
-
-Assign value to metric based on environment variable
-
-`env`
-
-*   is optional
-
-*   Type: `string`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-metrics_field-properties-env.md "definitions.schema.json#/definitions/metrics_field/properties/env")
-
-#### env Type
-
-`string`
 
 ## Definitions group metrics
 
@@ -265,124 +312,33 @@ Name of metric
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-metrics_field.md "definitions.schema.json#/definitions/metrics/patternProperties/^.\*$")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-metrics_field.md "definitions.schema.json#/definitions/metrics/patternProperties/^.*$")
 
 #### ^.\*$ Type
 
 `object` ([Details](definitions-definitions-metrics_field.md))
 
-## Definitions group run_only
+## Definitions group state
 
 Reference this group by using
 
 ```json
-{"$ref":"definitions.schema.json#/definitions/run_only"}
+{"$ref":"definitions.schema.json#/definitions/state"}
 ```
 
-| Property                      | Type     | Required | Nullable       | Defined by                                                                                                                                                            |
-| :---------------------------- | :------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [scheduler](#scheduler)       | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-scheduler.md "definitions.schema.json#/definitions/run_only/properties/scheduler")       |
-| [user](#user)                 | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-user.md "definitions.schema.json#/definitions/run_only/properties/user")                 |
-| [platform](#platform)         | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-platform.md "definitions.schema.json#/definitions/run_only/properties/platform")         |
-| [linux_distro](#linux_distro) | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-linux_distro.md "definitions.schema.json#/definitions/run_only/properties/linux_distro") |
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
 
-### scheduler
+## Definitions group returncode
 
-Test will run only if scheduler is available. We assume binaries are available in $PATH
+Reference this group by using
 
-`scheduler`
+```json
+{"$ref":"definitions.schema.json#/definitions/returncode"}
+```
 
-*   is optional
-
-*   Type: `string`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-scheduler.md "definitions.schema.json#/definitions/run_only/properties/scheduler")
-
-#### scheduler Type
-
-`string`
-
-#### scheduler Constraints
-
-**enum**: the value of this property must be equal to one of the following values:
-
-| Value      | Explanation |
-| :--------- | :---------- |
-| `"lsf"`    |             |
-| `"slurm"`  |             |
-| `"cobalt"` |             |
-| `"pbs"`    |             |
-
-### user
-
-Test will run only if current user matches this field, otherwise test will be skipped
-
-`user`
-
-*   is optional
-
-*   Type: `string`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-user.md "definitions.schema.json#/definitions/run_only/properties/user")
-
-#### user Type
-
-`string`
-
-### platform
-
-This test will run if target system is Linux or Darwin. We check target system using `platform.system()` and match with input field
-
-`platform`
-
-*   is optional
-
-*   Type: `string`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-platform.md "definitions.schema.json#/definitions/run_only/properties/platform")
-
-#### platform Type
-
-`string`
-
-#### platform Constraints
-
-**enum**: the value of this property must be equal to one of the following values:
-
-| Value      | Explanation |
-| :--------- | :---------- |
-| `"Linux"`  |             |
-| `"Darwin"` |             |
-
-### linux_distro
-
-Specify a list of Linux Distros to check when processing test. If target system matches one of input field, test will be processed.
-
-`linux_distro`
-
-*   is optional
-
-*   Type: `string[]`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-run_only-properties-linux_distro.md "definitions.schema.json#/definitions/run_only/properties/linux_distro")
-
-#### linux_distro Type
-
-`string[]`
-
-#### linux_distro Constraints
-
-**minimum number of items**: the minimum number of items for this array is: `1`
-
-**unique items**: all items in this array must be unique. Duplicates are not allowed.
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
 
 ## Definitions group status
 
@@ -392,15 +348,15 @@ Reference this group by using
 {"$ref":"definitions.schema.json#/definitions/status"}
 ```
 
-| Property                            | Type     | Required | Nullable       | Defined by                                                                                                                                                              |
-| :---------------------------------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [slurm_job_state](#slurm_job_state) | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-slurm_job_state.md "definitions.schema.json#/definitions/status/properties/slurm_job_state") |
-| [returncode](#returncode)           | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
-| [regex](#regex-1)                   | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
-| [runtime](#runtime)                 | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
-| [state](#state)                     | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-state.md "definitions.schema.json#/definitions/status/properties/state")                     |
+| Property                              | Type     | Required | Nullable       | Defined by                                                                                                                                                              |
+| :------------------------------------ | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [slurm\_job\_state](#slurm_job_state) | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-slurm_job_state.md "definitions.schema.json#/definitions/status/properties/slurm_job_state") |
+| [returncode](#returncode)             | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
+| [regex](#regex-1)                     | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
+| [runtime](#runtime)                   | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
+| [state](#state)                       | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-state.md "definitions.schema.json#/definitions/status/properties/state")                     |
 
-### slurm_job_state
+### slurm\_job\_state
 
 This field can be used for checking Slurm Job State, if there is a match buildtest will report as `PASS`
 
@@ -414,11 +370,11 @@ This field can be used for checking Slurm Job State, if there is a match buildte
 
 *   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-slurm_job_state.md "definitions.schema.json#/definitions/status/properties/slurm_job_state")
 
-#### slurm_job_state Type
+#### slurm\_job\_state Type
 
 `string`
 
-#### slurm_job_state Constraints
+#### slurm\_job\_state Constraints
 
 **enum**: the value of this property must be equal to one of the following values:
 
@@ -625,8 +581,208 @@ unknown
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-executors-patternproperties-.md "definitions.schema.json#/definitions/executors/patternProperties/^.\*$")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-executors-patternproperties-.md "definitions.schema.json#/definitions/executors/patternProperties/^.*$")
 
 #### ^.\*$ Type
 
 unknown
+
+## Definitions group cc
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/cc"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group fc
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/fc"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group cxx
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/cxx"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group cflags
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/cflags"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group fflags
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/fflags"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group cxxflags
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/cxxflags"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group ldflags
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/ldflags"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group cppflags
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/cppflags"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group run
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/run"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
+## Definitions group module
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/module"}
+```
+
+| Property            | Type      | Required | Nullable       | Defined by                                                                                                                                              |
+| :------------------ | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [purge](#purge)     | `boolean` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-module-properties-purge.md "definitions.schema.json#/definitions/module/properties/purge")     |
+| [load](#load)       | `array`   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/module/properties/load")              |
+| [restore](#restore) | `string`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-module-properties-restore.md "definitions.schema.json#/definitions/module/properties/restore") |
+| [swap](#swap)       | `array`   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-module-properties-swap.md "definitions.schema.json#/definitions/module/properties/swap")       |
+
+### purge
+
+Run `module purge` if purge is set
+
+`purge`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-module-properties-purge.md "definitions.schema.json#/definitions/module/properties/purge")
+
+#### purge Type
+
+`boolean`
+
+### load
+
+Load one or more modules via `module load`
+
+`load`
+
+*   is optional
+
+*   Type: `string[]`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/module/properties/load")
+
+#### load Type
+
+`string[]`
+
+#### load Constraints
+
+**minimum number of items**: the minimum number of items for this array is: `1`
+
+**unique items**: all items in this array must be unique. Duplicates are not allowed.
+
+### restore
+
+Load a collection name via `module restore`
+
+`restore`
+
+*   is optional
+
+*   Type: `string`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-module-properties-restore.md "definitions.schema.json#/definitions/module/properties/restore")
+
+#### restore Type
+
+`string`
+
+### swap
+
+Swap modules using `module swap`. The swap property expects 2 unique modules.
+
+`swap`
+
+*   is optional
+
+*   Type: `string[]`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-module-properties-swap.md "definitions.schema.json#/definitions/module/properties/swap")
+
+#### swap Type
+
+`string[]`
+
+#### swap Constraints
+
+**maximum number of items**: the maximum number of items for this array is: `2`
+
+**minimum number of items**: the minimum number of items for this array is: `2`
+
+**unique items**: all items in this array must be unique. Duplicates are not allowed.
