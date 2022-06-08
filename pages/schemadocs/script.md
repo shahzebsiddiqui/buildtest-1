@@ -20,6 +20,7 @@ The script schema is of `type: script` in sub-schema which is used for running s
 | :-------------------------- | :-------- | :------- | :------------- | :----------------------------------------------------------------------------------------------------------- |
 | [type](#type)               | `string`  | Required | cannot be null | [script schema version](script-properties-type.md "script.schema.json#/properties/type")                     |
 | [description](#description) | `string`  | Optional | cannot be null | [script schema version](definitions-definitions-description.md "script.schema.json#/properties/description") |
+| [summary](#summary)         | `string`  | Optional | cannot be null | [script schema version](definitions-definitions-summary.md "script.schema.json#/properties/summary")         |
 | [sbatch](#sbatch)           | `array`   | Optional | cannot be null | [script schema version](script-properties-sbatch.md "script.schema.json#/properties/sbatch")                 |
 | [bsub](#bsub)               | `array`   | Optional | cannot be null | [script schema version](script-properties-bsub.md "script.schema.json#/properties/bsub")                     |
 | [cobalt](#cobalt)           | `array`   | Optional | cannot be null | [script schema version](script-properties-cobalt.md "script.schema.json#/properties/cobalt")                 |
@@ -30,7 +31,6 @@ The script schema is of `type: script` in sub-schema which is used for running s
 | [vars](#vars)               | `object`  | Optional | cannot be null | [script schema version](definitions-definitions-env.md "script.schema.json#/properties/vars")                |
 | [executor](#executor)       | `string`  | Required | cannot be null | [script schema version](definitions-definitions-executor.md "script.schema.json#/properties/executor")       |
 | [needs](#needs)             | `array`   | Optional | cannot be null | [script schema version](definitions-definitions-needs.md "script.schema.json#/properties/needs")             |
-| [artifacts](#artifacts)     | `object`  | Optional | cannot be null | [script schema version](definitions-definitions-artifacts.md "script.schema.json#/properties/artifacts")     |
 | [shell](#shell)             | `string`  | Optional | cannot be null | [script schema version](script-properties-shell.md "script.schema.json#/properties/shell")                   |
 | [shebang](#shebang)         | `string`  | Optional | cannot be null | [script schema version](script-properties-shebang.md "script.schema.json#/properties/shebang")               |
 | [run](#run)                 | `string`  | Required | cannot be null | [script schema version](definitions-definitions-run.md "script.schema.json#/properties/run")                 |
@@ -90,6 +90,24 @@ The `description` field is used to document what the test is doing
 ### description Constraints
 
 **maximum length**: the maximum number of characters for this string is: `80`
+
+## summary
+
+The `summary` field is used to document what the test is doing and can be a multi-line string
+
+`summary`
+
+*   is optional
+
+*   Type: `string`
+
+*   cannot be null
+
+*   defined in: [script schema version](definitions-definitions-summary.md "script.schema.json#/properties/summary")
+
+### summary Type
+
+`string`
 
 ## sbatch
 
@@ -318,24 +336,6 @@ A list of test names that are dependency before runnning job
 an array where each item follows the corresponding schema in the following list:
 
 1.  [Untitled undefined type in JSON Schema Definitions File. ](definitions-definitions-needs-items-0.md "check type definition")
-
-## artifacts
-
-
-
-`artifacts`
-
-*   is optional
-
-*   Type: `object` ([Details](definitions-definitions-artifacts.md))
-
-*   cannot be null
-
-*   defined in: [script schema version](definitions-definitions-artifacts.md "script.schema.json#/properties/artifacts")
-
-### artifacts Type
-
-`object` ([Details](definitions-definitions-artifacts.md))
 
 ## shell
 

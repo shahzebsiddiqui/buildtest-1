@@ -140,6 +140,17 @@ Reference this group by using
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
 
+## Definitions group summary
+
+Reference this group by using
+
+```json
+{"$ref":"definitions.schema.json#/definitions/summary"}
+```
+
+| Property | Type | Required | Nullable | Defined by |
+| :------- | :--- | :------- | :------- | :--------- |
+
 ## Definitions group tags
 
 Reference this group by using
@@ -183,80 +194,6 @@ Reference this group by using
 
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
-
-## Definitions group artifacts
-
-Reference this group by using
-
-```json
-{"$ref":"definitions.schema.json#/definitions/artifacts"}
-```
-
-| Property          | Type      | Required | Nullable       | Defined by                                                                                                                                                  |
-| :---------------- | :-------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [output](#output) | `boolean` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-output.md "definitions.schema.json#/definitions/artifacts/properties/output") |
-| [error](#error)   | `boolean` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-error.md "definitions.schema.json#/definitions/artifacts/properties/error")   |
-| [files](#files)   | `array`   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/artifacts/properties/files")              |
-
-### output
-
-Save output file
-
-`output`
-
-*   is optional
-
-*   Type: `boolean`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-output.md "definitions.schema.json#/definitions/artifacts/properties/output")
-
-#### output Type
-
-`boolean`
-
-### error
-
-Save error file
-
-`error`
-
-*   is optional
-
-*   Type: `boolean`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-artifacts-properties-error.md "definitions.schema.json#/definitions/artifacts/properties/error")
-
-#### error Type
-
-`boolean`
-
-### files
-
-List of files to save as artifacts for job dependency
-
-`files`
-
-*   is optional
-
-*   Type: `string[]`
-
-*   cannot be null
-
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/artifacts/properties/files")
-
-#### files Type
-
-`string[]`
-
-#### files Constraints
-
-**minimum number of items**: the minimum number of items for this array is: `1`
-
-**unique items**: all items in this array must be unique. Duplicates are not allowed.
 
 ## Definitions group metrics\_field
 
@@ -352,6 +289,7 @@ Reference this group by using
 | :------------------------------------ | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [slurm\_job\_state](#slurm_job_state) | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-slurm_job_state.md "definitions.schema.json#/definitions/status/properties/slurm_job_state") |
 | [pbs\_job\_state](#pbs_job_state)     | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-pbs_job_state.md "definitions.schema.json#/definitions/status/properties/pbs_job_state")     |
+| [lsf\_job\_state](#lsf_job_state)     | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-lsf_job_state.md "definitions.schema.json#/definitions/status/properties/lsf_job_state")     |
 | [returncode](#returncode)             | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
 | [regex](#regex-1)                     | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
 | [runtime](#runtime)                   | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
@@ -413,6 +351,33 @@ This field can be used to pass test based on PBS Job State, if there is a match 
 | `"H"` |             |
 | `"S"` |             |
 | `"F"` |             |
+
+### lsf\_job\_state
+
+This field can be used to pass test based on LSF Job State, if there is a match buildtest will report as `PASS`
+
+`lsf_job_state`
+
+*   is optional
+
+*   Type: `string`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-lsf_job_state.md "definitions.schema.json#/definitions/status/properties/lsf_job_state")
+
+#### lsf\_job\_state Type
+
+`string`
+
+#### lsf\_job\_state Constraints
+
+**enum**: the value of this property must be equal to one of the following values:
+
+| Value    | Explanation |
+| :------- | :---------- |
+| `"DONE"` |             |
+| `"EXIT"` |             |
 
 ### returncode
 

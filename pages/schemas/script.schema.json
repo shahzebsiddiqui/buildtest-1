@@ -19,6 +19,9 @@
     "description": {
       "$ref": "definitions.schema.json#/definitions/description"
     },
+    "summary": {
+      "$ref": "definitions.schema.json#/definitions/summary"
+    },
     "sbatch": {
       "$ref": "definitions.schema.json#/definitions/sbatch"
     },
@@ -48,9 +51,6 @@
     },
     "needs": {
       "$ref": "definitions.schema.json#/definitions/needs"
-    },
-    "artifacts": {
-      "$ref": "definitions.schema.json#/definitions/artifacts"
     },
     "shell": {
       "type": "string",

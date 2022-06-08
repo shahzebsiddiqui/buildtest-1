@@ -20,11 +20,12 @@ settings.schema.json#/definitions/system
 | :----------------------------------- | :-------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [hostnames](#hostnames)              | `array`   | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-hostnames.md "settings.schema.json#/definitions/system/properties/hostnames")             |
 | [description](#description)          | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-description.md "settings.schema.json#/definitions/system/properties/description")         |
-| [numprocs](#numprocs)                | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-numprocs.md "settings.schema.json#/definitions/system/properties/numprocs")               |
+| [poolsize](#poolsize)                | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-poolsize.md "settings.schema.json#/definitions/system/properties/poolsize")               |
 | [buildspec\_roots](#buildspec_roots) | `array`   | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-buildspec_roots.md "settings.schema.json#/definitions/system/properties/buildspec_roots") |
 | [testdir](#testdir)                  | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-testdir.md "settings.schema.json#/definitions/system/properties/testdir")                 |
 | [logdir](#logdir)                    | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-logdir.md "settings.schema.json#/definitions/system/properties/logdir")                   |
 | [moduletool](#moduletool)            | `string`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-moduletool.md "settings.schema.json#/definitions/system/properties/moduletool")           |
+| [timeout](#timeout)                  | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-timeout.md "settings.schema.json#/definitions/system/properties/timeout")                 |
 | [processor](#processor)              | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-processor.md "settings.schema.json#/definitions/system/properties/processor")             |
 | [compilers](#compilers)              | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-compilers.md "settings.schema.json#/definitions/system/properties/compilers")             |
 | [executors](#executors)              | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors.md "settings.schema.json#/definitions/system/properties/executors")             |
@@ -66,11 +67,11 @@ system description field
 
 `string`
 
-## numprocs
+## poolsize
 
-Specify size of Process Pool for parallel processing
+Specify size of Process Pool for parallel processing using `multiprocessing.Pool`
 
-`numprocs`
+`poolsize`
 
 *   is optional
 
@@ -78,13 +79,13 @@ Specify size of Process Pool for parallel processing
 
 *   cannot be null
 
-*   defined in: [buildtest configuration schema](settings-definitions-system-properties-numprocs.md "settings.schema.json#/definitions/system/properties/numprocs")
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-poolsize.md "settings.schema.json#/definitions/system/properties/poolsize")
 
-### numprocs Type
+### poolsize Type
 
 `integer`
 
-### numprocs Constraints
+### poolsize Constraints
 
 **minimum**: the value of this number must greater than or equal to: `1`
 
@@ -169,6 +170,28 @@ Specify modules tool used for interacting with `module` command.
 | `"environment-modules"` |             |
 | `"lmod"`                |             |
 | `"N/A"`                 |             |
+
+## timeout
+
+Specify timeout duration in number of seconds
+
+`timeout`
+
+*   is optional
+
+*   Type: `integer`
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-timeout.md "settings.schema.json#/definitions/system/properties/timeout")
+
+### timeout Type
+
+`integer`
+
+### timeout Constraints
+
+**minimum**: the value of this number must greater than or equal to: `1`
 
 ## processor
 
