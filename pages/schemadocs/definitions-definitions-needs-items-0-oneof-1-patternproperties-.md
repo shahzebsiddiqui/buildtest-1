@@ -16,10 +16,10 @@ unknown
 
 # ^.\*$ Properties
 
-| Property                  | Type     | Required | Nullable       | Defined by                                                                                                                                                                         |
-| :------------------------ | :------- | :------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [state](#state)           | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-state.md "definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/state")            |
-| [returncode](#returncode) | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/returncode") |
+| Property                  | Type     | Required | Nullable       | Defined by                                                                                                                                                                                                                  |
+| :------------------------ | :------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [state](#state)           | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-needs-items-0-oneof-1-patternproperties--properties-state.md "definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/state") |
+| [returncode](#returncode) | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/returncode")                                          |
 
 ## state
 
@@ -33,7 +33,7 @@ explicitly mark state of test regardless of status calculation
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-state.md "definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/state")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-needs-items-0-oneof-1-patternproperties--properties-state.md "definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/state")
 
 ### state Type
 

@@ -1,19 +1,15 @@
-# Untitled integer in buildtest configuration schema Schema
+# Untitled boolean in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/max_jobs
+settings.schema.json#/definitions/system/properties/compilers/properties/purge
 ```
 
-Maximum number of jobs that can be run at a given time for a particular executor
+A boolean to determine whether to purge modules via `module purge` when generating compiler declaration
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                   |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------- |
 | Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [settings.schema.json\*](../out/settings.schema.json "open original schema") |
 
-## max\_jobs Type
+## purge Type
 
-`integer`
-
-## max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
+`boolean`

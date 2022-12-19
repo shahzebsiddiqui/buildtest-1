@@ -1,7 +1,7 @@
 # Untitled boolean in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/pbs/properties/disable
+settings.schema.json#/definitions/disable
 ```
 
 Disable executor

@@ -1,7 +1,7 @@
 # Untitled object in JSON Schema Definitions File.  Schema
 
 ```txt
-definitions.schema.json#/definitions/metrics_field/properties/regex
+definitions.schema.json#/definitions/regex
 ```
 
 Perform regular expression search using `re.search` python module on stdout/stderr stream for reporting if test `PASS`.
@@ -16,10 +16,11 @@ Perform regular expression search using `re.search` python module on stdout/stde
 
 # regex Properties
 
-| Property          | Type     | Required | Nullable       | Defined by                                                                                                                                          |
-| :---------------- | :------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [stream](#stream) | `string` | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-stream.md "definitions.schema.json#/definitions/regex/properties/stream") |
-| [exp](#exp)       | `string` | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-exp.md "definitions.schema.json#/definitions/regex/properties/exp")       |
+| Property          | Type      | Required | Nullable       | Defined by                                                                                                                                          |
+| :---------------- | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [stream](#stream) | `string`  | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-stream.md "definitions.schema.json#/definitions/regex/properties/stream") |
+| [exp](#exp)       | `string`  | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-exp.md "definitions.schema.json#/definitions/regex/properties/exp")       |
+| [item](#item)     | `integer` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-item.md "definitions.schema.json#/definitions/regex/properties/item")     |
 
 ## stream
 
@@ -65,3 +66,25 @@ Specify a regular expression to run with input stream specified by `stream` fiel
 ### exp Type
 
 `string`
+
+## item
+
+Specify the item number used to index element in `match.group() <https://docs.python.org/3/library/re.html#match-objects>`\_
+
+`item`
+
+*   is optional
+
+*   Type: `integer`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-regex-properties-item.md "definitions.schema.json#/definitions/regex/properties/item")
+
+### item Type
+
+`integer`
+
+### item Constraints
+
+**minimum**: the value of this number must greater than or equal to: `0`

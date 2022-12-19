@@ -68,10 +68,11 @@ Reference this group by using
 {"$ref":"definitions.schema.json#/definitions/regex"}
 ```
 
-| Property          | Type     | Required | Nullable       | Defined by                                                                                                                                          |
-| :---------------- | :------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [stream](#stream) | `string` | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-stream.md "definitions.schema.json#/definitions/regex/properties/stream") |
-| [exp](#exp)       | `string` | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-exp.md "definitions.schema.json#/definitions/regex/properties/exp")       |
+| Property          | Type      | Required | Nullable       | Defined by                                                                                                                                          |
+| :---------------- | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [stream](#stream) | `string`  | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-stream.md "definitions.schema.json#/definitions/regex/properties/stream") |
+| [exp](#exp)       | `string`  | Required | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-exp.md "definitions.schema.json#/definitions/regex/properties/exp")       |
+| [item](#item)     | `integer` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex-properties-item.md "definitions.schema.json#/definitions/regex/properties/item")     |
 
 ### stream
 
@@ -117,6 +118,28 @@ Specify a regular expression to run with input stream specified by `stream` fiel
 #### exp Type
 
 `string`
+
+### item
+
+Specify the item number used to index element in `match.group() <https://docs.python.org/3/library/re.html#match-objects>`\_
+
+`item`
+
+*   is optional
+
+*   Type: `integer`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-regex-properties-item.md "definitions.schema.json#/definitions/regex/properties/item")
+
+#### item Type
+
+`integer`
+
+#### item Constraints
+
+**minimum**: the value of this number must greater than or equal to: `0`
 
 ## Definitions group env
 
@@ -203,9 +226,38 @@ Reference this group by using
 {"$ref":"definitions.schema.json#/definitions/metrics_field"}
 ```
 
-| Property        | Type     | Required | Nullable       | Defined by                                                                                                                               |
-| :-------------- | :------- | :------- | :------------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
-| [regex](#regex) | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/metrics_field/properties/regex") |
+| Property        | Type     | Required | Nullable       | Defined by                                                                                                                                                      |
+| :-------------- | :------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [type](#type)   | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-metrics_field-properties-type.md "definitions.schema.json#/definitions/metrics_field/properties/type") |
+| [regex](#regex) | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/metrics_field/properties/regex")                        |
+
+### type
+
+Specify python data-type (str, int, float) to convert metric.
+
+`type`
+
+*   is optional
+
+*   Type: `string`
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-metrics_field-properties-type.md "definitions.schema.json#/definitions/metrics_field/properties/type")
+
+#### type Type
+
+`string`
+
+#### type Constraints
+
+**enum**: the value of this property must be equal to one of the following values:
+
+| Value     | Explanation |
+| :-------- | :---------- |
+| `"str"`   |             |
+| `"int"`   |             |
+| `"float"` |             |
 
 ### regex
 
@@ -293,6 +345,7 @@ Reference this group by using
 | [returncode](#returncode)             | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
 | [regex](#regex-1)                     | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
 | [runtime](#runtime)                   | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
+| [assert\_ge](#assert_ge)              | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ge.md "definitions.schema.json#/definitions/status/properties/assert_ge")             |
 | [state](#state)                       | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-state.md "definitions.schema.json#/definitions/status/properties/state")                     |
 
 ### slurm\_job\_state
@@ -438,6 +491,24 @@ The runtime section will pass test based on min and max values and compare with 
 #### runtime Type
 
 `object` ([Details](definitions-definitions-status-properties-runtime.md))
+
+### assert\_ge
+
+Perform assertion of greater and equal (>=) with reference value
+
+`assert_ge`
+
+*   is optional
+
+*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_ge-items.md))
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ge.md "definitions.schema.json#/definitions/status/properties/assert_ge")
+
+#### assert\_ge Type
+
+`object[]` ([Details](definitions-definitions-status-properties-assert_ge-items.md))
 
 ### state
 

@@ -1,7 +1,7 @@
 # Untitled undefined type in JSON Schema Definitions File.  Schema
 
 ```txt
-definitions.schema.json#/definitions/needs/items/0/oneOf/1/patternProperties/^.*$/properties/returncode
+definitions.schema.json#/definitions/returncode
 ```
 
 Specify a list of returncodes to match with script's exit code. buildtest will PASS test if script's exit code is found in list of returncodes. You must specify unique numbers as list and a minimum of 1 item in array

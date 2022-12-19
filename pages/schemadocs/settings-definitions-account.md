@@ -1,7 +1,7 @@
 # Untitled string in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/pbs/properties/account
+settings.schema.json#/definitions/account
 ```
 
 Specify Job Account for charging resources

@@ -1,14 +1,14 @@
-# Untitled object in JSON Schema Definitions File.  Schema
+# Untitled object in spack schema version Schema
 
 ```txt
-definitions.schema.json#/definitions/executors/patternProperties/^.*$/properties/metrics
+spack.schema.json#/properties/metrics
 ```
 
 This field is used for defining one or more metrics that is recorded for each test. A metric must have a unique name which is recorded in the test metadata.
 
-| Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                         |
-| :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------------- |
-| Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [definitions.schema.json\*](../out/definitions.schema.json "open original schema") |
+| Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                             |
+| :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------- |
+| Can be instantiated | No         | Unknown status | Unknown identifiability | Forbidden         | Allowed               | none                | [spack.schema.json\*](../out/spack.schema.json "open original schema") |
 
 ## metrics Type
 

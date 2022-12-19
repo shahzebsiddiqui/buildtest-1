@@ -7,6 +7,9 @@
   "required": ["buildspecs"],
   "additionalProperties": false,
   "properties": {
+    "skip": {
+      "$ref": "definitions.schema.json#/definitions/skip"
+    },
     "maintainers": {
       "type": "array",
       "description": "One or more maintainers or aliases",
@@ -20,8 +23,8 @@
      "type": "object",
      "description": "This section is used to define one or more tests (buildspecs). Each test must be unique name",
      "propertyNames": {
-       "pattern": "^[A-Za-z_.][A-Za-z0-9_.]*$",
-       "maxLength": 32
+       "pattern": "^[A-Za-z_.-][A-Za-z0-9_.-]*$",
+       "maxLength": 48
      }
    }
   }

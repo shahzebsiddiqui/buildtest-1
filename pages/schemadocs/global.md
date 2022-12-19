@@ -16,10 +16,29 @@ buildtest global schema is validated for all buildspecs. The global schema defin
 
 # global schema Properties
 
-| Property                    | Type     | Required | Nullable       | Defined by                                                                                     |
-| :-------------------------- | :------- | :------- | :------------- | :--------------------------------------------------------------------------------------------- |
-| [maintainers](#maintainers) | `array`  | Optional | cannot be null | [global schema](global-properties-maintainers.md "global.schema.json#/properties/maintainers") |
-| [buildspecs](#buildspecs)   | `object` | Required | cannot be null | [global schema](global-properties-buildspecs.md "global.schema.json#/properties/buildspecs")   |
+| Property                    | Type      | Required | Nullable       | Defined by                                                                                     |
+| :-------------------------- | :-------- | :------- | :------------- | :--------------------------------------------------------------------------------------------- |
+| [skip](#skip)               | `boolean` | Optional | cannot be null | [global schema](definitions-definitions-skip.md "global.schema.json#/properties/skip")         |
+| [maintainers](#maintainers) | `array`   | Optional | cannot be null | [global schema](global-properties-maintainers.md "global.schema.json#/properties/maintainers") |
+| [buildspecs](#buildspecs)   | `object`  | Required | cannot be null | [global schema](global-properties-buildspecs.md "global.schema.json#/properties/buildspecs")   |
+
+## skip
+
+The `skip` is a boolean field that can be used to skip tests during builds. By default buildtest will build and run all tests in your buildspec file, if `skip: True` is set it will skip the buildspec.
+
+`skip`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [global schema](definitions-definitions-skip.md "global.schema.json#/properties/skip")
+
+### skip Type
+
+`boolean`
 
 ## maintainers
 

@@ -1,14 +1,14 @@
-# Untitled object in JSON Schema Definitions File.  Schema
+# Untitled object in spack schema version Schema
 
 ```txt
-definitions.schema.json#/definitions/executors/patternProperties/^.*$/properties/status
+spack.schema.json#/properties/status
 ```
 
 The status section describes how buildtest detects PASS/FAIL on test. By default returncode 0 is a PASS and anything else is a FAIL, however buildtest can support other types of PASS/FAIL conditions.
 
-| Abstract            | Extensible | Status         | Identifiable | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                         |
-| :------------------ | :--------- | :------------- | :----------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------------- |
-| Can be instantiated | No         | Unknown status | No           | Forbidden         | Forbidden             | none                | [definitions.schema.json\*](../out/definitions.schema.json "open original schema") |
+| Abstract            | Extensible | Status         | Identifiable | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                             |
+| :------------------ | :--------- | :------------- | :----------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------- |
+| Can be instantiated | No         | Unknown status | No           | Forbidden         | Forbidden             | none                | [spack.schema.json\*](../out/spack.schema.json "open original schema") |
 
 ## status Type
 
@@ -24,6 +24,7 @@ The status section describes how buildtest detects PASS/FAIL on test. By default
 | [returncode](#returncode)             | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
 | [regex](#regex)                       | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
 | [runtime](#runtime)                   | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
+| [assert\_ge](#assert_ge)              | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ge.md "definitions.schema.json#/definitions/status/properties/assert_ge")             |
 | [state](#state)                       | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-state.md "definitions.schema.json#/definitions/status/properties/state")                                       |
 
 ## slurm\_job\_state
@@ -169,6 +170,24 @@ The runtime section will pass test based on min and max values and compare with 
 ### runtime Type
 
 `object` ([Details](definitions-definitions-status-properties-runtime.md))
+
+## assert\_ge
+
+Perform assertion of greater and equal (>=) with reference value
+
+`assert_ge`
+
+*   is optional
+
+*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_ge-items.md))
+
+*   cannot be null
+
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ge.md "definitions.schema.json#/definitions/status/properties/assert_ge")
+
+### assert\_ge Type
+
+`object[]` ([Details](definitions-definitions-status-properties-assert_ge-items.md))
 
 ## state
 

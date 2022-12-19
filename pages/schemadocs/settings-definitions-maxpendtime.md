@@ -1,7 +1,7 @@
 # Untitled integer in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/pbs/properties/maxpendtime
+settings.schema.json#/definitions/maxpendtime
 ```
 
 Cancel job if it is still pending in queue beyond maxpendtime

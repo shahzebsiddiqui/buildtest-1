@@ -1,7 +1,7 @@
 # Untitled object in buildtest configuration schema Schema
 
 ```txt
-settings.schema.json#/definitions/pbs/properties/module
+settings.schema.json#/definitions/module
 ```
 
 
