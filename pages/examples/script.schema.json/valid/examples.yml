@@ -30,7 +30,7 @@ buildspecs:
     description: declaring variables
     vars:
       First: Bob
-      Last:  Bill
+      Last: Bill
     run: |
       echo "First:" $First
       echo "Last:" $Last
@@ -166,7 +166,6 @@ buildspecs:
         stream: stdout
         exp: "^hello"
 
-
   status_runtime_min_max:
     type: script
     executor: generic.local.sh
@@ -269,9 +268,22 @@ buildspecs:
     run: echo "HPCG result is VALID with a GFLOP/s rating of=63.6515"
     metrics:
       hpcg_rating:
+        type: float
         regex:
           exp: 'rating of=(\d+\.\d+)$'
           stream: stdout
+
+  metrics_regex_with_file:
+    type: script
+    executor: generic.local.bash
+    description: metrics regular expression example
+    run: echo "HPCG result is VALID with a GFLOP/s rating of=63.6515" > hpcg.txt
+    metrics:
+      hpcg_rating:
+        type: float
+        file_regex:
+          exp: 'rating of=(\d+\.\d+)$'
+          file: hpcg.txt
 
   multi_executor_vars:
     type: script
@@ -364,12 +376,14 @@ buildspecs:
       generic.local.bash:
         metrics:
           hello:
+            type: str
             regex:
               stream: stdout
               exp: "(Hello)"
       generic.local.sh:
         metrics:
           world:
+            type: str
             regex:
               stream: stdout
               exp: "(World)"
@@ -390,3 +404,330 @@ buildspecs:
     run: |
       echo "This job depends on jobA"
       sleep 2
+
+  assert_range_ex:
+    type: script
+    executor: generic.local.bash
+    description: Example on assert_range
+    env:
+      OMP_NUM_THREADS: 4
+    run: |
+      wget https://raw.githubusercontent.com/jeffhammond/STREAM/master/stream.c
+      gcc -openmp -o stream stream.c
+      ./stream
+    metrics:
+      copy:
+        type: float
+        regex:
+          exp: 'Copy:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+      scale:
+        type: float
+        regex:
+          exp: 'Scale:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+    status:
+      assert_range:
+        - name: copy
+          lower: 5000
+          upper: 20000
+        - name: scale
+          lower: 4500
+          upper: 20000
+
+  assert_eq_example:
+    type: script
+    executor: generic.local.bash
+    description: Test for assert equality
+    vars:
+      X: 1
+      Y: 1.5
+      first: John
+      last: Smith
+    run: |
+      echo "X: $X"
+      echo "Y: $Y"
+      echo "Name: $first $last"
+    metrics:
+      x:
+        type: int
+        regex:
+          stream: stdout
+          exp: 'X:\s+(\S+)\s+.*'
+          item: 1
+      y:
+        type: float
+        regex:
+          stream: stdout
+          exp: 'Y:\s+(\S+)\s+.*'
+          item: 1
+      first:
+        type: str
+        regex:
+          stream: stdout
+          exp: 'Name:\s+(\S+)\s+.*'
+          item: 1
+      last:
+        type: str
+        regex:
+          stream: stdout
+          exp: '(Smith)$'
+          item: 1
+    status:
+      assert_eq:
+        - name: x
+          ref: 1
+        - name: y
+          ref: 1.5
+        - name: first
+          ref: John
+        - name: last
+          ref: Smith
+
+  stream_test_assert_ge:
+    type: script
+    executor: generic.local.bash
+    description: Run stream test with metrics example using assert greater equal
+    env:
+      OMP_NUM_THREADS: 4
+    run: |
+      wget https://raw.githubusercontent.com/jeffhammond/STREAM/master/stream.c
+      gcc -openmp -o stream stream.c
+      ./stream
+    metrics:
+      copy:
+        type: float
+        regex:
+          exp: 'Copy:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+      scale:
+        type: float
+        regex:
+          exp: 'Scale:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+      add:
+        type: float
+        regex:
+          exp: 'Add:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+      triad:
+        type: float
+        regex:
+          exp: 'Triad:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+    status:
+      assert_ge:
+        - name: copy
+          ref: 5000
+        - name: scale
+          ref: 5500
+        - name: add
+          ref: 6000
+        - name: triad
+          ref: 6500
+
+  stream_test_assert_ge_exception:
+    type: script
+    executor: generic.local.bash
+    description: Run stream test with testing exception for assert_ge
+    env:
+      OMP_NUM_THREADS: 4
+    run: |
+      wget https://raw.githubusercontent.com/jeffhammond/STREAM/master/stream.c
+      gcc -openmp -o stream stream.c
+      ./stream
+    metrics:
+      copy:
+        type: str
+        regex:
+          exp: 'Copy:\s+(\S+)\s+.*'
+          stream: stdout
+          item: 1
+    status:
+      assert_ge:
+        - name: copy
+          ref: 5000
+
+  file_exists_pass:
+    type: script
+    executor: generic.local.bash
+    description: this test will pass
+    run: mkdir -p 1
+    status:
+      exists: ['1']
+
+  combined_file_and_dir_checks:
+    type: script
+    executor: generic.local.bash
+    description: status check for files and directories
+    run: hostname
+    status:
+      is_dir:
+        - $HOME
+        - /tmp
+      is_file:
+        - $HOME/.bashrc
+
+  is_symlink_example:
+    type: script
+    executor: generic.local.bash
+    description: status check based on symbolic link
+    run: |
+        ln -s /tmp scratch
+        ln -s $HOME/.bash_profile $HOME/bash_profile
+    status:
+      is_symlink:
+        - scratch
+        - $HOME/bash_profile
+        - ~/bash_profile
+  regex_on_multiple_files:
+    type: script
+    executor: generic.local.bash
+    description: Test regex on multiple files
+    run: |
+      echo "Hello" > hello.txt
+      buildtest --help > buildtest_help.txt
+    status:
+      file_regex:
+        - file: hello.txt
+          exp: '^(Hello)$'
+        - file: buildtest_help.txt
+          exp: '^(usage: buildtest)'
+
+  regex_on_directory_not_supported:
+    type: script
+    executor: generic.local.bash
+    description: Test regex on directory is not supported
+    run: |
+      mkdir -p hello
+      echo "Hello" > hello/hello.txt
+    status:
+      file_regex:
+        - file: hello
+          exp: '^(Hello)$'
+
+  file_expansion_supported:
+    type: script
+    executor: generic.local.bash
+    description: Test regex with variable and shell expansion
+    run: |
+      echo "Hello" > $BUILDTEST_ROOT/hello.txt
+      echo "Hello" > $HOME/hello.txt
+    status:
+      file_regex:
+        - file: $BUILDTEST_ROOT/hello.txt
+          exp: '^(Hello)$'
+        - file: ~/hello.txt
+          exp: '^(Hello)$'
+
+  file_count_on_directory:
+    type: script
+    executor: generic.local.bash
+    description: file count check in directory
+    run: |
+      mkdir -p foo
+      touch foo/{1..5}
+    status:
+      file_count:
+        - dir: foo
+          count: 5
+  file_count_by_extension:
+    type: script
+    executor: generic.local.bash
+    description: file count by extension
+    run: |
+      mkdir -p foo/bar
+      touch foo/{1..5}.sh
+      touch foo/bar/{1..3}.py foo/bar/{1..3}.txt
+    status:
+      file_count:
+        - dir: foo
+          ext: '.sh'
+          depth: 1
+          count: 5
+        - dir: foo/bar
+          ext: ['.py', '.txt']
+          count: 6
+
+  file_extension_and_filepattern:
+    type: script
+    executor: generic.local.bash
+    description: file count by file extension and file pattern
+    run: |
+      touch foo{1..5}.txt
+      touch {conf,main}.py
+      ls -l
+    status:
+      file_count:
+        - dir: .
+          ext: '.txt'
+          filepattern: '(conf|main).py$'
+          count: 7
+
+  file_count_by_filetype:
+    type: script
+    executor: generic.local.bash
+    description: Count the number of directories and symbolic links
+    run: |
+      mkdir -p foo/{bar,baz}
+      find foo -type dir
+      ln -s foo/bar foo/bar.link
+      ln -s foo/baz foo/baz.link
+    status:
+      file_count:
+        - dir: foo
+          count: 3
+          filetype: 'dir'
+        - dir: foo
+          count: 2
+          filetype: 'symlink'
+
+  file_traverse_limit:
+    type: script
+    executor: generic.local.bash
+    description: Use of file_traverse_limit to limit number of files searched in a directory
+    run: |
+      mkdir foo
+      touch foo/{1..99}.txt
+    status:
+      file_count:
+        - dir: foo
+          count: 50
+          file_traverse_limit: 50
+        - dir: foo
+          count: 10
+          file_traverse_limit: 20
+
+  status_logical_and:
+    type: script
+    executor: 'generic.local.bash'
+    description: 'Using logical AND to check status'
+    run: |
+      echo "This is a test"
+      exit 1
+    status:
+      mode: all
+      returncode: 1
+      regex:
+        stream: stdout
+        exp: 'This is a test'
+
+  status_logical_or:
+    type: script
+    executor: 'generic.local.bash'
+    description: 'Using logical OR to check status'
+    run: |
+      echo "This is a test"
+      exit 1
+    status:
+      mode: any
+      returncode: 0
+      regex:
+        stream: stdout
+        exp: 'This is a test'

@@ -20,11 +20,33 @@
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-env-items.md) – `definitions.schema.json#/definitions/env/items`
 
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-file_regex-items.md) – `definitions.schema.json#/definitions/file_regex/items`
+
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ge-items.md) – `definitions.schema.json#/definitions/status/properties/assert_ge/items`
 
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_le-items.md) – `definitions.schema.json#/definitions/status/properties/assert_le/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_gt-items.md) – `definitions.schema.json#/definitions/status/properties/assert_gt/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_lt-items.md) – `definitions.schema.json#/definitions/status/properties/assert_lt/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_eq-items.md) – `definitions.schema.json#/definitions/status/properties/assert_eq/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ne-items.md) – `definitions.schema.json#/definitions/status/properties/assert_ne/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range-items.md) – `definitions.schema.json#/definitions/status/properties/assert_range/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-contains-items.md) – `definitions.schema.json#/definitions/status/properties/contains/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-not_contains-items.md) – `definitions.schema.json#/definitions/status/properties/not_contains/items`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-file_count-items.md) – `definitions.schema.json#/definitions/status/properties/file_count/items`
+
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-needs-items-0-oneof-1.md) – `definitions.schema.json#/definitions/needs/items/0/oneOf/1`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-file_regex_in_metrics.md "Specify a regular expressions on a filepath used for assigning value to metrics") – `definitions.schema.json#/definitions/file_regex_in_metrics`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-regex.md "Perform regular expression search using re") – `definitions.schema.json#/definitions/regex`
 
@@ -41,6 +63,10 @@
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-module.md) – `definitions.schema.json#/definitions/module`
 
 *   [Untitled object in buildtest configuration schema](./settings-properties-system.md) – `settings.schema.json#/properties/system`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-buildspecs.md "Specify configuration for buildtest buildspec command") – `settings.schema.json#/definitions/system/properties/buildspecs`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-report.md) – `settings.schema.json#/definitions/system/properties/report`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-processor.md "Specify processor information") – `settings.schema.json#/definitions/system/properties/processor`
 
@@ -84,6 +110,10 @@
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-cdash.md "Specify CDASH configuration used to upload tests via 'buildtest cdash' command") – `settings.schema.json#/definitions/system/properties/cdash`
 
+*   [Untitled object in buildtest configuration schema](./settings-definitions-system-properties-profiles.md "The profiles section is used for declaring one or more profiles that can be used to run buildtest build that are captured as command options") – `settings.schema.json#/definitions/system/properties/profiles`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-profiles-properties-filter.md) – `settings.schema.json#/definitions/profiles/properties/filter`
+
 *   [Untitled object in buildtest configuration schema](./settings-definitions-system.md) – `settings.schema.json#/definitions/system`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-compiler_section.md "A compiler section is composed of cc, cxx and fc wrapper these are required when you need to specify compiler wrapper") – `settings.schema.json#/definitions/compiler_section`
@@ -99,6 +129,8 @@
 *   [Untitled object in buildtest configuration schema](./settings-definitions-cobalt.md "An instance object of cobalt executor") – `settings.schema.json#/definitions/cobalt`
 
 *   [Untitled object in buildtest configuration schema](./settings-definitions-pbs.md "An instance object of cobalt executor") – `settings.schema.json#/definitions/pbs`
+
+*   [Untitled object in buildtest configuration schema](./settings-definitions-profiles.md) – `settings.schema.json#/definitions/profiles`
 
 *   [Untitled object in compiler schema](./compiler-definitions-default_compiler_all.md "Specify compiler configuration for all compiler groups") – `compiler.schema.json#/definitions/default_compiler_all`
 
@@ -148,17 +180,39 @@
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ge.md "Perform assertion of greater and equal (>=) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_ge`
 
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_le.md "Perform assertion of less than and equal (<=) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_le`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_gt.md "Perform assertion of greater than (>) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_gt`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_lt.md "Perform assertion of less than (<) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_lt`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_eq.md "Perform assertion of equality (=) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_eq`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ne.md "Perform assertion of not equal with reference value") – `definitions.schema.json#/definitions/status/properties/assert_ne`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range.md "Perform assertion based on lower and upper bound") – `definitions.schema.json#/definitions/status/properties/assert_range`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-contains-items-properties-ref.md "Specify a list of reference value") – `definitions.schema.json#/definitions/status/properties/contains/items/properties/ref`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-not_contains-items-properties-ref.md "Specify a list of reference value") – `definitions.schema.json#/definitions/status/properties/not_contains/items/properties/ref`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-file_count.md "Perform assertion check by comparing file count in a directory") – `definitions.schema.json#/definitions/status/properties/file_count`
+
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-module-properties-swap.md "Swap modules using module swap") – `definitions.schema.json#/definitions/module/properties/swap`
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-list_of_strings.md) – `definitions.schema.json#/definitions/list_of_strings`
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-list_of_ints.md) – `definitions.schema.json#/definitions/list_of_ints`
 
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-list_of_positive_integers.md) – `definitions.schema.json#/definitions/list_of_positive_integers`
+
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-file_regex.md "Specify a list of regular expressions to match files in the current working directory") – `definitions.schema.json#/definitions/file_regex`
+
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-needs.md "A list of test names that are dependency before runnning job") – `definitions.schema.json#/definitions/needs`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-hostnames.md "Specify a list of hostnames to check where buildtest can run for the given system record") – `settings.schema.json#/definitions/system/properties/hostnames`
 
-*   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-buildspec_roots.md "Specify a list of directory paths to search buildspecs") – `settings.schema.json#/definitions/system/properties/buildspec_roots`
+*   [Untitled array in buildtest configuration schema](./settings-definitions-system-properties-buildspecs-properties-root.md "Specify a list of directory paths to search buildspecs") – `settings.schema.json#/definitions/system/properties/buildspecs/properties/root`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-module-properties-swap.md "Swap modules using module swap") – `settings.schema.json#/definitions/module/properties/swap`
 
@@ -169,6 +223,8 @@
 *   [Untitled array in buildtest configuration schema](./settings-definitions-cobalt-properties-options.md "Specify any options for qsub for this executor when running all jobs associated to this executor") – `settings.schema.json#/definitions/cobalt/properties/options`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-pbs-properties-options.md "Specify any options for qsub for this executor when running all jobs associated to this executor") – `settings.schema.json#/definitions/pbs/properties/options`
+
+*   [Untitled array in buildtest configuration schema](./settings-definitions-profiles-properties-filter-properties-type.md "Specify the type field to determine which schema to use during filtering") – `settings.schema.json#/definitions/profiles/properties/filter/properties/type`
 
 *   [Untitled array in buildtest configuration schema](./settings-definitions-unique_string_array.md) – `settings.schema.json#/definitions/unique_string_array`
 

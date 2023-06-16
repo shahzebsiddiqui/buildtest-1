@@ -16,20 +16,23 @@ settings.schema.json#/definitions/system
 
 # system Properties
 
-| Property                             | Type      | Required | Nullable       | Defined by                                                                                                                                                        |
-| :----------------------------------- | :-------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [hostnames](#hostnames)              | `array`   | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-hostnames.md "settings.schema.json#/definitions/system/properties/hostnames")             |
-| [description](#description)          | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-description.md "settings.schema.json#/definitions/system/properties/description")         |
-| [poolsize](#poolsize)                | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-poolsize.md "settings.schema.json#/definitions/system/properties/poolsize")               |
-| [buildspec\_roots](#buildspec_roots) | `array`   | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-buildspec_roots.md "settings.schema.json#/definitions/system/properties/buildspec_roots") |
-| [testdir](#testdir)                  | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-testdir.md "settings.schema.json#/definitions/system/properties/testdir")                 |
-| [logdir](#logdir)                    | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-logdir.md "settings.schema.json#/definitions/system/properties/logdir")                   |
-| [moduletool](#moduletool)            | `string`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-moduletool.md "settings.schema.json#/definitions/system/properties/moduletool")           |
-| [timeout](#timeout)                  | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-timeout.md "settings.schema.json#/definitions/system/properties/timeout")                 |
-| [processor](#processor)              | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-processor.md "settings.schema.json#/definitions/system/properties/processor")             |
-| [compilers](#compilers)              | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-compilers.md "settings.schema.json#/definitions/system/properties/compilers")             |
-| [executors](#executors)              | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors.md "settings.schema.json#/definitions/system/properties/executors")             |
-| [cdash](#cdash)                      | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-cdash.md "settings.schema.json#/definitions/system/properties/cdash")                     |
+| Property                    | Type      | Required | Nullable       | Defined by                                                                                                                                                |
+| :-------------------------- | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [hostnames](#hostnames)     | `array`   | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-hostnames.md "settings.schema.json#/definitions/system/properties/hostnames")     |
+| [description](#description) | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-description.md "settings.schema.json#/definitions/system/properties/description") |
+| [poolsize](#poolsize)       | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-poolsize.md "settings.schema.json#/definitions/system/properties/poolsize")       |
+| [testdir](#testdir)         | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-testdir.md "settings.schema.json#/definitions/system/properties/testdir")         |
+| [logdir](#logdir)           | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-logdir.md "settings.schema.json#/definitions/system/properties/logdir")           |
+| [moduletool](#moduletool)   | `string`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-moduletool.md "settings.schema.json#/definitions/system/properties/moduletool")   |
+| [timeout](#timeout)         | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-timeout.md "settings.schema.json#/definitions/system/properties/timeout")         |
+| [pager](#pager)             | `boolean` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-pager.md "settings.schema.json#/definitions/system/properties/pager")             |
+| [buildspecs](#buildspecs)   | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-buildspecs.md "settings.schema.json#/definitions/system/properties/buildspecs")   |
+| [report](#report)           | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-report.md "settings.schema.json#/definitions/system/properties/report")           |
+| [processor](#processor)     | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-processor.md "settings.schema.json#/definitions/system/properties/processor")     |
+| [compilers](#compilers)     | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-compilers.md "settings.schema.json#/definitions/system/properties/compilers")     |
+| [executors](#executors)     | `object`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors.md "settings.schema.json#/definitions/system/properties/executors")     |
+| [cdash](#cdash)             | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-cdash.md "settings.schema.json#/definitions/system/properties/cdash")             |
+| [profiles](#profiles)       | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-profiles.md "settings.schema.json#/definitions/system/properties/profiles")       |
 
 ## hostnames
 
@@ -88,24 +91,6 @@ Specify size of Process Pool for parallel processing using `multiprocessing.Pool
 ### poolsize Constraints
 
 **minimum**: the value of this number must greater than or equal to: `1`
-
-## buildspec\_roots
-
-Specify a list of directory paths to search buildspecs. This field can be used with `buildtest buildspec find` to rebuild buildspec cache or build tests using `buildtest build` command
-
-`buildspec_roots`
-
-*   is optional
-
-*   Type: `string[]`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-system-properties-buildspec_roots.md "settings.schema.json#/definitions/system/properties/buildspec_roots")
-
-### buildspec\_roots Type
-
-`string[]`
 
 ## testdir
 
@@ -193,6 +178,60 @@ Specify timeout duration in number of seconds
 
 **minimum**: the value of this number must greater than or equal to: `1`
 
+## pager
+
+A boolean to determine whether to enable paging when viewing buildspec cache
+
+`pager`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-pager.md "settings.schema.json#/definitions/system/properties/pager")
+
+### pager Type
+
+`boolean`
+
+## buildspecs
+
+Specify configuration for `buildtest buildspec` command
+
+`buildspecs`
+
+*   is required
+
+*   Type: `object` ([Details](settings-definitions-system-properties-buildspecs.md))
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-buildspecs.md "settings.schema.json#/definitions/system/properties/buildspecs")
+
+### buildspecs Type
+
+`object` ([Details](settings-definitions-system-properties-buildspecs.md))
+
+## report
+
+
+
+`report`
+
+*   is required
+
+*   Type: `object` ([Details](settings-definitions-system-properties-report.md))
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-report.md "settings.schema.json#/definitions/system/properties/report")
+
+### report Type
+
+`object` ([Details](settings-definitions-system-properties-report.md))
+
 ## processor
 
 Specify processor information
@@ -264,3 +303,21 @@ Specify CDASH configuration used to upload tests via 'buildtest cdash' command
 ### cdash Type
 
 `object` ([Details](settings-definitions-system-properties-cdash.md))
+
+## profiles
+
+The profiles section is used for declaring one or more profiles that can be used to run `buildtest build` that are captured as command options
+
+`profiles`
+
+*   is optional
+
+*   Type: `object` ([Details](settings-definitions-system-properties-profiles.md))
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-profiles.md "settings.schema.json#/definitions/system/properties/profiles")
+
+### profiles Type
+
+`object` ([Details](settings-definitions-system-properties-profiles.md))
