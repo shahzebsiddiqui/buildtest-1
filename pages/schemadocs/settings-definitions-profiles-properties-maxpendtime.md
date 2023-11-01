@@ -4,7 +4,7 @@
 settings.schema.json#/definitions/profiles/properties/maxpendtime
 ```
 
-
+Specify maximum pending time in seconds
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                   |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------- |

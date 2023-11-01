@@ -40,6 +40,7 @@ The script schema is of `type: script` in sub-schema which is used for running s
 | [metrics](#metrics)         | `object`  | Optional | cannot be null | [script schema version](definitions-definitions-metrics.md "script.schema.json#/properties/metrics")         |
 | [executors](#executors)     | `object`  | Optional | cannot be null | [script schema version](definitions-definitions-executors.md "script.schema.json#/properties/executors")     |
 | [compilers](#compilers)     | `object`  | Optional | cannot be null | [script schema version](script-properties-compilers.md "script.schema.json#/properties/compilers")           |
+| [container](#container)     | `object`  | Optional | cannot be null | [script schema version](script-properties-container.md "script.schema.json#/properties/container")           |
 
 ## type
 
@@ -504,6 +505,24 @@ Define executor specific configuration
 ### compilers Type
 
 `object` ([Details](script-properties-compilers.md))
+
+## container
+
+
+
+`container`
+
+*   is optional
+
+*   Type: `object` ([Details](script-properties-container.md))
+
+*   cannot be null
+
+*   defined in: [script schema version](script-properties-container.md "script.schema.json#/properties/container")
+
+### container Type
+
+`object` ([Details](script-properties-container.md))
 
 # script schema version Definitions
 

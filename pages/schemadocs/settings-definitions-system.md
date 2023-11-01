@@ -21,6 +21,7 @@ settings.schema.json#/definitions/system
 | [hostnames](#hostnames)     | `array`   | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-hostnames.md "settings.schema.json#/definitions/system/properties/hostnames")     |
 | [description](#description) | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-description.md "settings.schema.json#/definitions/system/properties/description") |
 | [poolsize](#poolsize)       | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-poolsize.md "settings.schema.json#/definitions/system/properties/poolsize")       |
+| [max\_jobs](#max_jobs)      | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-max_jobs.md "settings.schema.json#/definitions/system/properties/max_jobs")       |
 | [testdir](#testdir)         | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-testdir.md "settings.schema.json#/definitions/system/properties/testdir")         |
 | [logdir](#logdir)           | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-logdir.md "settings.schema.json#/definitions/system/properties/logdir")           |
 | [moduletool](#moduletool)   | `string`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-moduletool.md "settings.schema.json#/definitions/system/properties/moduletool")   |
@@ -89,6 +90,28 @@ Specify size of Process Pool for parallel processing using `multiprocessing.Pool
 `integer`
 
 ### poolsize Constraints
+
+**minimum**: the value of this number must greater than or equal to: `1`
+
+## max\_jobs
+
+Maximum number of jobs that can be run at a given time for a particular executor
+
+`max_jobs`
+
+*   is optional
+
+*   Type: `integer`
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-max_jobs.md "settings.schema.json#/definitions/system/properties/max_jobs")
+
+### max\_jobs Type
+
+`integer`
+
+### max\_jobs Constraints
 
 **minimum**: the value of this number must greater than or equal to: `1`
 

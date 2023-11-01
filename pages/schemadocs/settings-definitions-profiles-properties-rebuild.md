@@ -4,7 +4,7 @@
 settings.schema.json#/definitions/profiles/properties/rebuild
 ```
 
-
+Specify number of tests to rebuild
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                   |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------- |

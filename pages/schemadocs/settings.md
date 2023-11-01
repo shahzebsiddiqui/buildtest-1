@@ -86,6 +86,7 @@ Reference this group by using
 | [hostnames](#hostnames)     | `array`   | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-hostnames.md "settings.schema.json#/definitions/system/properties/hostnames")     |
 | [description](#description) | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-description.md "settings.schema.json#/definitions/system/properties/description") |
 | [poolsize](#poolsize)       | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-poolsize.md "settings.schema.json#/definitions/system/properties/poolsize")       |
+| [max\_jobs](#max_jobs)      | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-max_jobs.md "settings.schema.json#/definitions/system/properties/max_jobs")       |
 | [testdir](#testdir)         | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-testdir.md "settings.schema.json#/definitions/system/properties/testdir")         |
 | [logdir](#logdir)           | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-logdir.md "settings.schema.json#/definitions/system/properties/logdir")           |
 | [moduletool](#moduletool)   | `string`  | Required | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-moduletool.md "settings.schema.json#/definitions/system/properties/moduletool")   |
@@ -154,6 +155,28 @@ Specify size of Process Pool for parallel processing using `multiprocessing.Pool
 `integer`
 
 #### poolsize Constraints
+
+**minimum**: the value of this number must greater than or equal to: `1`
+
+### max\_jobs
+
+Maximum number of jobs that can be run at a given time for a particular executor
+
+`max_jobs`
+
+*   is optional
+
+*   Type: `integer`
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-system-properties-max_jobs.md "settings.schema.json#/definitions/system/properties/max_jobs")
+
+#### max\_jobs Type
+
+`integer`
+
+#### max\_jobs Constraints
 
 **minimum**: the value of this number must greater than or equal to: `1`
 
@@ -420,17 +443,6 @@ Reference this group by using
 | Property | Type | Required | Nullable | Defined by |
 | :------- | :--- | :------- | :------- | :--------- |
 
-## Definitions group max\_jobs
-
-Reference this group by using
-
-```json
-{"$ref":"settings.schema.json#/definitions/max_jobs"}
-```
-
-| Property | Type | Required | Nullable | Defined by |
-| :------- | :--- | :------- | :------- | :--------- |
-
 ## Definitions group compiler\_section
 
 Reference this group by using
@@ -687,7 +699,6 @@ Reference this group by using
 | [description](#description-1)    | `string`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-local-properties-description.md "settings.schema.json#/definitions/local/properties/description")     |
 | [shell](#shell)                  | `string`      | Required | cannot be null | [buildtest configuration schema](settings-definitions-local-properties-shell.md "settings.schema.json#/definitions/local/properties/shell")                 |
 | [before\_script](#before_script) | Not specified | Optional | cannot be null | [buildtest configuration schema](settings-definitions-local-properties-before_script.md "settings.schema.json#/definitions/local/properties/before_script") |
-| [max\_jobs](#max_jobs)           | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-local-properties-max_jobs.md "settings.schema.json#/definitions/local/properties/max_jobs")           |
 | [disable](#disable)              | `boolean`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-local-properties-disable.md "settings.schema.json#/definitions/local/properties/disable")             |
 | [module](#module-1)              | `object`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-module.md "settings.schema.json#/definitions/local/properties/module")                                |
 
@@ -745,28 +756,6 @@ Specify the shell launcher you want to use when running tests locally
 
 unknown
 
-### max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-local-properties-max_jobs.md "settings.schema.json#/definitions/local/properties/max_jobs")
-
-#### max\_jobs Type
-
-`integer`
-
-#### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
-
 ### disable
 
 Disable executor
@@ -822,7 +811,6 @@ Reference this group by using
 | [before\_script](#before_script-1) | Not specified | Optional | cannot be null | [buildtest configuration schema](settings-definitions-slurm-properties-before_script.md "settings.schema.json#/definitions/slurm/properties/before_script") |
 | [maxpendtime](#maxpendtime)        | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-slurm-properties-maxpendtime.md "settings.schema.json#/definitions/slurm/properties/maxpendtime")     |
 | [account](#account)                | `string`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-slurm-properties-account.md "settings.schema.json#/definitions/slurm/properties/account")             |
-| [max\_jobs](#max_jobs-1)           | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-slurm-properties-max_jobs.md "settings.schema.json#/definitions/slurm/properties/max_jobs")           |
 | [disable](#disable-1)              | `boolean`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-slurm-properties-disable.md "settings.schema.json#/definitions/slurm/properties/disable")             |
 | [module](#module-2)                | `object`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-module.md "settings.schema.json#/definitions/slurm/properties/module")                                |
 
@@ -1008,28 +996,6 @@ Specify Job Account for charging resources
 
 `string`
 
-### max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-slurm-properties-max_jobs.md "settings.schema.json#/definitions/slurm/properties/max_jobs")
-
-#### max\_jobs Type
-
-`integer`
-
-#### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
-
 ### disable
 
 Disable executor
@@ -1083,7 +1049,6 @@ Reference this group by using
 | [before\_script](#before_script-2) | Not specified | Optional | cannot be null | [buildtest configuration schema](settings-definitions-lsf-properties-before_script.md "settings.schema.json#/definitions/lsf/properties/before_script") |
 | [maxpendtime](#maxpendtime-1)      | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-lsf-properties-maxpendtime.md "settings.schema.json#/definitions/lsf/properties/maxpendtime")     |
 | [account](#account-1)              | `string`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-lsf-properties-account.md "settings.schema.json#/definitions/lsf/properties/account")             |
-| [max\_jobs](#max_jobs-2)           | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-lsf-properties-max_jobs.md "settings.schema.json#/definitions/lsf/properties/max_jobs")           |
 | [disable](#disable-2)              | `boolean`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-lsf-properties-disable.md "settings.schema.json#/definitions/lsf/properties/disable")             |
 | [module](#module-3)                | `object`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-module.md "settings.schema.json#/definitions/lsf/properties/module")                              |
 
@@ -1233,28 +1198,6 @@ Specify Job Account for charging resources
 
 `string`
 
-### max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-lsf-properties-max_jobs.md "settings.schema.json#/definitions/lsf/properties/max_jobs")
-
-#### max\_jobs Type
-
-`integer`
-
-#### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
-
 ### disable
 
 Disable executor
@@ -1308,7 +1251,6 @@ Reference this group by using
 | [before\_script](#before_script-3) | Not specified | Optional | cannot be null | [buildtest configuration schema](settings-definitions-cobalt-properties-before_script.md "settings.schema.json#/definitions/cobalt/properties/before_script") |
 | [maxpendtime](#maxpendtime-2)      | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-cobalt-properties-maxpendtime.md "settings.schema.json#/definitions/cobalt/properties/maxpendtime")     |
 | [account](#account-2)              | `string`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-cobalt-properties-account.md "settings.schema.json#/definitions/cobalt/properties/account")             |
-| [max\_jobs](#max_jobs-3)           | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-cobalt-properties-max_jobs.md "settings.schema.json#/definitions/cobalt/properties/max_jobs")           |
 | [disable](#disable-3)              | `boolean`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-cobalt-properties-disable.md "settings.schema.json#/definitions/cobalt/properties/disable")             |
 | [module](#module-4)                | `object`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-module.md "settings.schema.json#/definitions/cobalt/properties/module")                                 |
 
@@ -1458,28 +1400,6 @@ Specify Job Account for charging resources
 
 `string`
 
-### max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-cobalt-properties-max_jobs.md "settings.schema.json#/definitions/cobalt/properties/max_jobs")
-
-#### max\_jobs Type
-
-`integer`
-
-#### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
-
 ### disable
 
 Disable executor
@@ -1533,7 +1453,6 @@ Reference this group by using
 | [before\_script](#before_script-4) | Not specified | Optional | cannot be null | [buildtest configuration schema](settings-definitions-pbs-properties-before_script.md "settings.schema.json#/definitions/pbs/properties/before_script") |
 | [maxpendtime](#maxpendtime-3)      | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-pbs-properties-maxpendtime.md "settings.schema.json#/definitions/pbs/properties/maxpendtime")     |
 | [account](#account-3)              | `string`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-pbs-properties-account.md "settings.schema.json#/definitions/pbs/properties/account")             |
-| [max\_jobs](#max_jobs-4)           | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-pbs-properties-max_jobs.md "settings.schema.json#/definitions/pbs/properties/max_jobs")           |
 | [disable](#disable-4)              | `boolean`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-pbs-properties-disable.md "settings.schema.json#/definitions/pbs/properties/disable")             |
 | [module](#module-5)                | `object`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-module.md "settings.schema.json#/definitions/pbs/properties/module")                              |
 
@@ -1683,28 +1602,6 @@ Specify Job Account for charging resources
 
 `string`
 
-### max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-pbs-properties-max_jobs.md "settings.schema.json#/definitions/pbs/properties/max_jobs")
-
-#### max\_jobs Type
-
-`integer`
-
-#### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
-
 ### disable
 
 Disable executor
@@ -1749,27 +1646,29 @@ Reference this group by using
 {"$ref":"settings.schema.json#/definitions/profiles"}
 ```
 
-| Property                                  | Type      | Required | Nullable       | Defined by                                                                                                                                                          |
-| :---------------------------------------- | :-------- | :------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| [buildspecs](#buildspecs-1)               | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/buildspecs")                     |
-| [exclude-buildspecs](#exclude-buildspecs) | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/exclude-buildspecs")             |
-| [tags](#tags)                             | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/tags")                           |
-| [exclude-tags](#exclude-tags)             | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/exclude-tags")                   |
-| [executors](#executors-1)                 | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/executors")                      |
-| [filter](#filter)                         | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-filter.md "settings.schema.json#/definitions/profiles/properties/filter")                 |
-| [module](#module-6)                       | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-module.md "settings.schema.json#/definitions/profiles/properties/module")                 |
-| [unload-modules](#unload-modules)         | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-unload-modules.md "settings.schema.json#/definitions/profiles/properties/unload-modules") |
-| [module-purge](#module-purge)             | `boolean` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-module-purge.md "settings.schema.json#/definitions/profiles/properties/module-purge")     |
-| [rebuild](#rebuild)                       | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-rebuild.md "settings.schema.json#/definitions/profiles/properties/rebuild")               |
-| [limit](#limit)                           | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-limit.md "settings.schema.json#/definitions/profiles/properties/limit")                   |
-| [account](#account-4)                     | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-account.md "settings.schema.json#/definitions/profiles/properties/account")               |
-| [maxpendtime](#maxpendtime-4)             | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-maxpendtime.md "settings.schema.json#/definitions/profiles/properties/maxpendtime")       |
-| [pollinterval](#pollinterval)             | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-pollinterval.md "settings.schema.json#/definitions/profiles/properties/pollinterval")     |
-| [procs](#procs)                           | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_positive_integers.md "settings.schema.json#/definitions/profiles/properties/procs")                |
-| [nodes](#nodes)                           | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_positive_integers.md "settings.schema.json#/definitions/profiles/properties/nodes")                |
-| [testdir](#testdir-1)                     | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-testdir.md "settings.schema.json#/definitions/profiles/properties/testdir")               |
-| [timeout](#timeout-1)                     | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-timeout.md "settings.schema.json#/definitions/profiles/properties/timeout")               |
-| [executor-type](#executor-type)           | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-executor-type.md "settings.schema.json#/definitions/profiles/properties/executor-type")   |
+| Property                                  | Type      | Required | Nullable       | Defined by                                                                                                                                                            |
+| :---------------------------------------- | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [buildspecs](#buildspecs-1)               | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/buildspecs")                       |
+| [exclude-buildspecs](#exclude-buildspecs) | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/exclude-buildspecs")               |
+| [tags](#tags)                             | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/tags")                             |
+| [exclude-tags](#exclude-tags)             | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/exclude-tags")                     |
+| [executors](#executors-1)                 | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_strings.md "settings.schema.json#/definitions/profiles/properties/executors")                        |
+| [filter](#filter)                         | `object`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-filter.md "settings.schema.json#/definitions/profiles/properties/filter")                   |
+| [module](#module-6)                       | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-module.md "settings.schema.json#/definitions/profiles/properties/module")                   |
+| [unload-modules](#unload-modules)         | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-unload-modules.md "settings.schema.json#/definitions/profiles/properties/unload-modules")   |
+| [module-purge](#module-purge)             | `boolean` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-module-purge.md "settings.schema.json#/definitions/profiles/properties/module-purge")       |
+| [rebuild](#rebuild)                       | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-rebuild.md "settings.schema.json#/definitions/profiles/properties/rebuild")                 |
+| [limit](#limit)                           | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-limit.md "settings.schema.json#/definitions/profiles/properties/limit")                     |
+| [account](#account-4)                     | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-account.md "settings.schema.json#/definitions/profiles/properties/account")                 |
+| [maxpendtime](#maxpendtime-4)             | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-maxpendtime.md "settings.schema.json#/definitions/profiles/properties/maxpendtime")         |
+| [pollinterval](#pollinterval)             | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-pollinterval.md "settings.schema.json#/definitions/profiles/properties/pollinterval")       |
+| [procs](#procs)                           | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_positive_integers.md "settings.schema.json#/definitions/profiles/properties/procs")                  |
+| [nodes](#nodes)                           | `array`   | Optional | cannot be null | [buildtest configuration schema](definitions-definitions-list_of_positive_integers.md "settings.schema.json#/definitions/profiles/properties/nodes")                  |
+| [testdir](#testdir-1)                     | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-testdir.md "settings.schema.json#/definitions/profiles/properties/testdir")                 |
+| [timeout](#timeout-1)                     | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-timeout.md "settings.schema.json#/definitions/profiles/properties/timeout")                 |
+| [executor-type](#executor-type)           | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-executor-type.md "settings.schema.json#/definitions/profiles/properties/executor-type")     |
+| [remove-stagedir](#remove-stagedir)       | `boolean` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-remove-stagedir.md "settings.schema.json#/definitions/profiles/properties/remove-stagedir") |
+| [max-jobs](#max-jobs)                     | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-profiles-properties-max-jobs.md "settings.schema.json#/definitions/profiles/properties/max-jobs")               |
 
 ### buildspecs
 
@@ -1965,7 +1864,7 @@ Reference this group by using
 
 ### rebuild
 
-
+Specify number of tests to rebuild
 
 `rebuild`
 
@@ -1989,7 +1888,7 @@ Reference this group by using
 
 ### limit
 
-
+Limit number of tests to build
 
 `limit`
 
@@ -2029,7 +1928,7 @@ Reference this group by using
 
 ### maxpendtime
 
-
+Specify maximum pending time in seconds
 
 `maxpendtime`
 
@@ -2051,7 +1950,7 @@ Reference this group by using
 
 ### pollinterval
 
-
+Specify poll interval in seconds
 
 `pollinterval`
 
@@ -2121,7 +2020,7 @@ Reference this group by using
 
 ### testdir
 
-
+Specify test directory where buildtest will write tests.
 
 `testdir`
 
@@ -2185,3 +2084,43 @@ Specify the `executor-type` field used by `--executor-type` option which determi
 | :-------- | :---------- |
 | `"local"` |             |
 | `"batch"` |             |
+
+### remove-stagedir
+
+Remove stage directory after test completes
+
+`remove-stagedir`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-profiles-properties-remove-stagedir.md "settings.schema.json#/definitions/profiles/properties/remove-stagedir")
+
+#### remove-stagedir Type
+
+`boolean`
+
+### max-jobs
+
+Maximum number of jobs that can be run at a given time for a particular executor
+
+`max-jobs`
+
+*   is optional
+
+*   Type: `integer`
+
+*   cannot be null
+
+*   defined in: [buildtest configuration schema](settings-definitions-profiles-properties-max-jobs.md "settings.schema.json#/definitions/profiles/properties/max-jobs")
+
+#### max-jobs Type
+
+`integer`
+
+#### max-jobs Constraints
+
+**minimum**: the value of this number must greater than or equal to: `1`

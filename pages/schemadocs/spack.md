@@ -499,6 +499,7 @@ Reference this group by using
 | Property                  | Type      | Required | Nullable       | Defined by                                                                                                                        |
 | :------------------------ | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
 | [create](#create)         | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-create.md "spack.schema.json#/definitions/env/properties/create")         |
+| [deactivate](#deactivate) | `boolean` | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-deactivate.md "spack.schema.json#/definitions/env/properties/deactivate") |
 | [activate](#activate)     | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-activate.md "spack.schema.json#/definitions/env/properties/activate")     |
 | [rm](#rm)                 | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-rm.md "spack.schema.json#/definitions/env/properties/rm")                 |
 | [mirror](#mirror)         | `object`  | Optional | cannot be null | [spack schema version](definitions-definitions-env.md "spack.schema.json#/definitions/env/properties/mirror")                     |
@@ -522,6 +523,24 @@ Create a spack environment via `spack env create`
 #### create Type
 
 `object` ([Details](spack-definitions-env-properties-create.md))
+
+### deactivate
+
+Deactivate a spack environment prior to activating it via `spack env deactivate`
+
+`deactivate`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [spack schema version](spack-definitions-env-properties-deactivate.md "spack.schema.json#/definitions/env/properties/deactivate")
+
+#### deactivate Type
+
+`boolean`
 
 ### activate
 
@@ -667,6 +686,61 @@ List of specs to install using `spack install` command
 *   cannot be null
 
 *   defined in: [spack schema version](definitions-definitions-list_of_strings.md "spack.schema.json#/definitions/install/properties/specs")
+
+#### specs Type
+
+`string[]`
+
+#### specs Constraints
+
+**minimum number of items**: the minimum number of items for this array is: `1`
+
+**unique items**: all items in this array must be unique. Duplicates are not allowed.
+
+## Definitions group load
+
+Reference this group by using
+
+```json
+{"$ref":"spack.schema.json#/definitions/load"}
+```
+
+| Property              | Type     | Required | Nullable       | Defined by                                                                                                                    |
+| :-------------------- | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------- |
+| [options](#options-1) | `string` | Optional | cannot be null | [spack schema version](spack-definitions-load-properties-options.md "spack.schema.json#/definitions/load/properties/options") |
+| [specs](#specs-2)     | `array`  | Optional | cannot be null | [spack schema version](definitions-definitions-list_of_strings.md "spack.schema.json#/definitions/load/properties/specs")     |
+
+### options
+
+Pass options to `spack load` command
+
+`options`
+
+*   is optional
+
+*   Type: `string`
+
+*   cannot be null
+
+*   defined in: [spack schema version](spack-definitions-load-properties-options.md "spack.schema.json#/definitions/load/properties/options")
+
+#### options Type
+
+`string`
+
+### specs
+
+List of specs to install using `spack load` command
+
+`specs`
+
+*   is optional
+
+*   Type: `string[]`
+
+*   cannot be null
+
+*   defined in: [spack schema version](definitions-definitions-list_of_strings.md "spack.schema.json#/definitions/load/properties/specs")
 
 #### specs Type
 

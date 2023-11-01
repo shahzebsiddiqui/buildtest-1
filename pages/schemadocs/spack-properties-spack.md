@@ -23,6 +23,7 @@ Entry point to spack configuration
 | [mirror](#mirror)                | `object`  | Optional | cannot be null | [spack schema version](definitions-definitions-env.md "spack.schema.json#/properties/spack/properties/mirror")                            |
 | [env](#env)                      | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env.md "spack.schema.json#/properties/spack/properties/env")                                     |
 | [install](#install)              | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-install.md "spack.schema.json#/properties/spack/properties/install")                             |
+| [load](#load)                    | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-load.md "spack.schema.json#/properties/spack/properties/load")                                   |
 | [verify\_spack](#verify_spack)   | `boolean` | Optional | cannot be null | [spack schema version](spack-properties-spack-properties-verify_spack.md "spack.schema.json#/properties/spack/properties/verify_spack")   |
 | [test](#test)                    | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-test.md "spack.schema.json#/properties/spack/properties/test")                                   |
 
@@ -119,6 +120,24 @@ Install spack packages using `spack install` command
 ### install Type
 
 `object` ([Details](spack-definitions-install.md))
+
+## load
+
+load spack packages using `spack load` command
+
+`load`
+
+*   is optional
+
+*   Type: `object` ([Details](spack-definitions-load.md))
+
+*   cannot be null
+
+*   defined in: [spack schema version](spack-definitions-load.md "spack.schema.json#/properties/spack/properties/load")
+
+### load Type
+
+`object` ([Details](spack-definitions-load.md))
 
 ## verify\_spack
 

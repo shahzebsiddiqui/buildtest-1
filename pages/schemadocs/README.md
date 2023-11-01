@@ -24,23 +24,15 @@
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-runtime.md "The runtime section will pass test based on min and max values and compare with actual runtime") – `definitions.schema.json#/definitions/status/properties/runtime`
 
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ge-items.md) – `definitions.schema.json#/definitions/status/properties/assert_ge/items`
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status_check_ge_gt_le_lt-properties-comparisons-items.md) – `definitions.schema.json#/definitions/status_check_ge_gt_le_lt/properties/comparisons/items`
 
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_le-items.md) – `definitions.schema.json#/definitions/status/properties/assert_le/items`
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status_check_eq_ne-properties-comparisons-items.md) – `definitions.schema.json#/definitions/status_check_eq_ne/properties/comparisons/items`
 
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_gt-items.md) – `definitions.schema.json#/definitions/status/properties/assert_gt/items`
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range.md "Perform assertion based on lower and upper bound") – `definitions.schema.json#/definitions/status/properties/assert_range`
 
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_lt-items.md) – `definitions.schema.json#/definitions/status/properties/assert_lt/items`
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range-properties-comparisons-items.md) – `definitions.schema.json#/definitions/status/properties/assert_range/properties/comparisons/items`
 
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_eq-items.md) – `definitions.schema.json#/definitions/status/properties/assert_eq/items`
-
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ne-items.md) – `definitions.schema.json#/definitions/status/properties/assert_ne/items`
-
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range-items.md) – `definitions.schema.json#/definitions/status/properties/assert_range/items`
-
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-contains-items.md) – `definitions.schema.json#/definitions/status/properties/contains/items`
-
-*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-not_contains-items.md) – `definitions.schema.json#/definitions/status/properties/not_contains/items`
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status_check_contains_not_contains-properties-comparisons-items.md) – `definitions.schema.json#/definitions/status_check_contains_not_contains/properties/comparisons/items`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status-properties-file_count-items.md) – `definitions.schema.json#/definitions/status/properties/file_count/items`
 
@@ -57,6 +49,12 @@
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-metrics.md "This field is used for defining one or more metrics that is recorded for each test") – `definitions.schema.json#/definitions/metrics`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status.md "The status section describes how buildtest detects PASS/FAIL on test") – `definitions.schema.json#/definitions/status`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status_check_ge_gt_le_lt.md) – `definitions.schema.json#/definitions/status_check_ge_gt_le_lt`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status_check_eq_ne.md) – `definitions.schema.json#/definitions/status_check_eq_ne`
+
+*   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-status_check_contains_not_contains.md) – `definitions.schema.json#/definitions/status_check_contains_not_contains`
 
 *   [Untitled object in JSON Schema Definitions File. ](./definitions-definitions-executors.md "Define executor specific configuration") – `definitions.schema.json#/definitions/executors`
 
@@ -154,6 +152,8 @@
 
 *   [Untitled object in script schema version](./script-definitions-compiler_declaration-default_compiler_config.md "Specify compiler configuration for group of compilers") – `script.schema.json#/definitions/compiler_declaration/default_compiler_config`
 
+*   [Untitled object in script schema version](./script-properties-container.md) – `script.schema.json#/properties/container`
+
 *   [Untitled object in script schema version](./script-definitions-compiler_declaration.md "Specify compiler configuration at compiler level") – `script.schema.json#/definitions/compiler_declaration`
 
 *   [Untitled object in script schema version](./script-definitions-default_compiler_config.md "Specify compiler configuration for group of compilers") – `script.schema.json#/definitions/default_compiler_config`
@@ -174,27 +174,21 @@
 
 *   [Untitled object in spack schema version](./spack-definitions-install.md "Install spack packages using spack install command") – `spack.schema.json#/definitions/install`
 
+*   [Untitled object in spack schema version](./spack-definitions-load.md "load spack packages using spack load command") – `spack.schema.json#/definitions/load`
+
 *   [Untitled object in spack schema version](./spack-definitions-test.md) – `spack.schema.json#/definitions/test`
 
 ### Arrays
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ge.md "Perform assertion of greater and equal (>=) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_ge`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status_check_ge_gt_le_lt-properties-comparisons.md) – `definitions.schema.json#/definitions/status_check_ge_gt_le_lt/properties/comparisons`
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_le.md "Perform assertion of less than and equal (<=) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_le`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status_check_eq_ne-properties-comparisons.md) – `definitions.schema.json#/definitions/status_check_eq_ne/properties/comparisons`
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_gt.md "Perform assertion of greater than (>) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_gt`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range-properties-comparisons.md) – `definitions.schema.json#/definitions/status/properties/assert_range/properties/comparisons`
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_lt.md "Perform assertion of less than (<) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_lt`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status_check_contains_not_contains-properties-comparisons.md) – `definitions.schema.json#/definitions/status_check_contains_not_contains/properties/comparisons`
 
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_eq.md "Perform assertion of equality (=) with reference value") – `definitions.schema.json#/definitions/status/properties/assert_eq`
-
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_ne.md "Perform assertion of not equal with reference value") – `definitions.schema.json#/definitions/status/properties/assert_ne`
-
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-assert_range.md "Perform assertion based on lower and upper bound") – `definitions.schema.json#/definitions/status/properties/assert_range`
-
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-contains-items-properties-ref.md "Specify a list of reference value") – `definitions.schema.json#/definitions/status/properties/contains/items/properties/ref`
-
-*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-not_contains-items-properties-ref.md "Specify a list of reference value") – `definitions.schema.json#/definitions/status/properties/not_contains/items/properties/ref`
+*   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status_check_contains_not_contains-properties-comparisons-items-properties-ref.md "Specify a list of reference value") – `definitions.schema.json#/definitions/status_check_contains_not_contains/properties/comparisons/items/properties/ref`
 
 *   [Untitled array in JSON Schema Definitions File. ](./definitions-definitions-status-properties-file_count.md "Perform assertion check by comparing file count in a directory") – `definitions.schema.json#/definitions/status/properties/file_count`
 

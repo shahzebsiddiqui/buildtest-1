@@ -21,7 +21,6 @@ Specify default executor settings for all executors
 | [pollinterval](#pollinterval) | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors-properties-defaults-properties-pollinterval.md "settings.schema.json#/definitions/system/properties/executors/properties/defaults/properties/pollinterval") |
 | [maxpendtime](#maxpendtime)   | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors-properties-defaults-properties-maxpendtime.md "settings.schema.json#/definitions/system/properties/executors/properties/defaults/properties/maxpendtime")   |
 | [account](#account)           | `string`  | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors-properties-defaults-properties-account.md "settings.schema.json#/definitions/system/properties/executors/properties/defaults/properties/account")           |
-| [max\_jobs](#max_jobs)        | `integer` | Optional | cannot be null | [buildtest configuration schema](settings-definitions-system-properties-executors-properties-defaults-properties-max_jobs.md "settings.schema.json#/definitions/system/properties/executors/properties/defaults/properties/max_jobs")         |
 
 ## pollinterval
 
@@ -100,25 +99,3 @@ Specify Job Account for charging resources
 ### account Type
 
 `string`
-
-## max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-system-properties-executors-properties-defaults-properties-max_jobs.md "settings.schema.json#/definitions/system/properties/executors/properties/defaults/properties/max_jobs")
-
-### max\_jobs Type
-
-`integer`
-
-### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`

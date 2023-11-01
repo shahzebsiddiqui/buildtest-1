@@ -25,7 +25,6 @@ An instance object of cobalt executor
 | [before\_script](#before_script) | Not specified | Optional | cannot be null | [buildtest configuration schema](settings-definitions-pbs-properties-before_script.md "settings.schema.json#/definitions/pbs/properties/before_script") |
 | [maxpendtime](#maxpendtime)      | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-maxpendtime.md "settings.schema.json#/definitions/pbs/properties/maxpendtime")                    |
 | [account](#account)              | `string`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-account.md "settings.schema.json#/definitions/pbs/properties/account")                            |
-| [max\_jobs](#max_jobs)           | `integer`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-max_jobs.md "settings.schema.json#/definitions/pbs/properties/max_jobs")                          |
 | [disable](#disable)              | `boolean`     | Optional | cannot be null | [buildtest configuration schema](settings-definitions-disable.md "settings.schema.json#/definitions/pbs/properties/disable")                            |
 | [module](#module)                | `object`      | Optional | cannot be null | [buildtest configuration schema](settings-definitions-module.md "settings.schema.json#/definitions/pbs/properties/module")                              |
 
@@ -174,28 +173,6 @@ Specify Job Account for charging resources
 ### account Type
 
 `string`
-
-## max\_jobs
-
-Maximum number of jobs that can be run at a given time for a particular executor
-
-`max_jobs`
-
-*   is optional
-
-*   Type: `integer`
-
-*   cannot be null
-
-*   defined in: [buildtest configuration schema](settings-definitions-max_jobs.md "settings.schema.json#/definitions/pbs/properties/max_jobs")
-
-### max\_jobs Type
-
-`integer`
-
-### max\_jobs Constraints
-
-**minimum**: the value of this number must greater than or equal to: `1`
 
 ## disable
 

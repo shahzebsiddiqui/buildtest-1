@@ -4,7 +4,7 @@
 settings.schema.json#/definitions/profiles/properties/testdir
 ```
 
-
+Specify test directory where buildtest will write tests.
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                   |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------- |

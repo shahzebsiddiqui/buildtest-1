@@ -4,7 +4,7 @@
 settings.schema.json#/definitions/profiles/properties/limit
 ```
 
-
+Limit number of tests to build
 
 | Abstract            | Extensible | Status         | Identifiable            | Custom Properties | Additional Properties | Access Restrictions | Defined In                                                                   |
 | :------------------ | :--------- | :------------- | :---------------------- | :---------------- | :-------------------- | :------------------ | :--------------------------------------------------------------------------- |

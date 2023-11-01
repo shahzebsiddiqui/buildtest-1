@@ -16,31 +16,31 @@ The status section describes how buildtest detects PASS/FAIL on test. By default
 
 # status Properties
 
-| Property                              | Type          | Required | Nullable       | Defined by                                                                                                                                                              |
-| :------------------------------------ | :------------ | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [slurm\_job\_state](#slurm_job_state) | `string`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-slurm_job_state.md "definitions.schema.json#/definitions/status/properties/slurm_job_state") |
-| [pbs\_job\_state](#pbs_job_state)     | `string`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-pbs_job_state.md "definitions.schema.json#/definitions/status/properties/pbs_job_state")     |
-| [lsf\_job\_state](#lsf_job_state)     | `string`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-lsf_job_state.md "definitions.schema.json#/definitions/status/properties/lsf_job_state")     |
-| [returncode](#returncode)             | Merged        | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
-| [regex](#regex)                       | `object`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
-| [file\_regex](#file_regex)            | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-file_regex.md "definitions.schema.json#/definitions/status/properties/file_regex")                             |
-| [runtime](#runtime)                   | `object`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
-| [assert\_ge](#assert_ge)              | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ge.md "definitions.schema.json#/definitions/status/properties/assert_ge")             |
-| [assert\_le](#assert_le)              | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_le.md "definitions.schema.json#/definitions/status/properties/assert_le")             |
-| [assert\_gt](#assert_gt)              | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_gt.md "definitions.schema.json#/definitions/status/properties/assert_gt")             |
-| [assert\_lt](#assert_lt)              | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_lt.md "definitions.schema.json#/definitions/status/properties/assert_lt")             |
-| [assert\_eq](#assert_eq)              | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_eq.md "definitions.schema.json#/definitions/status/properties/assert_eq")             |
-| [assert\_ne](#assert_ne)              | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ne.md "definitions.schema.json#/definitions/status/properties/assert_ne")             |
-| [assert\_range](#assert_range)        | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_range.md "definitions.schema.json#/definitions/status/properties/assert_range")       |
-| [contains](#contains)                 | Not specified | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-contains.md "definitions.schema.json#/definitions/status/properties/contains")               |
-| [not\_contains](#not_contains)        | Not specified | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-not_contains.md "definitions.schema.json#/definitions/status/properties/not_contains")       |
-| [is\_symlink](#is_symlink)            | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/is_symlink")                        |
-| [exists](#exists)                     | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/exists")                            |
-| [is\_dir](#is_dir)                    | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/is_dir")                            |
-| [is\_file](#is_file)                  | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/is_file")                           |
-| [file\_count](#file_count)            | `array`       | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-file_count.md "definitions.schema.json#/definitions/status/properties/file_count")           |
-| [state](#state)                       | `string`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-state.md "definitions.schema.json#/definitions/status/properties/state")                                       |
-| [mode](#mode)                         | `string`      | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-mode.md "definitions.schema.json#/definitions/status/properties/mode")                       |
+| Property                              | Type     | Required | Nullable       | Defined by                                                                                                                                                              |
+| :------------------------------------ | :------- | :------- | :------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [slurm\_job\_state](#slurm_job_state) | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-slurm_job_state.md "definitions.schema.json#/definitions/status/properties/slurm_job_state") |
+| [pbs\_job\_state](#pbs_job_state)     | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-pbs_job_state.md "definitions.schema.json#/definitions/status/properties/pbs_job_state")     |
+| [lsf\_job\_state](#lsf_job_state)     | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-lsf_job_state.md "definitions.schema.json#/definitions/status/properties/lsf_job_state")     |
+| [returncode](#returncode)             | Merged   | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-int_or_list.md "definitions.schema.json#/definitions/status/properties/returncode")                            |
+| [regex](#regex)                       | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-regex.md "definitions.schema.json#/definitions/status/properties/regex")                                       |
+| [file\_regex](#file_regex)            | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-file_regex.md "definitions.schema.json#/definitions/status/properties/file_regex")                             |
+| [runtime](#runtime)                   | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-runtime.md "definitions.schema.json#/definitions/status/properties/runtime")                 |
+| [assert\_ge](#assert_ge)              | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_ge")                |
+| [assert\_le](#assert_le)              | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_le")                |
+| [assert\_gt](#assert_gt)              | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_gt")                |
+| [assert\_lt](#assert_lt)              | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_lt")                |
+| [assert\_eq](#assert_eq)              | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_eq_ne.md "definitions.schema.json#/definitions/status/properties/assert_eq")                      |
+| [assert\_ne](#assert_ne)              | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_eq_ne.md "definitions.schema.json#/definitions/status/properties/assert_ne")                      |
+| [assert\_range](#assert_range)        | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_range.md "definitions.schema.json#/definitions/status/properties/assert_range")       |
+| [contains](#contains)                 | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_contains_not_contains.md "definitions.schema.json#/definitions/status/properties/contains")       |
+| [not\_contains](#not_contains)        | `object` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status_check_contains_not_contains.md "definitions.schema.json#/definitions/status/properties/not_contains")   |
+| [is\_symlink](#is_symlink)            | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/is_symlink")                        |
+| [exists](#exists)                     | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/exists")                            |
+| [is\_dir](#is_dir)                    | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/is_dir")                            |
+| [is\_file](#is_file)                  | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-list_of_strings.md "definitions.schema.json#/definitions/status/properties/is_file")                           |
+| [file\_count](#file_count)            | `array`  | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-file_count.md "definitions.schema.json#/definitions/status/properties/file_count")           |
+| [state](#state)                       | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-state.md "definitions.schema.json#/definitions/status/properties/state")                                       |
+| [mode](#mode)                         | `string` | Optional | cannot be null | [JSON Schema Definitions File. ](definitions-definitions-status-properties-mode.md "definitions.schema.json#/definitions/status/properties/mode")                       |
 
 ## slurm\_job\_state
 
@@ -212,33 +212,33 @@ Perform assertion of greater and equal (>=) with reference value
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_ge-items.md))
+*   Type: `object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ge.md "definitions.schema.json#/definitions/status/properties/assert_ge")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_ge")
 
 ### assert\_ge Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_ge-items.md))
+`object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 ## assert\_le
 
-Perform assertion of less than and equal (<=) with reference value
+Perform assertion of greater and equal (>=) with reference value
 
 `assert_le`
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_le-items.md))
+*   Type: `object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_le.md "definitions.schema.json#/definitions/status/properties/assert_le")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_le")
 
 ### assert\_le Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_le-items.md))
+`object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 ## assert\_gt
 
@@ -248,15 +248,15 @@ Perform assertion of greater than (>) with reference value
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_gt-items.md))
+*   Type: `object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_gt.md "definitions.schema.json#/definitions/status/properties/assert_gt")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_gt")
 
 ### assert\_gt Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_gt-items.md))
+`object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 ## assert\_lt
 
@@ -266,15 +266,15 @@ Perform assertion of less than (<) with reference value
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_lt-items.md))
+*   Type: `object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_lt.md "definitions.schema.json#/definitions/status/properties/assert_lt")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_ge_gt_le_lt.md "definitions.schema.json#/definitions/status/properties/assert_lt")
 
 ### assert\_lt Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_lt-items.md))
+`object` ([Details](definitions-definitions-status_check_ge_gt_le_lt.md))
 
 ## assert\_eq
 
@@ -284,33 +284,33 @@ Perform assertion of equality (=) with reference value
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_eq-items.md))
+*   Type: `object` ([Details](definitions-definitions-status_check_eq_ne.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_eq.md "definitions.schema.json#/definitions/status/properties/assert_eq")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_eq_ne.md "definitions.schema.json#/definitions/status/properties/assert_eq")
 
 ### assert\_eq Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_eq-items.md))
+`object` ([Details](definitions-definitions-status_check_eq_ne.md))
 
 ## assert\_ne
 
-Perform assertion of not equal with reference value
+Perform assertion of not equal (!=) with reference value
 
 `assert_ne`
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_ne-items.md))
+*   Type: `object` ([Details](definitions-definitions-status_check_eq_ne.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-assert_ne.md "definitions.schema.json#/definitions/status/properties/assert_ne")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_eq_ne.md "definitions.schema.json#/definitions/status/properties/assert_ne")
 
 ### assert\_ne Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_ne-items.md))
+`object` ([Details](definitions-definitions-status_check_eq_ne.md))
 
 ## assert\_range
 
@@ -320,7 +320,7 @@ Perform assertion based on lower and upper bound
 
 *   is optional
 
-*   Type: `object[]` ([Details](definitions-definitions-status-properties-assert_range-items.md))
+*   Type: `object` ([Details](definitions-definitions-status-properties-assert_range.md))
 
 *   cannot be null
 
@@ -328,7 +328,7 @@ Perform assertion based on lower and upper bound
 
 ### assert\_range Type
 
-`object[]` ([Details](definitions-definitions-status-properties-assert_range-items.md))
+`object` ([Details](definitions-definitions-status-properties-assert_range.md))
 
 ## contains
 
@@ -338,15 +338,15 @@ Check if metric value is in a list of reference values
 
 *   is optional
 
-*   Type: unknown
+*   Type: `object` ([Details](definitions-definitions-status_check_contains_not_contains.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-contains.md "definitions.schema.json#/definitions/status/properties/contains")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_contains_not_contains.md "definitions.schema.json#/definitions/status/properties/contains")
 
 ### contains Type
 
-unknown
+`object` ([Details](definitions-definitions-status_check_contains_not_contains.md))
 
 ## not\_contains
 
@@ -356,15 +356,15 @@ Check if metric value not in a list of reference values
 
 *   is optional
 
-*   Type: unknown
+*   Type: `object` ([Details](definitions-definitions-status_check_contains_not_contains.md))
 
 *   cannot be null
 
-*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status-properties-not_contains.md "definitions.schema.json#/definitions/status/properties/not_contains")
+*   defined in: [JSON Schema Definitions File. ](definitions-definitions-status_check_contains_not_contains.md "definitions.schema.json#/definitions/status/properties/not_contains")
 
 ### not\_contains Type
 
-unknown
+`object` ([Details](definitions-definitions-status_check_contains_not_contains.md))
 
 ## is\_symlink
 

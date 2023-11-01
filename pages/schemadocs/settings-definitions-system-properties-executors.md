@@ -61,6 +61,10 @@ The `local` section is used for declaring local executors for running jobs on lo
 
 `object` ([Details](settings-definitions-system-properties-executors-properties-local.md))
 
+### local Constraints
+
+**minimum number of properties**: the minimum number of properties for this object is: `1`
+
 ## lsf
 
 The `lsf` section is used for declaring LSF executors for running jobs using LSF scheduler

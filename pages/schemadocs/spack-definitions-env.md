@@ -19,6 +19,7 @@ Used for managing spack environment using `spack env` command.
 | Property                  | Type      | Required | Nullable       | Defined by                                                                                                                        |
 | :------------------------ | :-------- | :------- | :------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
 | [create](#create)         | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-create.md "spack.schema.json#/definitions/env/properties/create")         |
+| [deactivate](#deactivate) | `boolean` | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-deactivate.md "spack.schema.json#/definitions/env/properties/deactivate") |
 | [activate](#activate)     | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-activate.md "spack.schema.json#/definitions/env/properties/activate")     |
 | [rm](#rm)                 | `object`  | Optional | cannot be null | [spack schema version](spack-definitions-env-properties-rm.md "spack.schema.json#/definitions/env/properties/rm")                 |
 | [mirror](#mirror)         | `object`  | Optional | cannot be null | [spack schema version](definitions-definitions-env.md "spack.schema.json#/definitions/env/properties/mirror")                     |
@@ -42,6 +43,24 @@ Create a spack environment via `spack env create`
 ### create Type
 
 `object` ([Details](spack-definitions-env-properties-create.md))
+
+## deactivate
+
+Deactivate a spack environment prior to activating it via `spack env deactivate`
+
+`deactivate`
+
+*   is optional
+
+*   Type: `boolean`
+
+*   cannot be null
+
+*   defined in: [spack schema version](spack-definitions-env-properties-deactivate.md "spack.schema.json#/definitions/env/properties/deactivate")
+
+### deactivate Type
+
+`boolean`
 
 ## activate
 
