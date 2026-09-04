@@ -1,0 +1,16 @@
+buildspecs:
+  run_pre_post_commands:
+    type: spack
+    executor: generic.local.bash
+    description: "Install zlib"
+    tags: [spack]
+    pre_cmds: |
+      cat /etc/os-release
+      gcc --version
+    spack:
+      root: $HOME/spack
+      install:
+        specs: ['zlib']
+    post_cmds: |
+      spack location -i gcc@12.3.0
+      spack --version

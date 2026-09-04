@@ -1,0 +1,37 @@
+system:
+  generic:
+    hostnames:
+    - .*
+    description: Generic System
+    moduletool: none
+    file_traversal_limit: 1000
+    cdash:
+      url: https://my.cdash.org
+      project: buildtest
+      site: laptop
+    buildspecs:
+      rebuild: False
+      count: 15
+      format: "name,description"
+      terse: False
+    report:
+      count: 25
+      format: "name,id,state,runtime,returncode"
+    executors:
+      local:
+        bash:
+          description: submit jobs on local machine using bash shell
+          shell: bash
+        zsh:
+          description: submit jobs on local machine using zsh shell
+          shell: zsh123
+
+    compilers:
+      find:
+        gcc: "^(gcc)"
+      compiler:
+        gcc:
+          builtin_gcc:
+            cc: gcc
+            fc: gfortran
+            cxx: g++

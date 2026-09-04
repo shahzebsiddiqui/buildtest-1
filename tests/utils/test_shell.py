@@ -1,5 +1,7 @@
-import pytest
 import shutil
+
+import pytest
+
 from buildtest.exceptions import BuildTestError
 from buildtest.utils.shell import Shell
 
@@ -38,7 +40,6 @@ class TestShell:
 
     @pytest.mark.utility()
     def test_bash_shell(self):
-
         shell = Shell("/bin/bash")
         assert shell.name == "/bin/bash"
         assert shell.path == shutil.which("/bin/bash")
@@ -51,6 +52,8 @@ class TestShell:
 
     @pytest.mark.utility()
     def test_zsh_shell(self):
+        if not shutil.which("/bin/zsh"):
+            pytest.skip("Skipping test for zsh shell")
 
         shell = Shell("/bin/zsh")
         assert shell.name == "/bin/zsh"
@@ -64,6 +67,9 @@ class TestShell:
 
     @pytest.mark.utility()
     def test_csh_shell(self):
+        if not shutil.which("/bin/csh"):
+            pytest.skip("Skipping test for csh shell")
+
         shell = Shell("/bin/csh")
         assert shell.name == "/bin/csh"
         assert shell.path == shutil.which("/bin/csh")
@@ -76,6 +82,9 @@ class TestShell:
 
     @pytest.mark.utility()
     def test_tcsh_shell(self):
+        if not shutil.which("/bin/tcsh"):
+            pytest.skip("Skipping test for tcsh shell")
+
         shell = Shell("/bin/tcsh")
         assert shell.name == "/bin/tcsh"
         assert shell.path == shutil.which("/bin/tcsh")
@@ -88,7 +97,6 @@ class TestShell:
 
     @pytest.mark.utility
     def test_update_instance(self):
-
         # create a sh shell
         shell = Shell("sh")
         assert shell.name == "sh"
@@ -96,8 +104,11 @@ class TestShell:
         assert shell.path == shutil.which("sh")
         assert shell.shebang == f"#!{shutil.which('sh')}"
 
-        # update attributes  and 'path' in instance object
-        shell.path = "/bin/csh"
+        # if system doesn't have /bin/csh then we should expect this to raise exception
+        try:
+            shell.path = "/bin/csh"
+        except BuildTestError:
+            return
 
         # check instance attribute match from ones reported from get method
         assert shell.get()["name"] == shell.name

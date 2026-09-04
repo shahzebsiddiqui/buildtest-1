@@ -1,0 +1,20 @@
+buildspecs:
+  sbatch_example:
+    type: script
+    executor: generic.local.bash
+    description: This test runs hostname using sbatch directives
+    sbatch:
+      - "-t 10:00:00"
+      - "-p normal"
+      - "-N 1"
+      - "-n 8"
+    run: hostname
+
+  bsub_example:
+    type: script
+    executor: generic.local.bash
+    description: This test runs hostname using bsub directives
+    bsub:
+      - "-W 00:30"
+      - "-N 1"
+    run: hostname

@@ -2,7 +2,7 @@ name: installation
 
 on:
   pull_request:
-    branches: [ devel ]
+    branches: [devel]
 
 
 jobs:
@@ -12,29 +12,48 @@ jobs:
 
     strategy:
       fail-fast: false
-      max-parallel: 3
       matrix:
-        os: [macos-latest, ubuntu-latest]
-        python-version: [3.6, 3.7, 3.8]
+        os: [macos-latest, macos-13, ubuntu-latest]
+        python-version: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v7
 
     - name: Setup Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Buildtest Installation for os - ${{ matrix.os }}, python version - ${{ matrix.python-version }}
-      env:
-        OS: ${{ matrix.os }}
+    - name: "Install zsh and tcsh"
       run: |
-        if [ "OS" == "ubuntu-latest" ] ; then apt-get install -y tcsh zsh; else brew install tcsh zsh ;  fi
-        echo $SHELL
-        $SHELL --version
-        git --version
-        pip install -U pip
-        python --version
-        source setup.sh
+        if [[ ${{ matrix.os }} == 'ubuntu-latest' ]]; then
+          sudo apt-get install -y tcsh zsh
+        else
+          brew install tcsh zsh
+        fi
+    - name: Buildtest Installation for os - ${{ matrix.os }}, python version - ${{ matrix.python-version }}, shell - bash
+      shell: bash
+      run: |
+        echo $SHELL        
+        pip install -U pip                
+        source setup.sh        
         which buildtest
-        buildtest --version
+        buildtest --help
+
+    - name: Buildtest Installation for os - ${{ matrix.os }}, python version - ${{ matrix.python-version }}, shell - zsh
+      shell: zsh {0}
+      run: |   
+        echo $SHELL        
+        pip install -U pip                
+        source setup.sh        
+        which buildtest
+        buildtest --help
+
+    - name: Buildtest Installation for os - ${{ matrix.os }}, python version - ${{ matrix.python-version }}, shell - csh
+      shell: csh {0}
+      run: |
+        echo $shell        
+        pip install -U pip                
+        source setup.csh        
+        which buildtest
+        buildtest --help

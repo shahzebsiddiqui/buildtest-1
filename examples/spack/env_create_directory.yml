@@ -1,0 +1,20 @@
+buildspecs:
+  spack_env_directory:
+    type: spack
+    executor: generic.local.bash
+    description: "create spack environment in directory"
+    tags: [spack]
+    spack:
+      root: $HOME/spack
+      env:
+        create:
+          dir: $HOME/spack-envs/m4
+        activate:
+          dir: $HOME/spack-envs/m4
+        specs:
+          - 'm4'
+      install:
+        option: ''
+    post_cmds: |
+      spack find
+      rm -rf $HOME/spack-envs/m4

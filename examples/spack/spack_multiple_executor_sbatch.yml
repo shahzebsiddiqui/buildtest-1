@@ -1,0 +1,19 @@
+buildspecs:
+  spack_sbatch_multi_executors:
+    type: spack
+    executor: "generic.local.(sh|bash)"
+    description: "sbatch directives can be defined in spack schema"
+    tags: [spack]
+    executors:
+      generic.local.sh:
+        sbatch: ["-N 1", "-t 30"]
+      generic.local.bash:
+        sbatch: ["-N 8", "-t 15"]
+    spack:
+      root: $HOME/spack
+      test:
+        run:
+          specs: ['libsigsegv']
+        results:
+          specs: ['libsigsegv']
+          option: "-l"

@@ -1,6 +1,15 @@
-PyYAML>=5.2
-jsonschema
-tabulate
 distro
-lmodule==0.1
-termcolor
+isort
+# https://github.com/python-jsonschema/jsonschema/releases/tag/v4.18.0 deprecates jsonschema.RefResolver
+jsonschema>=4.18
+lmodule
+PyYAML>=5.2
+requests
+rich
+coverage
+pytest
+isort
+black==26.5.1
+pyflakes
+# https://urllib3.readthedocs.io/en/latest/v2-migration-guide.html
+urllib3>=2.7.0

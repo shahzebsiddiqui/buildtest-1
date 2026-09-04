@@ -1,0 +1,13 @@
+buildspecs:
+  hostname:
+    type: script
+    executor: generic.pbs.workq
+    pbs: ["-l nodes=1", "-l walltime=00:02:00"]
+    run: hostname
+
+  whoami:
+    type: script
+    executor: generic.pbs.workq
+    needs: [hostname]
+    pbs: ["-l nodes=1", "-l walltime=00:02:00"]
+    run: whoami

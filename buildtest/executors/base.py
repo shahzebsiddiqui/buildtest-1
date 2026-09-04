@@ -2,37 +2,61 @@
 BuildExecutor: manager for test executors
 """
 
-import datetime
 import logging
 import os
-import re
-from buildtest.utils.file import read_file
+import time
+
+from buildtest.builders.base import BuilderBase
+from buildtest.defaults import console
+from buildtest.utils.tools import deep_get
 
 
 class BaseExecutor:
     """The BaseExecutor is an abstract base class for all executors."""
 
     type = "base"
+    default_maxpendtime = 86400
 
-    def __init__(self, name, settings, site_configs):
+    def __init__(
+        self, name, settings, site_configs, timeout=None, account=None, maxpendtime=None
+    ):
         """Initiate a base executor, meaning we provide a name (also held
         by the BuildExecutor base that holds it) and the loaded dictionary
         of config opts to parse.
 
-        :param name: a name for the base executor and key provided in the configuration file
-        :type name: str, required
-        :param settings: executor settings from configuration file for a particular executor instance (``local.bash``)
-        :type settings: dict, required
-        :param site_configs: loaded buildtest configuration
-        :type site_configs: instance of BuildtestConfiguration, required
+        Args:
+            name (str): name of executor
+            setting (dict): setting for a given executor defined in configuration file
+            site_configs (buildtest.config.SiteConfiguration): Instance of SiteConfiguration class
+            timeout (str, optional): Test timeout in number of seconds
+            maxpendtime (int, optional): Maximum Pending Time until job is cancelled. The default is 1 day (86400s)
+            account (str, optional): Account to use for job submission
+            maxpendtime (int, optional): Maximum Pending Time until job is cancelled. The default is 1 day (86400s)
         """
 
+        self.shell = "bash"
         self.logger = logging.getLogger(__name__)
         self.name = name
         self._settings = settings
         self._buildtestsettings = site_configs
+        self.timeout = timeout
+        self.builders = []
+        self.account = account
+        self.maxpendtime = maxpendtime
+
         self.load()
-        self.result = {}
+        # the shell type for executors will be bash by default
+        # self.shell = "bash"
+
+    def add_builder(self, builder):
+        """Add builder object to ``self.builders`` only if its of type BuilderBase"""
+
+        if isinstance(builder, BuilderBase):
+            self.builders.append(builder)
+
+    def get_builder(self):
+        """Return a list of builders"""
+        return self.builders
 
     def load(self):
         """Load a particular configuration based on the name. This method
@@ -40,151 +64,110 @@ class BaseExecutor:
         class.
         """
 
+        self.launcher_opts = self._settings.get("options")
+        self.account = (
+            self.account
+            or self._settings.get("account")
+            or deep_get(
+                self._buildtestsettings.target_config,
+                "executors",
+                "defaults",
+                "account",
+            )
+        )
+        self.maxpendtime = (
+            self.maxpendtime
+            or self._settings.get("maxpendtime")
+            or deep_get(
+                self._buildtestsettings.target_config,
+                "executors",
+                "defaults",
+                "maxpendtime",
+            )
+            or self.default_maxpendtime
+        )
+
     def run(self):
         """The run step basically runs the build. This is run after setup
         so we are sure that the builder is defined. This is also where
         we set the result to return.
         """
+        raise NotImplementedError
 
-    def start_time(self, builder):
-        """Record start time in builder metadata object. This method is called right after job submission"""
-        builder.metadata["result"]["starttime"] = datetime.datetime.now()
+    def poll(self, builder):
+        builder.job.poll()
 
-    def end_time(self, builder):
-        """Record end time in builder metadata object. This method is after job completion."""
-        builder.metadata["result"]["endtime"] = datetime.datetime.now()
+        # if job is complete gather job data
+        if builder.job.is_complete():
+            self.gather(builder)
+            return
 
-        # Calculate runtime of job by calculating delta between start and endtime.
-        runtime = (
-            builder.metadata["result"]["endtime"]
-            - builder.metadata["result"]["starttime"]
+        builder.stop()
+
+        if builder.job.is_running():
+            builder.job.elapsedtime = time.time() - builder.job.starttime
+            builder.job.elapsedtime = round(builder.job.elapsedtime, 2)
+            if self._cancel_job_if_elapsedtime_exceeds_timeout(builder):
+                return
+
+        if builder.job.is_suspended() or builder.job.is_pending():
+            if self._cancel_job_if_pendtime_exceeds_maxpendtime(builder):
+                return
+
+        builder.start()
+
+    def gather(self, builder):
+        """Gather Job detail after completion of job by invoking the builder method ``builder.job.gather()``.
+        We retrieve exit code, output file, error file and update builder metadata.
+
+        Args:
+            builder (buildtest.buildsystem.base.BuilderBase): An instance object of BuilderBase type
+        """
+
+        builder.record_endtime()
+
+        builder.job.retrieve_jobdata()
+        builder.metadata["job"] = builder.job.jobdata()
+        builder.metadata["result"]["returncode"] = builder.job.exitcode()
+
+        self.logger.debug(
+            f"[{builder.name}] returncode: {builder.metadata['result']['returncode']}"
         )
-        builder.metadata["result"]["runtime"] = runtime.total_seconds()
-        builder.metadata["result"]["starttime"] = builder.metadata["result"][
-            "starttime"
-        ].strftime("%Y/%m/%d %X")
-        builder.metadata["result"]["endtime"] = builder.metadata["result"][
-            "endtime"
-        ].strftime("%Y/%m/%d %X")
+
+        builder.metadata["outfile"] = os.path.join(
+            builder.stage_dir, builder.job.output_file()
+        )
+        builder.metadata["errfile"] = os.path.join(
+            builder.stage_dir, builder.job.error_file()
+        )
+        console.print(f"[blue]{builder}[/]: Job {builder.job.get()} is complete! ")
+        builder.post_run_steps()
+
+    def _cancel_job_if_elapsedtime_exceeds_timeout(self, builder):
+        if not self.timeout:
+            return
+
+        # cancel job when elapsed time exceeds the timeout value.
+        if builder.job.elapsedtime > self.timeout:
+            builder.job.cancel()
+            builder.failed()
+            console.print(
+                f"[blue]{builder}[/]: [red]Cancelling Job {builder.job.get()} because job exceeds timeout of {self.timeout} sec with current elapsed time of {builder.job.elapsedtime} sec[/red] "
+            )
+
+    def _cancel_job_if_pendtime_exceeds_maxpendtime(self, builder):
+        builder.job.pendtime = time.time() - builder.job.submittime
+        builder.job.pendtime = round(builder.job.pendtime, 2)
+        if builder.job.pendtime > self.maxpendtime:
+            builder.job.cancel()
+            builder.failed()
+            console.print(
+                f"[blue]{builder}[/]: [red]Cancelling Job {builder.job.get()} because job exceeds max pend time of {self.maxpendtime} sec with current pend time of {builder.job.pendtime} sec[/red] "
+            )
 
     def __str__(self):
-        return "%s.%s" % (self.type, self.name)
+        return self.name
+        # return "%s.%s" % (self.type, self.name)
 
     def __repr__(self):
         return self.__str__()
-
-    def _check_regex(self, builder):
-        """This method conducts a regular expression check using ``re.search``
-        with regular expression defined in Buildspec. User must specify an
-        output stream (stdout, stderr) to select when performing regex. In
-        buildtest, this would read the .out or .err file based on stream and
-        run the regular expression to see if there is a match. This method
-        will return a boolean True indicates there is a match otherwise False
-        if ``regex`` object not defined or ``re.search`` doesn't find a match.
-
-        :param status: status property defined in Buildspec file
-        :type status: dict, required
-        :return: A boolean return True/False based on if re.search is successful or not
-        :rtype: bool
-        """
-
-        regex_match = False
-
-        if not builder.status.get("regex"):
-            return regex_match
-
-        if builder.status["regex"]["stream"] == "stdout":
-            self.logger.debug(
-                f"Detected regex stream 'stdout' so reading output file: {builder.metadata['outfile']}"
-            )
-            content = read_file(builder.metadata["outfile"])
-
-        elif builder.status["regex"]["stream"] == "stderr":
-            self.logger.debug(
-                f"Detected regex stream 'stderr' so reading error file: {builder.metadata['errfile']}"
-            )
-            content = read_file(builder.metadata["errfile"])
-
-        self.logger.debug(
-            f"Applying re.search with exp: {builder.status['regex']['exp']}"
-        )
-
-        # perform a regex search based on value of 'exp' key defined in Buildspec with content file (output or error)
-        return re.search(builder.status["regex"]["exp"], content) is not None
-
-    def _returncode_check(self, builder):
-        """Check status check of ``returncode`` field if specified in status
-        property.
-        """
-
-        returncode_match = False
-
-        if builder.status.get("returncode"):
-            # returncode can be an integer or list of integers
-
-            buildspec_returncode = builder.status["returncode"]
-
-            # if buildspec returncode field is integer we convert to list for check
-            if isinstance(buildspec_returncode, int):
-                buildspec_returncode = [buildspec_returncode]
-
-            self.logger.debug("Conducting Return Code check")
-            self.logger.debug(
-                "Status Return Code: %s   Result Return Code: %s"
-                % (
-                    buildspec_returncode,
-                    builder.metadata["result"]["returncode"],
-                )
-            )
-            # checks if test returncode matches returncode specified in Buildspec and assign boolean to returncode_match
-            returncode_match = (
-                builder.metadata["result"]["returncode"] in buildspec_returncode
-            )
-
-        return returncode_match
-
-    def check_test_state(self, builder):
-        """This method is responsible for detecting state of test (PASS/FAIL)
-        based on returncode or regular expression.
-        """
-
-        builder.metadata["result"]["state"] = "FAIL"
-        # if status is defined in Buildspec, then check for returncode and regex
-        if builder.status:
-
-            # regex_match is boolean to check if output/error stream matches regex defined in Buildspec,
-            # if no regex is defined we set this to True since we do a logical AND
-            regex_match = False
-
-            slurm_job_state_match = False
-
-            # returncode_match is boolean to check if reference returncode matches return code from test
-            returncode_match = self._returncode_check(builder)
-
-            # check regex against output or error stream based on regular expression
-            # defined in status property. Return value is a boolean
-            regex_match = self._check_regex(builder)
-
-            # if slurm_job_state_codes defined in buildspec.
-            # self.builder.metadata["job"] only defined when job run through SlurmExecutor
-            if builder.status.get("slurm_job_state") and builder.metadata.get("job"):
-                slurm_job_state_match = (
-                    builder.status["slurm_job_state"]
-                    == builder.metadata["job"]["State"]
-                )
-
-            self.logger.info(
-                "ReturnCode Match: %s Regex Match: %s Slurm Job State Match: %s"
-                % (returncode_match, regex_match, slurm_job_state_match)
-            )
-
-            if returncode_match or regex_match or slurm_job_state_match:
-                builder.metadata["result"]["state"] = "PASS"
-
-        # if status is not defined we check test returncode, by default 0 is PASS and any other return code is a FAIL
-        else:
-            if builder.metadata["result"]["returncode"] == 0:
-                builder.metadata["result"]["state"] = "PASS"
-
-        # Return to starting directory for next test
-        os.chdir(self.builder.pwd)

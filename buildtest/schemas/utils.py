@@ -2,20 +2,28 @@
 Utility and helper functions for schemas.
 """
 
-import json
 import logging
 import os
 import sys
+
 import yaml
+
+from buildtest.utils.file import load_json
 
 here = os.path.dirname(os.path.abspath(__file__))
 
 
 def load_schema(path):
-    """Load a json schema file, the file extension must be '.schema.json'
+    """Load a json schema file, the file extension must be **.schema.json**
 
-    :param path: the path to the schema file.
-    :type path: str
+    Args:
+        path (str): Path to schema file
+
+    Return:
+        dict: Return loaded schema as JSON document
+
+    Raises:
+         SystemExit: If filepath doesn't exist or schema file doesn't ends in **.schema.json**
     """
 
     logger = logging.getLogger(__name__)
@@ -28,19 +36,23 @@ def load_schema(path):
         logger.error(msg)
         sys.exit(msg)
 
-    with open(path, "r") as fd:
-        schema = json.loads(fd.read())
+    schema = load_json(path)
 
     logger.debug(f"Successfully loaded schema file: {path}")
     return schema
 
 
 def load_recipe(path):
-    """Load a yaml recipe file. The file must be in .yml extension
-    for buildtest to load.
+    """Load a yaml recipe file. The file must be in **.yml** extension for buildtest to load.
 
-    :param path: the path to the recipe file.
-    :type path: str
+    Args:
+        path (str): The full path to buildspec recipe
+
+    Returns:
+        dict: a dict containing buildspec that is defined in YAML format
+
+    Raises:
+        SystemExit: If filepath doesn't exist or doesn't end in **.yml** extension
     """
 
     if not os.path.exists(path):

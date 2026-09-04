@@ -1,13 +1,19 @@
 .. _writing_buildspecs:
 
-Writing buildspecs
-====================
+
+Writing Buildspecs
+===================
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Buildspec Reference
 
-   buildspecs/global
-   buildspecs/buildspec_overview
-   buildspecs/compiler
-   buildspecs/batch_support
-   buildspecs/schema_examples
+   writing_buildspecs/global
+   writing_buildspecs/compilation
+   writing_buildspecs/metrics
+   writing_buildspecs/test_dependency
+   writing_buildspecs/multi_executor
+   writing_buildspecs/customize_shell
+   writing_buildspecs/containers
+   writing_buildspecs/status_check
+   writing_buildspecs/comparison_operators

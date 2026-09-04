@@ -18,13 +18,28 @@
     }
   },
   "definitions": {
+    "terse": {
+      "type": "boolean",
+      "description": "A boolean to determine whether to enable terse mode"
+    },
+    "format": {
+        "type": "string",
+        "description": "Determine the format fields to display when viewing table results"
+    },
+    "count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Determine number of records to display in a table"
+    },
+
     "system": {
       "required": [
         "executors",
         "moduletool",
-        "load_default_buildspecs",
         "hostnames",
-        "compilers"
+        "compilers",
+        "buildspecs",
+        "report"
       ],
       "additionalProperties": false,
       "type": "object",
@@ -40,16 +55,21 @@
           "type": "string",
           "description": "system description field"
         },
-        "buildspec_roots": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "Specify a list of directory paths to search buildspecs. This field can be used with ``buildtest buildspec find`` to rebuild buildspec cache or build tests using ``buildtest build`` command"
+        "poolsize":
+        {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Specify size of Process Pool for parallel processing using ``multiprocessing.Pool``"
         },
-        "load_default_buildspecs": {
-          "type": "boolean",
-          "description": "Specify whether buildtest should automatically load  buildspecs provided in buildtest repo into buildspec cache"
+        "max_jobs": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Maximum number of jobs that can be run at a given time for a particular executor"
+        },
+        "file_traversal_limit": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Determine the number of files that can be traversed when searching for buildspecs"
         },
         "testdir": {
           "type": "string",
@@ -65,14 +85,99 @@
           "enum": [
             "environment-modules",
             "lmod",
-            "N/A"
+            "none"
           ]
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Specify timeout duration in number of seconds"
+        },
+        "pager":
+          {
+            "type": "boolean",
+            "description": "A boolean to determine whether to enable paging when viewing buildspec cache"
+          },
+        "buildspecs":
+        {
+          "type": "object",
+          "description": "Specify configuration for ``buildtest buildspec`` command",
+          "additionalProperties": false,
+          "properties": {
+            "rebuild": {
+              "type": "boolean",
+              "description": "A boolean to determine whether to rebuild buildspec cache"
+            },
+            "count": { "$ref": "#/definitions/count" } ,
+            "format": {
+              "$ref": "#/definitions/format"
+            },
+            "terse": { "$ref": "#/definitions/terse" },
+            "search": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Specify a list of file paths to search buildspecs. This field can be used with ``buildtest buildspec find`` to rebuild buildspec cache or build tests using ``buildtest build`` command"
+            }
+          }
+        },
+        "report":
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Specify configuration for ``buildtest report`` command",
+          "properties": {
+            "format": { "$ref": "#/definitions/format" },
+            "count": { "$ref": "#/definitions/count" }
+          }
         },
         "compilers": {
           "type": "object",
           "description": "Declare compiler section for defining system compilers that can be referenced in buildspec.",
           "additionalProperties": false,
           "properties": {
+            "enable_prgenv": {
+              "type": "boolean",
+              "description": "Enable support for Programming Environment"
+            },
+            "modulepath": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+            "purge": {"type": "boolean", "description": "A boolean to determine whether to purge modules via ``module purge`` when generating compiler declaration"},
+            "prgenv_modules": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "gcc": {
+                  "type": "string",
+                  "description": "Specify name of Programming Environment module for gcc",
+                  "enum": [
+                    "PrgEnv-gnu"
+                  ]
+                },
+                "intel": {
+                  "type": "string",
+                  "description": "Specify name of Programming Environment module for intel",
+                  "enum": [
+                    "PrgEnv-intel"
+                  ]
+                },
+                "cray": {
+                  "type": "string",
+                  "description": "Specify name of Programming Environment module for cray",
+                  "enum": [
+                    "PrgEnv-cray"
+                  ]
+                },
+                "nvhpc": {
+                  "type": "string",
+                  "description": "Specify name of Programming Environment module for nvhpc",
+                  "enum": [
+                    "PrgEnv-nvhpc",
+                    "PrgEnv-nvidia"
+                  ]
+                }
+              }
+            },
             "find": {
               "type": "object",
               "additionalProperties": false,
@@ -105,6 +210,10 @@
                 "upcxx": {
                   "type": "string",
                   "description": "Specify a regular expression to search for upcxx compilers from your module stack"
+                },
+                "nvhpc": {
+                  "type": "string",
+                  "description": "Specify a regular expression to search for nvhpc compilers from your module stack"
                 }
               }
             },
@@ -114,37 +223,42 @@
               "description": "Start of compiler declaration",
               "properties": {
                 "gcc": {
-                  "description": "Declaration of one or more GNU compilers where we define C, C++ and Fortran compiler. The GNU compiler wrapper are ``gcc``, ``g++`` and ``gfortran``. ",
+                  "description": "Declaration of one or more GNU compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "intel": {
-                  "description": "Declaration of one or more Intel compilers where we define C, C++ and Fortran compiler. The Intel compiler wrapper are ``icc``, ``icpc`` and ``ifort``. ",
+                  "description": "Declaration of one or more Intel compilers. ",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "cray": {
-                  "description": "Declaration of one or more Cray compilers where we define C, C++ and Fortran compiler. The Cray compiler wrapper are ``cc``, ``CC`` and ``ftn``.",
+                  "description": "Declaration of one or more Cray compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "pgi": {
-                  "description": "Declaration of one or more PGI compilers where we define C, C++ and Fortran compiler. The PGI compiler wrapper are ``pgcc``, ``pgc++`` and ``pgfortran``.",
+                  "description": "Declaration of one or more PGI compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "clang": {
-                  "description": "Declaration of one or more Clang compilers where we define C, C++ compiler. The Clang compiler wrapper are ``clang``, ``clang++``.",
+                  "description": "Declaration of one or more Clang compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "cuda": {
-                  "description": "Declaration of one or more Cuda compilers where we define C compiler. The Cuda compiler wrapper is ``nvcc``. ",
+                  "description": "Declaration of one or more CUDA compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 },
                 "upcxx": {
-                  "description": "Declaration of one or more UPCXX compilers where we define C, C++ compiler. The UPCXX compiler wrapper are ``upcxx``.",
+                  "description": "Declaration of one or more UPCXX compilers.",
+                  "type": "object",
+                  "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
+                },
+                "nvhpc": {
+                  "description": "Declaration of one or more NVHPC compilers.",
                   "type": "object",
                   "patternProperties": { "^.*$": { "$ref": "#/definitions/compiler_section" } }
                 }
@@ -155,7 +269,8 @@
         "executors": {
             "type": "object",
             "additionalProperties": false,
-            "description": "The executor section is used for declaring your executors that are responsible for running jobs. The executor section can be ``local``, ``lsf``, ``slurm``, ``cobalt``. The executors are referenced in buildspec using ``executor`` field.",
+            "description": "The executor section is used for declaring your executors that are responsible for running jobs. The executor section can be ``local``, ``lsf``, ``slurm``. The executors are referenced in buildspec using ``executor`` field.",
+            "required": ["local"],
             "properties": {
               "defaults": {
                 "type": "object",
@@ -165,21 +280,11 @@
                   "pollinterval": {
                     "type": "integer",
                     "description": "Specify poll interval in seconds after job submission, where buildtest will sleep and poll all jobs for job states. This field can be configured based on your preference. Excessive polling every few seconds can result in system degradation. ",
-                    "minimum": 10,
-                    "maximum": 300,
+                    "minimum": 1,
                     "default": 30
                   },
-                  "launcher": {
-                    "type": "string",
-                    "enum": [
-                      "sbatch",
-                      "bsub",
-                      "qsub"
-                    ],
-                    "description": "Specify batch launcher to use when submitting jobs, this is applicable for LSF and Slurm Executors."
-                  },
-                  "max_pend_time": {
-                    "$ref": "#/definitions/max_pend_time"
+                  "maxpendtime": {
+                    "$ref": "#/definitions/maxpendtime"
                   },
                   "account": {
                     "$ref": "#/definitions/account"
@@ -189,50 +294,131 @@
               "local": {
                 "type": "object",
                 "description": "The ``local`` section is used for declaring local executors for running jobs on local machine",
-                "patternProperties": {
-                  "^.*$": {
-                    "$ref": "#/definitions/local"
-                  }
-                }
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/local"
+                },
+                "minProperties": 1
               },
               "lsf": {
                 "type": "object",
                 "description": "The ``lsf`` section is used for declaring LSF executors for running jobs using LSF scheduler",
-                "patternProperties": {
-                  "^.*$": {
-                    "$ref": "#/definitions/lsf"
-                  }
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/lsf"
                 }
               },
               "slurm": {
                 "type": "object",
                 "description": "The ``slurm`` section is used for declaring Slurm executors for running jobs using Slurm scheduler",
-                "patternProperties": {
-                  "^.*$": {
-                    "$ref": "#/definitions/slurm"
-                  }
-                }
-              },
-              "cobalt": {
-                "type": "object",
-                "description": "The ``cobalt`` section is used for declaring Cobalt executors for running jobs using Cobalt scheduler",
-                "patternProperties": {
-                  "^.*$": {
-                    "$ref": "#/definitions/cobalt"
-                  }
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/slurm"
                 }
               },
               "pbs": {
                 "type": "object",
                 "description": "The ``pbs`` section is used for declaring PBS executors for running jobs using PBS scheduler",
-                "patternProperties": {
-                  "^.*$": {
-                    "$ref": "#/definitions/pbs"
-                  }
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/pbs"
+                }
+              },
+              "torque": {
+                "type": "object",
+                "description": "The ``torque`` section is used for declaring PBS/Torque executors for running jobs using Torque scheduler",
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/pbs"
+                }
+              },
+              "container": {
+                "type": "object",
+                "description": "The ``container`` section is used for declaring container executors for running jobs using container technology",
+                "propertyNames": {
+                  "pattern": "^[A-Za-z0-9_.-]+$"
+                },
+                "additionalProperties": {
+                  "$ref": "#/definitions/container"
                 }
               }
             }
+          },
+        "cdash": {
+          "type": "object",
+          "description": "Specify CDASH configuration used to upload tests via 'buildtest cdash' command",
+          "required": ["url", "project", "site"],
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Url to CDASH server"
+            },
+            "project": {
+              "type": "string",
+              "description": "Name of CDASH project"
+            },
+            "site": {
+              "type": "string",
+              "description": "Site Name reported in CDASH"
+            }
           }
+        },
+        "paths":
+        {
+          "type": "object",
+          "description": "Specify paths to look up for executables",
+          "additionalProperties": false,
+          "properties": {
+            "slurm": {
+              "type": "string",
+              "description": "Specify path to slurm executable"
+            },
+            "lsf": {
+              "type": "string",
+              "description": "Specify path to lsf executable"
+            },
+            "pbs": {
+              "type": "string",
+              "description": "Specify path to pbs executable"
+            },
+            "torque": {
+              "type": "string",
+              "description": "Specify path to torque executable"
+            },
+            "docker": {
+              "type": "string",
+              "description": "Specify path to docker executable"
+            },
+            "singularity": {
+              "type": "string",
+              "description": "Specify path to singularity executable"
+            },
+            "podman": {
+              "type": "string",
+              "description": "Specify path to podman executable"
+            }
+          }
+        },
+        "profiles": {
+          "type": "object",
+          "description": "The profiles section is used for declaring one or more profiles that can be used to run ``buildtest build`` that are captured as command options ",
+            "propertyNames": {
+                "pattern": "^[A-Za-z0-9_.-]+$"
+            },
+            "additionalProperties": {
+              "$ref": "#/definitions/profiles"
+            }
+        }
       }
     },
     "cc": {
@@ -266,6 +452,7 @@
         "type": "string"
       }
     },
+    "disable": {"type": "boolean", "description": "Disable an executor"},
     "module": {
       "type": "object",
       "additionalProperties": false,
@@ -285,7 +472,11 @@
           "minItems": 2,
           "maxItems": 2,
           "items": { "type": "string" }
-        }
+        },
+         "restore": {
+           "description": "Load a collection name via ``module restore``",
+           "type": "string"
+         }
       }
     },
     "script": {
@@ -293,11 +484,11 @@
       "additionalProperties": false,
       "items": { "type": "string" }
     },
-    "max_pend_time": {
+    "maxpendtime": {
       "type": "integer",
-      "description": "Cancel job if it is still pending in queue beyond max_pend_time",
-      "minimum": 10,
-      "default": 90
+      "description": "Cancel job if it is still pending in queue beyond maxpendtime",
+      "minimum": 1,
+      "default": 86400
     },
     "account": {
       "type": "string",
@@ -309,17 +500,14 @@
       "additionalProperties": false,
       "required": [ "shell" ],
       "properties": {
-        "description": {
-          "type": "string",
-          "description": "description field for documenting your executor"
-        },
+        "description": { "$ref": "#/definitions/description" },
         "shell": {
           "type": "string",
-          "description": "Specify the shell launcher you want to use when running tests locally",
-          "pattern": "^(/bin/bash|/bin/sh|/bin/csh|/bin/tcsh|/bin/zsh|sh|bash|csh|tcsh|zsh|python).*"
+          "description": "Specify the shell launcher you want to use when running tests locally"
         },
         "before_script": { "#ref": "#/definitions/script" },
-        "after_script": { "#ref": "#/definitions/script" }
+        "disable": {"$ref":  "#/definitions/disable"},
+        "module": { "$ref": "#/definitions/module" }
       }
     },
     "slurm": {
@@ -327,15 +515,7 @@
       "additionalProperties": false,
       "description": "An instance object of slurm executor",
       "properties": {
-        "description": {
-          "type": "string",
-          "description": "description field for documenting your executor"
-        },
-        "launcher": {
-          "type": "string",
-          "enum": [ "sbatch" ],
-          "description": "Specify the slurm batch scheduler to use. This overrides the default ``launcher`` field. This must be ``sbatch``. "
-        },
+        "description": { "$ref": "#/definitions/description" },
         "options": {
           "type": "array",
           "items": { "type": "string" },
@@ -357,17 +537,19 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "after_script": {
-          "description": "The ``after_script`` section can be used to specify commands at end of test. The script will be sourced in active shell.",
-          "#ref": "#/definitions/script"
-        },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",
           "$ref": "#/definitions/account"
+        },
+        "disable": {"$ref":  "#/definitions/disable"},
+        "module": { "$ref": "#/definitions/module" },
+        "disable_check": {
+          "type": "boolean",
+          "description": "Disable check for partition or qos "
         }
       }
     },
@@ -380,11 +562,6 @@
         "description": {
           "type": "string",
           "description": "description field for documenting your executor"
-        },
-        "launcher": {
-          "type": "string",
-          "enum": [ "bsub" ],
-          "description": "Specify the lsf batch scheduler to use. This overrides the default ``launcher`` field. It must be ``bsub``. "
         },
         "options": {
           "type": "array",
@@ -399,77 +576,29 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "after_script": {
-          "description": "The ``after_script`` section can be used to specify commands at end of test. The script will be sourced in active shell.",
-          "#ref": "#/definitions/script"
-        },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",
           "$ref": "#/definitions/account"
-        }
-      }
-    },
-    "cobalt": {
-      "type": "object",
-      "description": "An instance object of cobalt executor",
-      "additionalProperties": false,
-      "required": [ "queue" ],
-      "properties": {
-        "description": {
-          "type": "string",
-          "description": "description field for documenting your executor"
         },
-        "launcher": {
-          "type": "string",
-          "enum": [ "qsub" ],
-          "description": "Specify the cobalt batch scheduler to use. This overrides the default ``launcher`` field. It must be ``qsub``. "
-        },
-        "options": {
-          "type": "array",
-          "items": { "type": "string" },
-          "description": "Specify any options for ``qsub`` for this executor when running all jobs associated to this executor"
-        },
-        "queue": {
-          "type": "string",
-          "description": "Specify the lsf queue you want to use ``-q <queue>``"
-        },
-        "before_script": {
-          "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
-          "#ref": "#/definitions/script"
-        },
-        "after_script": {
-          "description": "The ``after_script`` section can be used to specify commands at end of test. The script will be sourced in active shell.",
-          "#ref": "#/definitions/script"
-        },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
-        },
-        "account": {
-          "description": "overrides default ``account`` value",
-          "$ref": "#/definitions/account"
+        "disable": {"$ref":  "#/definitions/disable"},
+        "module": { "$ref": "#/definitions/module" },
+        "disable_check": {
+          "type": "boolean",
+          "description": "Disable check for partition or qos "
         }
       }
     },
     "pbs": {
       "type": "object",
-      "description": "An instance object of cobalt executor",
+      "description": "An instance object of pbs executor",
       "additionalProperties": false,
       "required": [ "queue" ],
       "properties": {
-        "description": {
-          "type": "string",
-          "description": "description field for documenting your executor"
-        },
-        "launcher": {
-          "type": "string",
-          "enum": [ "qsub" ],
-          "description": "Specify the pbs batch scheduler to use. This overrides the default ``launcher`` field. It must be ``qsub``. "
-        },
+        "description": { "$ref": "#/definitions/description" },
         "options": {
           "type": "array",
           "items": { "type": "string" },
@@ -483,19 +612,116 @@
           "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
           "#ref": "#/definitions/script"
         },
-        "after_script": {
-          "description": "The ``after_script`` section can be used to specify commands at end of test. The script will be sourced in active shell.",
-          "#ref": "#/definitions/script"
-        },
-        "max_pend_time": {
-          "description": "overrides default ``max_pend_time`` value",
-          "$ref": "#/definitions/max_pend_time"
+        "maxpendtime": {
+          "description": "overrides default ``maxpendtime`` value",
+          "$ref": "#/definitions/maxpendtime"
         },
         "account": {
           "description": "overrides default ``account`` value",
           "$ref": "#/definitions/account"
+        },
+        "disable": {"$ref":  "#/definitions/disable"},
+        "module": { "$ref": "#/definitions/module" },
+        "disable_check": {
+          "type": "boolean",
+          "description": "Disable check for partition or qos "
         }
       }
+    },
+    "container": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": { "$ref": "#/definitions/description" },
+        "before_script": {
+          "description": "The ``before_script`` section can be used to specify commands before start of test. The script will be sourced in active shell.",
+          "#ref": "#/definitions/script"
+        },
+        "platform": {
+          "type": "string",
+          "description": "Specify container platform to use for container. ",
+          "enum": [
+            "docker",
+            "singularity",
+            "podman"
+          ]
+        },
+        "image": {
+          "type": "string",
+          "description": "Specify container image to use for container. "
+        },
+        "mounts": {
+          "type": "string",
+          "description": "Specify a list of directory paths to bind mount into the container"
+        },
+        "options": {
+          "type": "string",
+          "description": "Specify a list of options to pass to container runtime. "
+        },
+        "disable": {"$ref":  "#/definitions/disable"}
+      }
+    },
+    "profiles":
+    {
+      "type": "object",
+      "properties": {
+        "buildspecs": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+        "exclude-buildspecs": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+        "tags": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+        "exclude-tags": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+        "executors": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+        "filter": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "type": {
+              "type": "array",
+              "description": "Specify the `type` field to determine which schema to use during filtering",
+              "uniqueItems": true,
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                 "enum": ["script", "spack"]
+              }
+            },
+            "tags": {
+              "description": "Filter by tags",
+              "$ref": "definitions.schema.json#/definitions/list_of_strings"
+            },
+            "maintainers": {
+              "description": "Filter by maintainers",
+              "$ref": "definitions.schema.json#/definitions/list_of_strings"
+            }
+          }
+        },
+        "module": {"type": "string"},
+        "unload-modules": {"type": "string"},
+        "module-purge": {"type": "boolean"},
+        "validate": {"type": "boolean", "description": "Validate given buildspecs and buildtest will stop after parse stage"},
+        "display": {"$ref": "definitions.schema.json#/definitions/list_of_strings"},
+        "dry-run": {"type": "boolean", "description": "Show a list of tests that will potentially be run"},
+        "rebuild": {"type": "integer", "minimum": 1, "maximum": 50, "description": "Specify number of tests to rebuild"},
+        "limit": {"type": "integer", "minimum": 1, "description": "Limit number of tests to build"},
+        "account": {"$ref": "#/definitions/account"},
+        "maxpendtime": { "$ref": "#/definitions/maxpendtime" },
+        "pollinterval": {"type": "integer", "minimum": 1, "description": "Specify poll interval in seconds"},
+        "procs": {"$ref": "definitions.schema.json#/definitions/list_of_positive_integers"},
+        "nodes": {"$ref": "definitions.schema.json#/definitions/list_of_positive_integers"},
+        "testdir": {"type": "string", "description": "Specify test directory where buildtest will write tests."},
+        "timeout": {"type": "integer", "minimum": 1},
+        "executor-type": {
+          "type": "string",
+          "description": "Specify the `executor-type` field used by ``--executor-type`` option which determines if test will run by local or batch executor",
+          "enum": ["local", "batch"]
+        },
+        "remove-stagedir": {"type": "boolean", "description": "Remove stage directory after test completes"},
+        "max-jobs": {"type": "integer", "minimum": 1, "description": "Maximum number of jobs that can be run at a given time for a particular executor"},
+        "strict": {"type": "boolean", "description": "Enable strict mode for buildtest"}
+      }
+    },
+    "description": {
+      "type": "string",
+      "description": "description field for documenting your executor"
     }
   }
 }

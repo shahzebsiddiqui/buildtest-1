@@ -1,65 +1,58 @@
 """This module implements PBSExecutor class that defines how executors submit
 job to PBS Scheduler"""
-import json
-import os
-import sys
 
+import logging
+import os
+
+from buildtest.defaults import console
 from buildtest.executors.base import BaseExecutor
-from buildtest.utils.command import BuildTestCommand
-from buildtest.utils.file import read_file
-from buildtest.utils.tools import deep_get
+from buildtest.scheduler.pbs import PBSJob, TorqueJob
+from buildtest.utils.tools import check_binaries, deep_get
+
+logger = logging.getLogger(__name__)
 
 
 class PBSExecutor(BaseExecutor):
     """The PBSExecutor class is responsible for submitting jobs to PBS Scheduler.
     The class implements the following methods:
 
-    load: load PBS executors from configuration file
-    dispatch: submit PBS job to scheduler
-    poll: poll PBS job via qstat and retrieve job state
-    gather: gather job result
-    cancel: cancel job if it exceeds max pending time
+    - load: load PBS executors from configuration file
+    - dispatch: submit PBS job to scheduler
+    - poll: poll PBS job via qstat and retrieve job state
+    - gather: gather job result
+    - cancel: cancel job if it exceeds max pending time
     """
 
     type = "pbs"
-    poll_cmd = "qstat"
 
-    def load(self):
-        """Load the a Cobalt executor configuration from buildtest settings."""
-
-        self.launcher = self._settings.get("launcher") or deep_get(
-            self._buildtestsettings.target_config, "executors", "defaults", "launcher"
+    def __init__(
+        self, name, settings, site_configs, account=None, maxpendtime=None, timeout=None
+    ):
+        super().__init__(
+            name,
+            settings,
+            site_configs,
+            timeout=timeout,
+            account=account,
+            maxpendtime=maxpendtime,
         )
-        self.launcher_opts = self._settings.get("options")
 
         self.queue = self._settings.get("queue")
-        self.account = self._settings.get("account") or deep_get(
-            self._buildtestsettings.target_config, "executors", "defaults", "account"
+        self.custom_dirs = None
+
+        if isinstance(self, PBSExecutor):
+            self.custom_dirs = deep_get(site_configs.target_config, "paths", "pbs")
+        elif isinstance(self, TorqueExecutor):
+            self.custom_dirs = deep_get(site_configs.target_config, "paths", "torque")
+
+    def launcher_command(self, numprocs=None, numnodes=None):
+        batch_cmd = []
+
+        self.pbs_cmds = check_binaries(
+            ["qsub", "qstat", "qdel"], custom_dirs=self.custom_dirs
         )
 
-        self.max_pend_time = self._settings.get("max_pend_time") or deep_get(
-            self._buildtestsettings.target_config,
-            "executors",
-            "defaults",
-            "max_pend_time",
-        )
-
-    def dispatch(self, builder):
-        """This method is responsible for dispatching PBS job, get JobID
-        and start record metadata in builder object. If job failed to submit
-        we check returncode and exit with failure. After we submit job, we
-        start timer and record when job was submitted and poll job once to get
-        job details and store them in builder object.
-
-        :param builder: builder object
-        :type builder: BuilderBase, required
-        """
-
-        self.load()
-
-        os.chdir(builder.stage_dir)
-
-        batch_cmd = [self.launcher]
+        batch_cmd += [self.pbs_cmds["qsub"]]
 
         if self.queue:
             batch_cmd += [f"-q {self.queue}"]
@@ -67,151 +60,59 @@ class PBSExecutor(BaseExecutor):
         if self.account:
             batch_cmd += [f"-P {self.account}"]
 
+        if numprocs:
+            batch_cmd += [f"-l ncpus={numprocs}"]
+
+        if numnodes:
+            batch_cmd += [f"-l nodes={numnodes}"]
+
         if self.launcher_opts:
             batch_cmd += [" ".join(self.launcher_opts)]
 
-        batch_cmd += [builder.metadata["testpath"]]
-        builder.metadata["command"] = " ".join(batch_cmd)
-        self.logger.debug(f"Running Test via command: {builder.metadata['command']}")
-        command = BuildTestCommand(builder.metadata["command"])
-        command.execute()
-        # record start time in builder object
-        self.start_time(builder)
-        builder.start()
+        return batch_cmd
 
-        # if qsub job submission returns non-zero exit that means we have failure, exit immediately
-        if command.returncode != 0:
-            err = f"[{builder.metadata['name']}] failed to submit job with returncode: {command.returncode} \n"
-            err += (
-                f"[{builder.metadata['name']}] running command: {' '.join(batch_cmd)}"
-            )
-            sys.exit(err)
+    def run(self, builder):
+        """This method is responsible for dispatching PBS job, get JobID
+        and start record metadata in builder object. If job failed to submit
+        we check returncode and exit with failure. After we submit job, we
+        start timer and record when job was submitted and poll job once to get
+        job details and store them in builder object.
 
-        parse_jobid = command.get_output()
-        self.job_id = " ".join(parse_jobid).strip()
-
-        builder.metadata["jobid"] = self.job_id
-
-        msg = f"[{builder.metadata['name']}] JobID: {builder.metadata['jobid']} dispatched to scheduler"
-        print(msg)
-        self.logger.debug(msg)
-
-        qstat_cmd = f"{self.poll_cmd} -f -F json {builder.metadata['jobid']}"
-        cmd = BuildTestCommand(qstat_cmd)
-        cmd.execute()
-        output = cmd.get_output()
-        output = " ".join(output)
-        job_data = json.loads(output)
-
-        # output in the form of <server>:<file>
-        builder.metadata["outfile"] = job_data["Jobs"][self.job_id][
-            "Output_Path"
-        ].split(":")[1]
-        builder.metadata["errfile"] = job_data["Jobs"][self.job_id]["Error_Path"].split(
-            ":"
-        )[1]
-
-    def poll(self, builder):
-        """This method is responsible for polling Cobalt job, we check the
-        job state and existence of output file. If file exists or job is in
-        'exiting' stage we set job to 'done' stage and gather results. If job
-        is in 'pending' stage we check if job exceeds 'max_pend_time' time limit
-        by checking with builder timer attribute using ``start`` and ``stop`` method.
-        If job exceeds the time limit job is cancelled.
-
-        :param builder: builder object
-        :type builder: BuilderBase, required
+        Args:
+            builder (buildtest.buildsystem.base.BuilderBase): An instance object of BuilderBase type
         """
 
-        self.logger.debug(f"Query Job: {builder.metadata['jobid']}")
-        # run qstat -f -F json <jobid>
-        qstat_cmd = f"{self.poll_cmd} -x -f -F json {builder.metadata['jobid']}"
-        self.logger.debug(f"Executing command: {qstat_cmd}")
-        cmd = BuildTestCommand(qstat_cmd)
-        cmd.execute()
-        output = cmd.get_output()
-        output = " ".join(output)
+        os.chdir(builder.stage_dir)
 
-        job_data = json.loads(output)
+        cmd = f"{self.shell} {os.path.basename(builder.build_script)}"
 
-        self.logger.debug("Job record")
-        self.logger.debug(json.dumps(job_data, indent=2))
-
-        job_state = job_data["Jobs"][builder.metadata["jobid"]]["job_state"]
-
-        if job_state:
-            builder.job_state = job_state
-
-        self.logger.debug(
-            "[%s]: JobID %s in %s state ",
-            builder.metadata["name"],
-            builder.metadata["jobid"],
-            builder.job_state,
+        self.timeout = self.timeout or self._buildtestsettings.target_config.get(
+            "timeout"
         )
 
-        # if job in pending state (Q) check if it exceeds max_pend_time if so cancel job
-        if builder.job_state == "Q":
-            builder.stop()
-            self.logger.debug(f"Time Duration: {builder.duration}")
-            self.logger.debug(f"Max Pend Time: {self.max_pend_time}")
+        command = builder.run(cmd, timeout=self.timeout)
 
-            # if timer time is more than requested pend time then cancel job
-            if int(builder.duration) > self.max_pend_time:
-                self.cancel(builder)
-                builder.job_state = "CANCELLED"
-                print(
-                    "Cancelling Job because duration time: {:f} sec exceeds max pend time: {} sec".format(
-                        builder.duration, self.max_pend_time
-                    )
-                )
+        if command.returncode() != 0:
+            builder.failed()
+            return builder
 
-            builder.start()
+        out = command.get_output()
+        JobID = " ".join(out).strip()
 
-    def gather(self, builder):
-        """This method is responsible for getting output of job using `qstat -x -f -F json <jobID>`
-        and storing the result in builder object. We retrieve specific fields such as exit status,
-        start time, end time, runtime and store them in builder object. We read output and error file
-        and store the content in builder object.
+        if isinstance(self, TorqueExecutor):
+            builder.job = TorqueJob(JobID, self.pbs_cmds)
+        elif isinstance(self, PBSExecutor):
+            builder.job = PBSJob(JobID, self.pbs_cmds)
 
-        :param builder: builder object
-        :type builder: BuilderBase, required
-        """
+        # store job id
+        builder.metadata["jobid"] = builder.job.get()
 
-        qstat_cmd = f"{self.poll_cmd} -x -f -F json {builder.metadata['jobid']}"
-
-        self.logger.debug(f"Executing command: {qstat_cmd}")
-        cmd = BuildTestCommand(qstat_cmd)
-        cmd.execute()
-        output = cmd.get_output()
-        output = " ".join(output)
-
-        job_data = json.loads(output)
-
-        builder.metadata["result"]["returncode"] = job_data["Jobs"][
-            builder.metadata["jobid"]
-        ]["Exit_status"]
-
-        # record endtime in builder object
-        self.end_time(builder)
-
-        builder.metadata["job"] = job_data
-
-        builder.metadata["output"] = read_file(builder.metadata["outfile"])
-        builder.metadata["error"] = read_file(builder.metadata["errfile"])
-
-        self.check_test_state(builder)
-
-    def cancel(self, builder):
-        """Cancel Cobalt job using qdel, this operation is performed if job exceeds its max_pend_time.
-
-        :param builder: builder object
-        :type builder: BuilderBase, required
-        """
-
-        query = f"qdel {builder.metadata['jobid']}"
-
-        cmd = BuildTestCommand(query)
-        cmd.execute()
-        msg = f"Cancelling Job: {builder.metadata['name']} running command: {query}"
-        print(msg)
+        msg = f"[blue]{builder}[/]: JobID: {builder.metadata['jobid']} dispatched to scheduler"
+        console.print(msg)
         self.logger.debug(msg)
+
+        return builder
+
+
+class TorqueExecutor(PBSExecutor):
+    """This class is a sub-class of PBSExecutor class and is responsible for Torque Executor"""

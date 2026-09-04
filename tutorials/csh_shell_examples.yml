@@ -1,4 +1,3 @@
-version: "1.0"
 buildspecs:
   csh_shell:
     executor: generic.local.csh
@@ -9,9 +8,9 @@ buildspecs:
     vars:
       file: "/etc/csh.cshrc"
     run: |
-      if (-e $file) then
-        echo "$file file found"
-      else
+      if (! -e $file) then
         echo "$file file not found"
         exit 1
+      else
+        echo "$file file found"        
       endif

@@ -1,9 +1,14 @@
+import logging
 import os
-import subprocess
 import shlex
 import shutil
+import subprocess
 import tempfile
+
+from buildtest.exceptions import BuildTestError
 from buildtest.utils.file import read_file
+
+logger = logging.getLogger(__name__)
 
 
 class Capturing:
@@ -13,15 +18,14 @@ class Capturing:
     the init of the capture, and then they are closed when we exit. This
     means expected usage looks like:
 
-    with Capturing() as capture:
-        process = subprocess.Popen(...)
+    .. code-block:: python
+
+        with Capturing() as capture:
+            process = subprocess.Popen(...)
 
 
     And then the output and error are retrieved from reading the files:
-    and exposed as properties to the client:
-
-        capture.out
-        capture.err
+    and exposed as properties to the client: capture.out, capture.err
 
     And cleanup means deleting these files, if they exist.
     """
@@ -43,23 +47,20 @@ class Capturing:
 
     @property
     def out(self):
-        """Return output stream. Returns empty string if empty or doesn't exist.
-        Returns (str) : output stream written to file
-        """
+        """Return content of output stream if file exists otherwise returns empty string"""
         if os.path.exists(self.stdout.name):
             return read_file(self.stdout.name)
         return ""
 
     @property
     def err(self):
-        """Return error stream. Returns empty string if empty or doesn't exist.
-        Returns (str) : error stream written to file
-        """
+        """Return content of error stream if file exists otherwise returns empty string."""
         if os.path.exists(self.stderr.name):
             return read_file(self.stderr.name)
         return ""
 
     def cleanup(self):
+        """This method will remove stdout and stderr file upon reading both streams"""
         for filename in [self.stdout.name, self.stderr.name]:
             if os.path.exists(filename):
                 os.remove(filename)
@@ -71,49 +72,40 @@ class BuildTestCommand:
     https://github.com/vsoch/scif
     """
 
-    def __init__(self, cmd=None):
+    def __init__(self, cmd):
+        """The initializer method will initialize class variables and check input argument `cmd` and make sure
+        command is in a list format.
 
-        cmd = cmd or []
-        self.returncode = None
+        Args:
+            cmd (str): Input shell command
+        """
+        if not isinstance(cmd, str):
+            raise BuildTestError("Input command must be a string")
+
+        self.cmd = shlex.split(cmd)
+
+        self._returncode = None
         self.out = []
         self.err = []
 
-        # If a list isn't provided, split it
-        if cmd:
-            self.set_command(cmd)
-
-    def set_command(self, cmd):
-        """parse is called when a new command is provided to ensure we have
-        a list. We don't check that the executable is on the path,
-        as the initialization might not occur in the runtime environment.
-        """
-        if not isinstance(cmd, list):
-            cmd = shlex.split(cmd)
-        self.cmd = cmd
-
-    def execute(self):
+    def execute(self, timeout=None):
         """Execute a system command and return output and error.
-        :param cmd: shell command to execute
-        :type cmd: str, required
-        :return: Output and Error from shell command
-        :rtype: two str objects
+
+        Args:
+            timeout (int, optional): The timeout value in number of seconds for a process. This argument is passed to `Popen.communicate <https://docs.python.org/3/library/subprocess.html#subprocess.Popen.communicate>`_
         """
         # Reset the output and error records
-        self.out = []
-        self.err = []
+        self.reset_output()
 
         # The executable must be found, return code 1 if not
-        executable = shutil.which(self.cmd[0])
+        executable = self.find_executable()
         if not executable:
-            self.err = ["%s not found." % self.cmd[0]]
-            self.returncode = 1
+            self.err.append(f"{self.cmd[0]} not found.")
+            self._returncode = 1
             return (self.out, self.err)
 
-        # remove the original executable
-        args = self.cmd[1:]
-
         # Use updated command with executable and remainder (list)
-        cmd = [executable] + args
+        cmd = [executable] + self.cmd[1:]
 
         # Capturing provides temporary output and error files
         with Capturing() as capture:
@@ -123,53 +115,67 @@ class BuildTestCommand:
                 stderr=capture.stderr,
                 universal_newlines=True,
             )
-            returncode = process.poll()
+            try:
+                process.communicate(timeout=timeout)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                logger.error("Process timed out")
+                self._returncode = 1
 
-            # Iterate through the output
-            while returncode is None:
-                returncode = process.poll()
-
-        # Get the remainder of lines, add return code
-        # self.out += ["%s\n" % x for x in self.decode(capture.out).split("\n") if x]
-        # self.err += ["%s\n" % x for x in self.decode(capture.err).split("\n") if x]
-
-        self.out += ["%s\n" % x for x in capture.out.split("\n") if x]
-        self.err += ["%s\n" % x for x in capture.err.split("\n") if x]
-        # Cleanup capture files and save final return code
-        capture.cleanup()
-        self.returncode = returncode
+            self._returncode = process.wait()
+            # Get the remainder of lines, add return code. The self.decode avoids UTF-8 decode error
+            self.out += self.decode_output(capture.out)
+            self.err += self.decode_output(capture.err)
+            # Cleanup capture files and save final return code
+            capture.cleanup()
 
         return (self.out, self.err)
 
-    def returnCode(self):
+    def reset_output(self):
+        """Reset output and error content"""
+        self.out = []
+        self.err = []
+
+    def find_executable(self):
+        """Find the executable for the command."""
+        return shutil.which(self.cmd[0])
+
+    def decode_output(self, output):
+        """Decode the output to avoid UTF-8 decode error."""
+        return [f"{x}\n" for x in output.split("\n") if x]
+
+    def returncode(self):
         """Returns the return code from shell command
-        :rtype: int
+
+        Returns:
+            int: returncode of shell command
         """
 
-        return self.returncode
+        return self._returncode
 
-    """
     def decode(self, line):
-        Given a line of output (error or regular) decode using the
+        """Given a line of output (error or regular) decode using the
         system default, if appropriate
-        
-        loc = locale.getdefaultlocale()[1]
+        """
+
+        # loc = locale.getdefaultlocale()[1]
 
         try:
-            line = line.decode(loc)
+            line = line.decode("utf-8")
         except Exception:
             pass
         return line
-    """
 
     def get_output(self):
-        """Returns the output from shell command
-        :rtype: str
-        """
+        """Returns the output content from shell command"""
         return self.out
 
     def get_error(self):
-        """Returns the error from shell command
-        :rtype: str
-        """
+        """Returns the error content from shell command"""
+
         return self.err
+
+    def get_command(self):
+        """Returns the executed command"""
+
+        return " ".join(self.cmd)

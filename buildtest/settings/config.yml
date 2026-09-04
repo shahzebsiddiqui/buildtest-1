@@ -1,62 +1,108 @@
 system:
   generic:
-    # specify list of hostnames where buildtest can run for given system record
-    hostnames: [".*"]
-
+    # specify a list of hostnames that is a regular expression where buildtest can run.
+    hostnames: ['.*']
     # system description
     description: Generic System
-    # specify module system used at your site (environment-modules, lmod)
-    moduletool: N/A
-    # boolean to determine if buildspecs provided in buildtest repo should be loaded in buildspec cache
-    load_default_buildspecs: True
+    # specify module system to use. Supported module systems are [lmod, environment-modules, none]
+    moduletool: none
 
+    # specify size of job pool (https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool). This will configure the number of processes that can run in parallel.
+    # If not specified then buildtest will use all available cores on the system.
+    poolsize: 1
+
+    # maximum number of jobs that can run in parallel. If not specified, buildtest will run all jobs in parallel.
+    #max_jobs: 1
+
+    # test timeout in number of seconds
+    # timeout: 3600
+
+    # This configuration is used to limit the number of files that can be traversed when searching for buildspecs
+    # file_traversal_limit: 1000
+
+    # enable pagination for buildtest
+    pager: false
+
+    # options for buildtest buildspec find command
+    buildspecs:
+      # determine whether to rebuild buildspec cache
+      rebuild: false
+      # determine number of records to display
+      count: 15
+
+      # specify format fields
+      #format: name,description
+
+      # display output in terse mode
+      terse: false
+
+      # list of paths to search for buildspecs where it can be file or directory
+      # search: ["$BUILDTEST_ROOT/tutorials/containers", "$BUILDTEST_ROOT/examples", "demo.yml"]
+
+    # options for buildtest report command
+    report:
+      # number of records to display
+      count: 25
+
+      # specify format fields
+      format: name,id,state,runtime,returncode
+
+    # specify directory paths to search for binaries
+    #paths:
+      # directory path to search for slurm binaries.
+      #slurm: "/usr/bin"
+
+      # directory path to search for lsf binaries.
+      #lsf: "/usr/bin"
+
+      # directory path to search for pbs binaries.
+      #pbs: "/usr/bin"
+
+      # directory path to search for torque binaries.
+      #torque: "/usr/bin"
+
+      # path to docker directory
+      #docker: "/usr/local/bin"
+
+      # path to singularity directory
+      #singularity: "/usr/local/bin"
+
+      # path to podman directory
+      #podman: "/usr/local/bin"
+
+    # start of executor configuration
     executors:
-      # define local executors for running jobs locally
+      # local executor is used to submit jobs on local machine. In this example we have 4 executors: bash, sh, csh, zsh that will submit jobs using bash, sh, csh, zsh shell respectively.
       local:
         bash:
           description: submit jobs on local machine using bash shell
           shell: bash
-
         sh:
           description: submit jobs on local machine using sh shell
           shell: sh
-
         csh:
           description: submit jobs on local machine using csh shell
           shell: csh
-
         zsh:
           description: submit jobs on local machine using zsh shell
           shell: zsh
-
-        python:
-          description: submit jobs on local machine using python shell
-          shell: python
-
-    # compiler block
+    # specify compiler declaration
     compilers:
-      # regular expression to search for compilers based on module pattern. Used with 'buildtest config compilers find' to generate compiler instance
-      # find:
-      #  gcc: "^(gcc)"
-      #  intel: "^(intel)"
-      #  cray: "^(craype)"
-      #  pgi: "^(pgi)"
-      #  cuda: ^(cuda)"
-      #  clang: "^(clang)"
-
-      # declare compiler instance which can be site-specific. You can let 'buildtest config compilers find' generate compiler section
       compiler:
+        # declaration of all gcc compilers
         gcc:
+          # name of compiler
           builtin_gcc:
-            cc: /usr/bin/gcc
-            fc: /usr/bin/gfortran
-            cxx: /usr/bin/g++
-
-    # location of log directory
-    # logdir: /tmp/
-
-    # specify location where buildtest will write tests
-    # testdir: /tmp
-
-    # specify one or more directory where buildtest should load buildspecs
-    # buildspec_roots: []
+            cc: gcc
+            fc: gfortran
+            cxx: g++
+    # specify CDASH configuration when using 'buildtest cdash upload'
+    cdash:
+      # CDASH server
+      url: https://my.cdash.org/
+      # name of CDASH project where to push test reports
+      project: buildtest
+      # specify the site name which should generally by name of your HPC system. This is used by CDASH to group test results by site
+      site: generic
+      # specify the build name which is used to group test results by build name
+      buildname: tutorials

@@ -1,43 +1,56 @@
 system:
   generic:
     hostnames: ['.*']
-
     logdir: $BUILDTEST_ROOT/logs
     testdir: $BUILDTEST_ROOT/tests
+    moduletool: none
+    poolsize: 1
+    max_jobs: 1
+    pager: False
+    file_traversal_limit: 1000
+    cdash:
+      url: https://my.cdash.org
+      project: buildtest
+      site: laptop
+    buildspecs:
+      # whether to rebuild cache file automatically when running `buildtest buildspec find`
+      rebuild: False
+      # limit number of records to display when running `buildtest buildspec find`
+      count: 15
+      # format fields to display when running `buildtest buildspec find`, By default we will show name,description
+      format: "name,description"
+      # enable terse mode
+      terse: False
+      # search for buildspecs in these directories
+      search: ["$BUILDTEST_ROOT/tutorials/containers"]
 
-    moduletool: N/A
-    load_default_buildspecs: False
+    report:
+      count: 25
+      format: "name,id,state,runtime,returncode"
     executors:
       local:
         bash:
           description: submit jobs on local machine using bash shell
           shell: bash
-          before_script: |
-            time
-            echo "commands run before job"
-          after_script: |
-            time
-            echo "commands run after job"
-
+          module:
+            purge: True
+            restore: "Default"
+            load: ["gcc"]
         sh:
           description: submit jobs on local machine using sh shell
           shell: sh
-
+          before_script: |
+            date
+            echo "these commands will be run"
         csh:
           description: submit jobs on local machine using csh shell
           shell: csh -x
-
         tcsh:
           description: submit jobs on local machine using tcsh shell
           shell: /bin/tcsh
-
         zsh:
           description: submit jobs on local machine using zsh shell
           shell: /bin/zsh
-
-        python:
-          description: submit jobs on local machine using python shell
-          shell: python
 
     compilers:
       find:

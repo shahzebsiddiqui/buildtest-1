@@ -1,0 +1,36 @@
+name: Issue with Documentation
+description: Issue with buildtest documentation
+title: "[DOCS]: "
+labels: [documentation, triage]
+assignees:
+  - shahzebsiddiqui
+body:
+  - type: input
+    id: link
+    attributes:
+      label: Documentation Link
+      description: Specify link to url that needs attention
+      placeholder: ex. https://buildtest.readthedocs.io/
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Please provide text and explanation of the issue
+    validations:
+      required: true
+  - type: checkboxes
+    id: slackterms
+    attributes:
+      label: Post question in Slack
+      options:
+        - label: I agree that I posted my question in [slack](https://hpcbuildtest.slack.com/) before creating this issue
+          required: true
+  - type: checkboxes
+    id: issueterms
+    attributes:
+      label: Is there an existing issue
+      options:
+        - label: I confirm there is no existing [issue](https://github.com/buildtesters/buildtest/issues) for this issue
+          required: true

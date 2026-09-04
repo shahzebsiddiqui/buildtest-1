@@ -1,2 +1,0 @@
-$ buildtest config validate
-/Users/siddiq90/Documents/github/buildtest/buildtest/settings/config.yml is valid

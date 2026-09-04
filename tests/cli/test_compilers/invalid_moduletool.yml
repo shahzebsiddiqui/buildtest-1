@@ -1,0 +1,33 @@
+system:
+  generic:
+    hostnames: [".*"]
+    moduletool: none
+    buildspecs:
+      rebuild: False
+      count: 15
+      format: "name,description"
+      terse: False
+    report:
+      count: 25
+      format: "name,id,state,runtime,returncode"
+    executors:
+      local:
+        bash:
+          description: submit jobs on local machine using bash shell
+          shell: bash
+        sh:
+          description: submit jobs on local machine using sh shell
+          shell: sh
+        csh:
+          description: submit jobs on local machine using csh shell
+          shell: csh
+        python:
+          description: submit jobs on local machine using python shell
+          shell: python
+    compilers:
+      compiler:
+        gcc:
+          builtin_gcc:
+            cc: /usr/bin/gcc
+            fc: /usr/bin/gfortran
+            cxx: /usr/bin/g++

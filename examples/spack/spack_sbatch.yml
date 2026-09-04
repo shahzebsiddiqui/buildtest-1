@@ -1,0 +1,11 @@
+buildspecs:
+  spack_sbatch_example:
+    type: spack
+    executor: generic.local.bash
+    description: "sbatch directives can be defined in spack schema"
+    tags: [spack]
+    sbatch: ["-N 1", "-n 8", "-t 30"]
+    spack:
+      root: $HOME/spack
+      install:
+        specs: ['zlib%clang', 'zlib%gcc']
