@@ -1,18 +1,6 @@
 Contributing to Schemas
 ==========================
 
-Schema Docs
-------------
-
-Schema Documentation are hosted on branch `gh-pages <https://github.com/buildtesters/buildtest/tree/gh-pages>`_
-which is hosted via GitHub Pages at https://buildtesters.github.io/buildtest/.
-
-There is an automated workflow `jsonschema2md <https://github.com/buildtesters/buildtest/blob/devel/.github/workflows/jsonschemadocs.yml>`_
-which publishes schemas, documentation and examples. If you want to edit top-level page
-`README.md <https://github.com/buildtesters/buildtest/blob/gh-pages/README.md>`_ please
-send a pull-request to `gh-pages` branch.
-
-
 Adding a new schema
 ----------------------
 
@@ -24,6 +12,7 @@ If you want to add a new schema to buildtest you need to do the following:
  4. There should be regression testfile in `schema_tests <https://github.com/buildtesters/buildtest/tree/devel/tests/schema_tests>`_ to test the schema.
 
 Be sure to update properties and take account for:
+
   - a property being required or not
   - Make use of `additionalProperties: false` when defining properties so that additional keys in properties are not passed in.
   - requirements for the values provided (types, lengths, etc.)
@@ -80,8 +69,7 @@ references definition ``string_or_list``::
       "$ref": "#/definitions/string_or_list"
     },
 
-The tags field is used in other schemas like **compiler-v1.0.schema.json**
-and **script-v1.0.schema.json**. In this example we declare **tags** field and
+The tags field is used in other schemas like **script.schema.json**. In this example we declare **tags** field and
 reference tags anchor from definitions.schema.json::
 
     "tags": {
@@ -101,8 +89,8 @@ each schema. Currently, we support JSON Schema Draft7 so our schema field must b
 
 .. _resources:
 
-Resources
-----------
+JSON Schema Resources
+----------------------
 
 The following sites (along with the files here) can be useful to help with your development
 of a schema.

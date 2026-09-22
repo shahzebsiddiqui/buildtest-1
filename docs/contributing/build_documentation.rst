@@ -11,8 +11,10 @@ by ReadTheDocs at https://readthedocs.org which is a documentation platform for
 building and hosting your docs.
 
 buildtest project can be found at https://readthedocs.org/projects/buildtest/
-which will show the recent builds and project setting. If you are interested
-in becoming a maintainer, please contact **Shahzeb Siddiqui** (``shahzebmsiddiqui@gmail.com``)
+which will show the recent builds and project setting. The file `.readthedocs.yaml <https://github.com/buildtesters/buildtest/blob/devel/.readthedocs.yaml>`_
+is a special configuration file used to configure the build process for ReadTheDocs. Please refer to this file to tweak changes to ReadTheDocs.
+
+If you are interested in becoming a maintainer, please contact **Shahzeb Siddiqui** (``shahzebmsiddiqui@gmail.com``)
 to grant access to this project.
 
 Setup
@@ -20,51 +22,123 @@ Setup
 
 buildtest documentation is located in top-level `docs <https://github.com/buildtesters/buildtest/tree/devel/docs>`_ directory.
 If you want to build the documentation you will need to make sure your python environment
-has all the packages defined in ``docs/requirements.txt``. If your environment
-is already setup as described in :ref:`Setup` then  you can skip this step.
+has all the packages defined in `docs/requirements.txt <https://github.com/buildtesters/buildtest/blob/devel/docs/requirements.txt>`_.
+If your environment setup, then you can skip this step.
 
-To install your python packages, you can run the following::
+To install python dependencies for documentation build, you can run the following::
 
-  pip install -r docs/requirements.txt
+    # install from requirements file
+    pip install -r docs/requirements.txt
+
+    # install from pyproject.toml
+    pip install '.[docs]'
 
 Building docs locally
 -----------------------
 
-To build your documentation simply run the following::
+To build your documentation, navigate to the `docs` directory and run the following::
 
   cd docs
   make clean
   make html
 
-It is best practice to run ``make clean`` to ensure sphinx will remove old html
+It's best practice to run ``make clean`` to ensure sphinx will remove old html
 content from previous builds, but it is ok to skip this step if you are
 making minor changes.
 
 Running ``make html`` will build the sphinx project and generate all the html
-files in ``docs/_build/html``. Once this process is complete you may want to view
-the documentation. If you have ``firefox`` in your system you can simply run the
-following::
+files in ``docs/_build/html``. Once this process is complete you can view the html
+pages by running the following::
 
-  make view
+    open _build/html/index.html
 
-This will open a ``firefox`` session to the root of your documentation that was
-recently generated. Make sure you have X11 forwarding in order for firefox to
-work properly. Refer to the ``Makefile`` to see all of the make tags or run
-``make`` or ``make help`` for additional help.
+Please refer to the ``Makefile`` to see list of tags or run ``make`` for additional help.
 
-Automate Documentation Examples
---------------------------------
+Sphinx
+-------
 
-buildtest has a script in top-level folder ``script/docgen.py`` to automate
-documentation examples. This script can be run as follows::
+The documentation is built via `Sphinx <https://www.sphinx-doc.org/en/master/>`_ using
+`reStructuredText (rST) <https://docutils.sourceforge.io/rst.html>`_ as its markup language. When
+you run `make` you are running `sphinx-build <https://www.sphinx-doc.org/en/master/man/sphinx-build.html>`_ command
+which will generate the documentation.
 
-  python script/docgen.py
+Sphinx will read the configuration file `conf.py <https://github.com/buildtesters/buildtest/blob/devel/docs/conf.py>`_ used
+for building the project. We have enabled a couple `sphinx extensions <https://www.sphinx-doc.org/en/master/usage/extensions/index.html>`_
+in our project to customize our documentation
 
-This assumes your buildtest environment is setup, the script will write
-documentation test examples in ``docs/docgen``. Consider running this script
-when **adding**, **modifying**, or **removing** documentation examples. Once the
-test are complete, you will want to add the tests, commit and push as follows::
+API Generation
+---------------
 
-  git add docs/docgen
-  git commit -m <MESSAGE>
-  git push
+We make use of `Sphinx AutoAPI <https://sphinx-autoapi.readthedocs.io/en/latest/>`_ to generate
+buildtest API documentation that is hosted on https://buildtest.readthedocs.io/en/devel/api/index.html.
+The Sphinx AutoAPI configuration is configured in sphinx configuration file `conf.py`. For more details
+on configuration options see https://sphinx-autoapi.readthedocs.io/en/latest/reference/config.html
+
+Command Line Documentation
+----------------------------
+
+We make use of `sphinx-argparse <https://sphinx-argparse.readthedocs.io/en/stable/index.html>`_ to generate
+documentation for buildtest command line that is hosted at https://buildtest.readthedocs.io/en/devel/command.html.
+In order to use this tool one must install this package and enable the extension in sphinx configuration.
+
+DocStrings
+-----------
+
+We have enabled `napolean extension <https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html>`_ to support
+Google style docstring. Please follow this format when you are writting docstring for buildtest codebase. For more details
+on google style see: https://google.github.io/styleguide/pyguide.html
+
+Generating Documentation Examples for Buildtest Tutorial
+----------------------------------------------------------
+
+The ``buildtest tutorial-examples`` command is used for auto-generating examples for the buildtest tutorial. This command will serve the purpose of semi-automating
+the test creation where examples can't be run on readthedocs platform. Shown below is the command usage for ``buildtest tutorial-examples``.
+
+.. command-output:: buildtest tutorial-examples --help
+   :shell:
+
+The documentation examples for the :ref:`buildtest_spack_integration` are run inside the container image
+`ghcr.io/buildtesters/buildtest_spack:latest <https://ghcr.io/buildtesters/buildtest_spack:latest>`_ which means that some of the
+example output needs to be generated manually.
+
+To get into the container along with the buildtest codebase you will need to run the following commands
+
+.. Note::
+
+   You may need to `source /etc/profile` in your container if you see **module command is not found**.
+
+.. Note::
+
+    You will need to volume mount **$BUILDTEST_ROOT** into `/home/spack/buildtest` in-order to get buildtest code-base accessible inside the container.
+
+
+.. code-block:: console
+
+    docker run -it -v  $BUILDTEST_ROOT:/home/spack/buildtest ghcr.io/buildtesters/buildtest_spack:latest
+
+Once you are in the container run the following commands
+
+.. code-block:: console
+
+    cd /home/spack/buildtest
+    source scripts/spack_container/setup.sh
+
+Once your setup is complete, you can run the spack generated examples in dryrun mode by running::
+
+        buildtest tutorial-examples spack --dryrun
+
+This will print a list of buildtest commands that will be run without actually executing them. If you want to test the examples, you can
+run the following command::
+
+    buildtest tutorial-examples spack
+
+If you want buildtest to write the changes to the documentation, you will need to use the ``--write`` flag which will run the example tests and write
+the output to file.
+
+If you want to generate the examples for :ref:`buildtest_aws`, you will need to access the E4S Pro container image and clone buildtest, checkout to your
+branch and then run the command::
+
+    buildtest tutorial-examples aws
+
+Please verify all the auto-generated examples that will be used in the documentation. Once you are content with all the changes please add all
+the changes via ``git add``.

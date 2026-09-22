@@ -1,28 +1,45 @@
 system:
   generic:
     hostnames: ['.*']
-
     moduletool: lmod
-    load_default_buildspecs: True
-    buildspec_roots:
-      - $HOME/buildtest-cori
+    poolsize: 1
+    file_traversal_limit: 1000
+    buildspecs:
+      # whether to rebuild cache file automatically when running `buildtest buildspec find`
+      rebuild: False
+      # limit number of records to display when running `buildtest buildspec find`
+      count: 15
+      # format fields to display when running `buildtest buildspec find`, By default we will show name,description
+      format: "name,description"
+      # enable terse mode
+      terse: False
+    report:
+      count: 25
+      format: "name,id,state,runtime,returncode"
+    paths:
+      slurm: /usr/bin
     testdir: /tmp/buildtest
     executors:
       defaults:
         pollinterval: 20
-        launcher: sbatch
-        max_pend_time: 30
+        maxpendtime: 30
         account: admin
+      local:
+        bash:
+          description: submit jobs via bash shell
+          shell: bash
       slurm:
         normal:
           options: ["-C haswell"]
           qos: normal
+          cluster: cori
           before_script: |
             time
             echo "commands run before job"
-          after_script: |
-            time
-
+        debug:
+          options: ["-C cpu -t 5"]
+          partition: debug
+          cluster: perlmutter
     compilers:
       compiler:
         gcc:

@@ -3,10 +3,14 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Python build
-buildtest_framework.egg-info/
-dist/
-build/
+# auto generated files in $BUILDTEST_ROOT/var
+var/
+
+# generated docs from sphinx-autoapi
+docs/api
+
+# xml files generated for buildtest cdash
+*.xml
 
 # logfile
 *.log
@@ -37,3 +41,12 @@ env/
 venv/
 ENV/
 env.bak/
+
+# ignore .packages directory
+.packages/
+Pipfile
+Pipfile.lock
+coverage.json
+
+# ignore .idea
+.idea/

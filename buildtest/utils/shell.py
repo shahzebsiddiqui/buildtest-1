@@ -1,30 +1,142 @@
 import shutil
+
 from buildtest.exceptions import BuildTestError
+from buildtest.utils.command import BuildTestCommand
+from buildtest.utils.file import is_file
+
+
+def get_shells():
+    """Return a list of shell returned from /etc/shells file. If file exist we return a list
+    The command we run is the following which will omit any lines that start with ``#`` which
+    is for comments. If file doesn't exist we return an empty list
+
+    .. code-block:: console
+
+        $ grep '^[^#]' /etc/shells
+        /bin/bash
+        /bin/csh
+        /bin/dash
+        /bin/ksh
+        /bin/sh
+        /bin/tcsh
+        /bin/zsh
+
+    Returns:
+        list: Return a list of shells
+    """
+
+    etc_shell = "/etc/shells"
+    if not is_file(etc_shell):
+        return []
+
+    cmd = BuildTestCommand(f"grep '^[^#]' {etc_shell}")
+    cmd.execute()
+    out = cmd.get_output()
+    out = [item.strip() for item in out]
+
+    # sometimes /etc/shells doesn't have all shells so we will use shutil.which to find shells
+    csh = shutil.which("csh")
+    zsh = shutil.which("zsh")
+
+    # if csh and zsh are found and not in list, then we add them to list.
+    if csh is not None and csh not in out:
+        out.append(csh)
+    if zsh is not None and zsh not in out:
+        out.append(zsh)
+
+    return out
+
+
+def get_python_shells():
+    """Return a list of all python shells by running ``which -a python3 python`` which
+    will report full path to all python and python3 wrapper in current $PATH.
+
+    Shown below is an expected output.
+
+    .. code-block:: console
+
+        $ which -a python3 python
+        /Users/siddiq90/.local/share/virtualenvs/buildtest-KLOcDrW0/bin/python3
+        /usr/local/bin/python3
+        /usr/bin/python3
+        /Users/siddiq90/.local/share/virtualenvs/buildtest-KLOcDrW0/bin/python
+        /usr/bin/python
+
+    Returns:
+        list: A list of full path to python shells
+    """
+
+    python_shells = []
+
+    if not shutil.which("which"):
+        raise BuildTestError("Unable to find program 'which'. Please install 'which' ")
+
+    cmd = BuildTestCommand("which -a python python3")
+    cmd.execute()
+    out = cmd.get_output()
+    python_shells += [item.strip() for item in out]
+
+    return python_shells
+
+
+def shell_lookup():
+    """Return a dictionary of shell types and list of all shell interpreter. If shell is not present the entry will be an empty list."""
+    shells = {"bash": ["bash"], "sh": ["sh"], "csh": ["csh"], "zsh": ["zsh"]}
+
+    for name in shells.keys():
+        cmd = BuildTestCommand(f"which -a {name}")
+        cmd.execute()
+        out = cmd.get_output()
+        shells[name] += [item.strip() for item in out]
+
+    return shells
+
+
+def is_bash_shell(name):
+    """Return ``True`` if specified shell is valid bash shell
+
+    >>> is_bash_shell("bash")
+    True
+    >>> is_bash_shell("/bin/bash")
+    True
+
+    """
+    return name in shell_dict["bash"]
+
+
+def is_sh_shell(name):
+    """Return ``True`` if specified shell is valid sh shell
+
+    >>> is_sh_shell("sh")
+    True
+    >>> is_sh_shell("/bin/sh")
+    True
+    """
+    return name in shell_dict["sh"]
+
+
+def is_csh_shell(name):
+    """Return ``True`` if specified shell is valid csh shell"""
+    return name in shell_dict["csh"]
+
+
+def is_zsh_shell(name):
+    """Return ``True`` if specified shell is valid zsh shell"""
+    return name in shell_dict["zsh"]
+
+
+python_shells = get_python_shells()
+system_shells = get_shells()
+shell_dict = shell_lookup()
 
 
 class Shell:
-    valid_shells = [
-        "bash",
-        "sh",
-        "zsh",
-        "csh",
-        "tcsh",
-        "/bin/bash",
-        "/bin/csh",
-        "/bin/sh",
-        "/bin/tcsh",
-        "/bin/zsh",
-        "python",
-    ]
-
     def __init__(self, shell="bash"):
         """The Shell initializer takes an input shell and shell options and split
         string by shell name and options.
 
-        Parameters:
-
-        :param shell: specify shell program and any options passed to shell
-        :type shell: str
+        Args:
+            shell (str): Specify shell program and any options passed to shell. Defaults to ``bash``
         """
 
         # enforce input argument 'shell' to be a string
@@ -34,6 +146,12 @@ class Shell:
             )
 
         self.name = shell.split()[0]
+
+        self.valid_shells = (
+            system_shells
+            + python_shells
+            + ["bash", "csh", "tcsh", "sh", "zsh", "python", "python3"]
+        )
 
         # if input shell is not in list of valid shells we raise error.
         if self.name not in self.valid_shells:
@@ -100,7 +218,7 @@ class Shell:
         # if input shell is not in list of valid shells we raise error.
         if self.name not in self.valid_shells:
             raise BuildTestError(
-                f"Invalid shell: {self.name} select from one of the following shells: {self.valid_shells}"
+                f"Please select one of the following shells: {self.valid_shells}"
             )
 
         self._path = path

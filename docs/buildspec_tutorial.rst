@@ -1,0 +1,117 @@
+.. _buildspec_tutorial:
+
+Buildspec Tutorial
+====================
+
+.. toctree::
+   :maxdepth: 1
+
+   buildspecs/buildspec_overview
+   buildspecs/aws
+   buildspecs/spack
+   buildspecs/e4s_testsuite
+
+
+Please proceed to :ref:`buildspec_overview` to get an overview of how to write buildspecs. This section can be done on your workstation.
+
+.. _tutorial_setup:
+
+Tutorials Setup
+----------------
+
+.. note::
+
+    The tutorial setup is required if you want to run buildspecs using the :ref:`spack <buildtest_spack_integration>` schema.
+
+
+To get started for this tutorial, you will need `docker <https://docs.docker.com/get-docker/>`_ on your machine to pull the container. At NERSC,
+you can use `podman <https://docs.podman.io/en/latest/>`_ or `shifter <https://github.com/NERSC/shifter>`_ to access the container, you will need to start an interactive shell.
+
+.. tab-set::
+
+    .. tab-item:: docker
+
+        .. code-block:: console
+
+            docker pull ghcr.io/buildtesters/buildtest_spack:spack-sc23
+            docker run -it ghcr.io/buildtesters/buildtest_spack:spack-sc23
+
+
+    .. tab-item:: podman
+
+        If you are using podman on Perlmutter, please do the following
+
+        .. code-block:: console
+
+            mkdir -p $HOME/.config/containers
+            touch $HOME/.config/containers/storage.conf
+        
+        Next add the following content in `storage.conf`::
+        
+        
+            [storage]
+              driver = "overlay"
+              graphroot = "/tmp/<USER>/storage"
+              [storage.options]
+                size = ""
+                remap-uids = ""
+                remap-gids = ""
+                ignore_chown_errors = "true"
+                remap-user = ""
+                remap-group = ""
+                mount_program = "/usr/bin/fuse-overlayfs"
+                mountopt = ""
+
+        **Please update the path /tmp/<USER>/storage to your username.**
+
+        Next, you can pull the container and run an interactive shell as follows
+
+        .. code-block:: console
+
+            podman pull ghcr.io/buildtesters/buildtest_spack:spack-sc23
+            podman run -it ghcr.io/buildtesters/buildtest_spack:spack-sc23
+
+    .. tab-item:: shifter
+
+        .. code-block:: console
+
+            shifter -E --image=registry.services.nersc.gov/siddiq90/buildtest_spack:latest -- /bin/bash --login
+
+Once you are in the container, your prompt should change and you will be in the container. You can confirm this by running `whoami` which should
+show the following ::
+
+    spack@ef50085c8a81: whoami
+    spack
+
+Please make sure you run the following command when starting the container environment which will setup spack and module environment.
+
+.. code-block:: console
+
+    source /etc/profile
+
+Next we need to install buildtest and setup environment for this tutorial. We recommend you clone buildtest in your HOME directory.
+Please run the following commands to setup buildtest for this tutorial::
+
+    cd ~
+    git clone https://github.com/buildtesters/buildtest.git
+    cd buildtest
+    source scripts/spack_container/setup.sh
+
+This container provides a software stack built with `spack <https://spack.readthedocs.io/en/latest/>`_, you should see
+``buildtest``, ``spack`` and ``module`` command in your path. The configuration file used for this container is set via `BUILDTEST_CONFIGFILE`.
+
+.. code-block::
+
+    spack@ef50085c8a81:~/buildtest$ which spack
+    /home/spack/spack/bin/spack
+
+    spack@ef50085c8a81:~/buildtest$ which buildtest
+    /home/spack/buildtest/bin/buildtest
+
+    spack@ef50085c8a81:~/buildtest$ module --version
+
+    Modules based on Lua: Version 8.7.18  2023-01-14 07:33 -06:00
+        by Robert McLay mclay@tacc.utexas.edu
+
+    (buildtest) spack@87354844bbf3:~/buildtest$ echo $BUILDTEST_CONFIGFILE
+    /home/spack/buildtest/buildtest/settings/spack_container.yml

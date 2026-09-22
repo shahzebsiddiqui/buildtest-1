@@ -1,0 +1,55 @@
+system:
+  generic:
+    hostnames:
+    - .*
+    description: Generic System
+    moduletool: lmod
+    testdir: ~/runs
+    pager: false
+    file_traversal_limit: 1000
+    buildspecs:
+      rebuild: false
+      count: 15
+      format: name,description
+      terse: false
+      search:
+      - $BUILDTEST_ROOT/examples
+    report:
+      count: 25
+      format: name,id,state,runtime,returncode
+    executors:
+      local:
+        bash:
+          description: submit jobs on local machine using bash shell
+          shell: bash
+          before_script: source /etc/profile
+        sh:
+          description: submit jobs on local machine using sh shell
+          shell: sh
+          before_script: source /etc/profile
+    compilers:
+      find:
+        gcc: ^(gcc)
+      compiler:
+        gcc:
+          gcc_11.4.0:
+            cc: /usr/bin/gcc
+            fc: /usr/bin/gfortran
+            cxx: /usr/bin/g++
+          clang_14.0.0:
+            cc: /usr/bin/clang
+            fc: None
+            cxx: /usr/bin/clang++
+          gcc/12.3.0-gcc-11.4.0:
+            cc: gcc
+            cxx: g++
+            fc: gfortran
+            module:
+              load:
+              - gcc/12.3.0-gcc-11.4.0
+              purge: false
+    cdash:
+      url: https://my.cdash.org/
+      project: buildtest
+      site: generic
+      buildname: buildtest_spack_tutorial

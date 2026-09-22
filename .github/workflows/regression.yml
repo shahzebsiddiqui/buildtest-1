@@ -2,35 +2,50 @@ name: regressiontest
 
 on:
   pull_request:
-    branches: [ devel ]
+    branches: [devel]
+    paths:
+      - 'buildtest/**'
+      - 'tests/**'
+      - '.github/workflows/regression.yml'
+      - 'requirements.txt'
+      - 'pyproject.toml'
 
 jobs:
 
-  pytest:
-
-    runs-on: ubuntu-latest
+  buildtest_regtest:
+    runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        python-version: [3.6, 3.7, 3.8]
-
+        os: [macos-latest, macos-13, ubuntu-latest]
+        python-version: ['3.10', '3.11', '3.12', '3.13']
 
     steps:
-
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Setup Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Run buildtest unittests
+    - name: Run buildtest unittests for os - ${{ matrix.os }}, python version - ${{ matrix.python-version }}
+      env:
+        OS: ${{ matrix.os }}
+      shell: bash
       run: |
-        sudo apt-get install -y tcsh zsh
+        if [ $OS = "ubuntu-latest"  ] ; then sudo apt-get install -y csh tcsh zsh emacs; else brew install tcsh zsh emacs ;  fi
+        cat /etc/shells
         source setup.sh
         pip install pytest
         pip install coverage
-        python $BUILDTEST_ROOT/scripts/regtest.py
-
+        python $BUILDTEST_ROOT/buildtest/tools/unittests.py -c
+        returncode=$?
+        if [ $returncode != 0 ]; then exit $returncode; fi
+        buildtest cdash upload --site=github unittests
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v7
+      with:
+        verbose: true
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}

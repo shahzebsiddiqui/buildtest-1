@@ -3,10 +3,6 @@
 Summary of buildtest
 ======================
 
-
-.. contents::
-   :backlinks: none
-
 Background
 ------------
 
@@ -56,192 +52,38 @@ run all the tests which led to `buildtest`.
 Preview of buildtest
 ----------------------
 
-Building test
-~~~~~~~~~~~~~~
+You can run ``buildtest show`` followed by name of command and it will provide an overview of the buildtest.
 
-buildtest will process YAML files called **buildspecs** (build specification) and
-generate test scripts. To build and run tests you use ``buildtest build`` command.
-There are several ways to build buildspecs, shown below are few examples:
+.. dropdown:: ``buildtest show build``
 
-.. code-block:: console
+    .. command-output:: buildtest show build
 
-  # process a single file
-  $ buildtest build -b /path/to/file.yml
+.. dropdown:: ``buildtest show buildspec``
 
-  # recursively find all .yml files in a directory
-  $ buildtest build -b /path/to/directory
+    .. command-output:: buildtest show buildspec
 
-  # append -b multiple times
-  $ buildtest -b /path/to/directory -b /path/to/file.yml
+.. dropdown:: ``buildtest show report``
 
-  # process entire directory but exclude file system/kernel.yml
-  $ buildtest -b system/ -x system/kernel.yml
+    .. command-output:: buildtest show report
 
-  # process entire directory but exclude sub-directory.
-  $ buildtest build -b system -x system/lustre
+.. dropdown:: ``buildtest show inspect``
 
-  # discover buildspecs based on tags
-  $ buildtest build --tags network
+    .. command-output:: buildtest show inspect
 
-  # filter tests by tag name network
-  $ buildtest build --tags network --filter-tags network
+.. dropdown:: ``buildtest show config``
 
-  # discover buildspecs based on executors
-  $ buildtest build --executor generic.local.sh
-
-  # combine all options together
-  $ buildtest build -b example.yml -b system --tags network -x system/kernel.yml
-
-For more details see :ref:`building_test`.
-
-Querying Test Report
-~~~~~~~~~~~~~~~~~~~~~
-
-buildtest will retrieve test results using ``buildtest report`` command which will display
-all test records. We can filter and format output of test records using the ``--filter``
-and ``--format`` option. Shown below is example usage:
-
-.. code-block:: console
-
-  # report all tests
-  $ buildtest report
-
-  # filter and format test report
-  $ buildtest report --filter KEY1=VALUE1,KEY2=VALUE2 --format <field1>,<field2>
-
-  # show filter fields
-  $ buildtest report --helpfilter
-
-  # show format fields
-  $ buildtest report --helpformat
-
-  # get oldest test record
-  $ buildtest report --oldest
-
-  # get latest test record
-  $ buildtest report --latest
-
-To learn more about `buildtest report` see :ref:`querying test reports <test_reports>`.
-
-
-Inspect Tests
-~~~~~~~~~~~~~~~
-
-If you want to see more detailed results for tests you should use ``buildtest inspect``
-which will extract the JSON record from the report file. Shown below are few command usage:
-
-.. code-block:: console
-
-    # list all test names and id
-    $ buildtest inspect list
-
-    # query record for test name 'python_hello'
-    $ buildtest inspect name python_hello
-
-    # query record for test name 'hello_world' 'shell_opts'
-    $ buildtest inspect name hello_world shell_opts
-
-    # query record based on test id
-    $ buildtest inspect id <identifier-1> <identifier-2>
-
-To learn more about `buildtest inspect` see :ref:`inspect_test`.
-
-
-Query Buildspecs
-~~~~~~~~~~~~~~~~~
-
-buildtest can discover and validate buildspecs with corresponding JSON schema. This
-feature is handy when you want to see all tests in your acceptance test. To see
-all buildspecs you need to use ``buildtest buildspec find``:
-
-.. code-block:: console
-
-    # build your buildspec cache and report all validated buildspecs
-    $ buildtest buildspec find
-
-    # rebuild buildspec cache and discover new buildspecs
-    $ buildtest buildspec find --rebuild
-
-    # view all tags
-    $ buildtest buildspec find --tags
-
-    # view all executors
-    $ buildtest buildspec find --executors
-
-    # view all maintainers
-    $ buildtest buildspec find --maintainers
-
-    # filter and format buildspec cache
-    $ buildtest buildspec find --filter KEY1=VALUE1,KEY2=VALUE2 --format <field1>,<field2>
-
-To learn more about `buildtest buildspec find` see :ref:`buildspec_interface`.
-
-Configuration
-~~~~~~~~~~~~~~
-
-buildtest provides :ref:`command line interface <configuration_cli>` via ``buildtest config`` to query
-buildtest configuration file. As you start :ref:`configuring buildtest <configuring_buildtest>` at your site,
-you will want to run:
-
-.. code-block:: console
-
-    $ buildtest config validate
-
-If you want to view your configuration file you can do:
-
-.. code-block:: console
-
-    $ buildtest config view
-
-buildtest can :ref:`define compilers <compilers>` in your configuration file which can be used to
-compile source code in a test. The ``buildtest config compilers`` command is responsible
-for querying and finding compilers:
-
-.. code-block:: console
-
-    # list compilers in flat listing
-    $ buildtest config compilers
-
-    # list compilers in YAML format
-    $ buildtest config compilers --yaml
-
-    # list compilers in JSON format
-    $ buildtest config compilers --json
-
-    # find compilers and update configuration file
-    $ buildtest config compilers find
-
-Schema Interface
-~~~~~~~~~~~~~~~~~
-
-buildtest has a :ref:`command line interface <buildtest_schemas>` to buildtest schemas via ``buildtest schema`` command.
-We provide a list of available schemas, including schema content and schema examples validated for
-each schema. This can be queried as follows:
-
-.. code-block:: console
-
-  # show available schemas
-  $ buildtest schema
-
-  # show content of schema global.schema.json
-  $ buildtest schema -n global.schema.json --json
-
-  # show schema examples of schema global.schema.json
-  $ buildtest schema -n global.schema.json --example
-
-We encourage you go over the :ref:`getting_started` guide as you learn buildtest and
-try the examples on your machine.
+    .. command-output:: buildtest show config
 
 Target Audience & Use Case
 ---------------------------
 
-buildtest target audience is `HPC Staff` that wants to perform acceptance &
-regression testing of their HPC system.
+buildtest target audience is **HPC Staff**, **Developers**, and **Vendors** that wants to
+perform acceptance & regression testing of their HPC system.
 
 buildtest is not
 
   - replacement for `make`, `cmake`, `autoconf`, `ctest`
-  - a software build framework (`easybuild <https://docs.easybuild.io/en/latest/>`_, `spack <https://spack.readthedocs.io/en/latest/>`_, `nix <https://nixos.org/>`_ , `guix <https://guix.gnu.org/>`_)
+  - a software build framework (`easybuild <https://docs.easybuild.io/en/latest/>`_, `spack <https://spack.readthedocs.io/en/latest/>`__, `nix <https://nixos.org/>`_ , `guix <https://guix.gnu.org/>`_)
   - a replacement for benchmark tools or test suite from upstream package
   - a replacement for writing tests, you will need to write your tests defined by buildtest schemas, however you can copy/paste & adapt tests from other sites that are applicable to you.
 
@@ -252,26 +94,7 @@ Typical use-case:
   - Run weekly/biweekly test on medium/large workload including micro-benchmark
   - Run tests for newly installed software package typically requested by user.
 
-If you are interested trying out buildtest check out :ref:`getting_started` and
-`Join Slack Channel <https://hpcbuildtest.herokuapp.com/>`_.
-
-Timeline
----------
-
-.. csv-table::
-    :header: "Date", "Description"
-    :widths: 30, 60
-
-    **Mar 14th 2021**, "`v0.9.4 <https://github.com/buildtesters/buildtest/releases/tag/v0.9.4>`_ introduced major change in buildtest configuration file (``settings.schema.json``) to define multiple HPC systems in configuration file. This lead to change in how ``executors`` are referenced in buildspec file."
-    **Feb 22nd 2021**, "`v0.9.3 <https://github.com/buildtesters/buildtest/releases/tag/v0.9.3>`_ change Copyright details for project to include `LBNL <https://www.lbl.gov/>`_. We added `dependabot <https://dependabot.com/>`_ for managing dependencies, added OLCF facility pipelines for running regression test."
-    **Jan 12th 2021**, "`v0.9.2 <https://github.com/buildtesters/buildtest/releases/tag/v0.9.2>`_ contains major refactor to ``compiler-v1.0-schema.json`` for writing compiler test using regular expression to search for compilers that are defined in configuration file."
-    **Nov 24st 2020**, "`v0.9.1 <https://github.com/buildtesters/buildtest/releases/tag/v0.9.1>`_ added support for `Cobalt Scheduler <https://trac.mcs.anl.gov/projects/cobalt>`_."
-    **Sep 3rd 2020**, "`v0.8.0 <https://github.com/buildtesters/buildtest/releases/tag/v0.8.0>`_ introduced `JSON Schema <https://json-schema.org/>`_ for validating buildspec. Add support for Slurm and LSF scheduler for job submission. Add support for building buildspecs by file, directory and tagname and command line interface to schema."
-    **Mar 3rd 2020**, "A spin-off project called `lmodule <https://lmodule.readthedocs.io/en/latest/>`_ was formed based on buildtest module features."
-    **Sep 11th 2018**, "In `v0.4.0 <https://github.com/buildtesters/buildtest/releases/tag/v0.4.0>`_ buildtest was ported from Python 2 to 3."
-    **Aug 20th 2017**, "In `v0.1.5 <https://github.com/buildtesters/buildtest/releases/tag/v0.1.5>`_ buildtest was converted from bash to Python and project was moved into github https://github.com/HPC-buildtest/buildtest."
-    **Feb 18th 2017**, "Start of project"
-
+If you are interested trying out buildtest check out :ref:`getting_started`.
 
 Related Projects and community efforts
 ---------------------------------------
@@ -287,7 +110,7 @@ Related Projects and community efforts
 +--------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+
 | `hpcswtest <https://github.com/idaholab/hpcswtest>`_                                 | is a HPC Software Stack Testing Framework developed by `Idaho National Lab <http://www.inl.gov>`_. The framework is built using C++11 and JSON file to define test configuration.                                                                                                                                   | Obsolete |
 +--------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+
-| `PVCS <https://github.com/cea-hpc/PCVS>`_                                            | is a validation engine to run large tests for HPC systems, the framework is written in Perl and recipe known as **Test Expression (TE)** are written in YAML. This project is developed by `CEA <http://www-hpc.cea.fr/index-en.htm>`_.                                                                             | Obsolete |
+| `PVCS <https://github.com/cea-hpc/PCVS>`_                                            | is a validation engine to run large tests for HPC systems, the framework is written in Perl and recipe known as **Test Expression (TE)** are written in YAML. This project is developed by `CEA <http://www-hpc.cea.fr/index-en.html>`_.                                                                            | Obsolete |
 +--------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+
 
 The `System Test Working Group <https://github.com/olcf/hpc-system-test-wg>`_ hosted

@@ -1,0 +1,18 @@
+buildspecs:
+  spack_env_create_from_manifest:
+    type: spack
+    executor: generic.local.bash
+    description: "Create spack environment from spack.yaml"
+    tags: [spack]
+    spack:
+      root: $HOME/spack
+      env:
+        create:
+          name: 'manifest_example'
+          manifest: "$BUILDTEST_ROOT/examples/spack/example/spack.yaml"
+        activate:
+          name: 'manifest_example'
+        concretize: true
+    post_cmds: |
+      spack env deactivate
+      spack env remove -y manifest_example
